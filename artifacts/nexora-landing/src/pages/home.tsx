@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, CheckCircle2, ChevronRight, Menu, X, 
@@ -38,9 +37,9 @@ export default function Home() {
       {/* Header */}
       <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent py-5"}`}>
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-          <Link href="/" className="flex items-center">
+          <a href="/" className="flex items-center">
             <img src="/nexora-logo.png" alt="Nexora Field AI" className="h-8 md:h-10 w-auto" />
-          </Link>
+          </a>
           
           <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-muted-foreground">
             <a href="#solucao" className="hover:text-white transition-colors">Solução</a>
@@ -50,10 +49,10 @@ export default function Home() {
           </nav>
           
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" className="text-white hover:bg-white/10">Login</Button>
-            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_20px_rgba(142,219,101,0.3)]">
+            <a href="/login"><Button variant="ghost" className="text-white hover:bg-white/10">Login</Button></a>
+            <a href="/register"><Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_20px_rgba(142,219,101,0.3)]">
               Solicitar Demonstração
-            </Button>
+            </Button></a>
           </div>
           
           <button className="lg:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -77,8 +76,8 @@ export default function Home() {
               <a href="#mercados" className="text-muted-foreground hover:text-white p-2" onClick={() => setMobileMenuOpen(false)}>Mercados</a>
               <a href="#planos" className="text-muted-foreground hover:text-white p-2" onClick={() => setMobileMenuOpen(false)}>Planos</a>
               <div className="h-px bg-white/10 my-2"></div>
-              <Button variant="outline" className="w-full justify-center border-white/20">Login</Button>
-              <Button className="w-full justify-center bg-secondary text-secondary-foreground hover:bg-secondary/90">Solicitar Demonstração</Button>
+              <a href="/login" className="w-full"><Button variant="outline" className="w-full justify-center border-white/20">Login</Button></a>
+              <a href="/register" className="w-full"><Button className="w-full justify-center bg-secondary text-secondary-foreground hover:bg-secondary/90">Solicitar Demonstração</Button></a>
             </div>
           </motion.div>
         )}
@@ -114,13 +113,17 @@ export default function Home() {
                 </motion.p>
                 
                 <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 mb-12">
-                  <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-base h-14 px-8 shadow-[0_0_30px_rgba(142,219,101,0.2)]">
-                    Solicitar Demonstração
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/5 text-base h-14 px-8">
-                    Sou Técnico
-                  </Button>
+                  <a href="/register">
+                    <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-base h-14 px-8 shadow-[0_0_30px_rgba(142,219,101,0.2)]">
+                      Solicitar Demonstração
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </a>
+                  <a href="/register?role=technician">
+                    <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/5 text-base h-14 px-8">
+                      Sou Técnico
+                    </Button>
+                  </a>
                 </motion.div>
                 
                 <motion.div variants={fadeIn} className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/10">
@@ -387,9 +390,11 @@ export default function Home() {
                       ))}
                     </div>
 
-                    <Button className="w-full bg-primary text-white hover:bg-primary/90 mt-2">
-                      Despachar Automaticamente
-                    </Button>
+                    <a href="/chamados/novo" className="w-full block">
+                      <Button className="w-full bg-primary text-white hover:bg-primary/90 mt-2">
+                        Despachar Automaticamente
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -635,7 +640,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Dashboard básico</li>
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Suporte padrão</li>
                 </ul>
-                <Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Assinar Starter</Button>
+                <a href="/register" className="w-full block"><Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Assinar Starter</Button></a>
               </div>
 
               {/* Professional */}
@@ -656,7 +661,7 @@ export default function Home() {
                   <li className="flex items-center gap-2 font-medium text-white"><FileText size={16} className="text-primary" /> Relatórios gerados por IA</li>
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> Dashboard completo</li>
                 </ul>
-                <Button className="w-full bg-primary text-white hover:bg-primary/90">Assinar Professional</Button>
+                <a href="/register" className="w-full block"><Button className="w-full bg-primary text-white hover:bg-primary/90">Assinar Professional</Button></a>
               </div>
 
               {/* Business */}
@@ -674,7 +679,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Acesso à API</li>
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> White Label básico</li>
                 </ul>
-                <Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Assinar Business</Button>
+                <a href="/register" className="w-full block"><Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Assinar Business</Button></a>
               </div>
 
               {/* Enterprise */}
@@ -691,7 +696,7 @@ export default function Home() {
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> SLA corporativo customizado</li>
                   <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Suporte dedicado (CSM)</li>
                 </ul>
-                <Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Falar com Vendas</Button>
+                <a href="/register" className="w-full block"><Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Falar com Vendas</Button></a>
               </div>
             </div>
           </div>
@@ -735,12 +740,16 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Pronto para modernizar sua operação?</h2>
             <p className="text-xl text-muted-foreground mb-10">Conecte sua empresa à maior rede inteligente de técnicos especializados do Brasil e recupere o controle sobre seu campo.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-base h-14 px-8 shadow-[0_0_30px_rgba(142,219,101,0.2)]">
-                Solicitar Demonstração
-              </Button>
-              <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/5 text-base h-14 px-8">
-                Falar com Especialista
-              </Button>
+              <a href="/register">
+                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-base h-14 px-8 shadow-[0_0_30px_rgba(142,219,101,0.2)]">
+                  Solicitar Demonstração
+                </Button>
+              </a>
+              <a href="/register">
+                <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/5 text-base h-14 px-8">
+                  Falar com Especialista
+                </Button>
+              </a>
             </div>
           </div>
         </section>
@@ -761,19 +770,19 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-white mb-4">Plataforma</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Para Empresas</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Para Técnicos</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Preços</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">API Docs</a></li>
+                <li><a href="/register" className="hover:text-primary transition-colors">Para Empresas</a></li>
+                <li><a href="/register?role=technician" className="hover:text-primary transition-colors">Para Técnicos</a></li>
+                <li><a href="#planos" className="hover:text-primary transition-colors">Preços</a></li>
+                <li><a href="/developer" className="hover:text-primary transition-colors">API Docs</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold text-white mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Contato</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Comercial</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Suporte</a></li>
+                <li><a href="/register" className="hover:text-primary transition-colors">Contato</a></li>
+                <li><a href="/register" className="hover:text-primary transition-colors">Comercial</a></li>
+                <li><a href="/login" className="hover:text-primary transition-colors">Suporte</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Política de Privacidade</a></li>
                 <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
               </ul>

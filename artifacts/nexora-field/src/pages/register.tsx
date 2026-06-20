@@ -12,7 +12,9 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<RegisterInputRole>("company");
+  const urlRole = new URLSearchParams(window.location.search).get("role");
+  const initialRole: RegisterInputRole = urlRole === "technician" ? "technician" : "company";
+  const [role, setRole] = useState<RegisterInputRole>(initialRole);
   const registerMutation = useRegister();
   const { setToken } = useAuth();
   const [, setLocation] = useLocation();
