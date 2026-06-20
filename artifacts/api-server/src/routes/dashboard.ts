@@ -1,12 +1,12 @@
 import { Router, type Response } from "express";
 import { db, usersTable, techniciansTable, companiesTable, serviceOrdersTable, applicationsTable } from "@workspace/db";
 import { eq, count, sum, avg } from "drizzle-orm";
-import { requireAuth, type AuthRequest } from "../middlewares/auth";
+import { requireAuth, requireRole, type AuthRequest } from "../middlewares/auth";
 import { sql } from "drizzle-orm";
 
 const router = Router();
 
-router.get("/dashboard/admin", requireAuth, async (req: AuthRequest, res: Response) => {
+router.get("/dashboard/admin", requireAuth, requireRole("admin"), async (req: AuthRequest, res: Response) => {
   try {
     const [techCount] = await db.select({ count: count() }).from(techniciansTable);
     const [companyCount] = await db.select({ count: count() }).from(companiesTable);

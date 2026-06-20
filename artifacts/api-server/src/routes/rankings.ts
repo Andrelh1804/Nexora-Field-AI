@@ -1,7 +1,7 @@
 import { Router, type Response } from "express";
 import { db, technicianRankingsTable, techniciansTable } from "@workspace/db";
 import { eq, desc, sql } from "drizzle-orm";
-import { requireAuth, type AuthRequest } from "../middlewares/auth";
+import { requireAuth, requireRole, type AuthRequest } from "../middlewares/auth";
 
 const router = Router();
 
@@ -74,7 +74,7 @@ router.get("/rankings/me", requireAuth, async (req: AuthRequest, res: Response) 
 });
 
 // Recalculate ranking for a technician (internal/admin)
-router.post("/rankings/recalculate/:technicianId", requireAuth, async (req: AuthRequest, res: Response) => {
+router.post("/rankings/recalculate/:technicianId", requireAuth, requireRole("admin"), async (req: AuthRequest, res: Response) => {
   try {
     const techId = parseInt(req.params["technicianId"] as string);
     const [tech] = await db.select().from(techniciansTable).where(eq(techniciansTable.id, techId)).limit(1);
