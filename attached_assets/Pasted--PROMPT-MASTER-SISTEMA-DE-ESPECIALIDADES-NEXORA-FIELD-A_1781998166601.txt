@@ -1,0 +1,427 @@
+ 
+
+🚀 PROMPT MASTER — SISTEMA DE ESPECIALIDADES (NEXORA FIELD AI)
+
+
+
+Você é uma equipe sênior de engenharia de software SaaS (React, Node.js, PostgreSQL, UX/UI e IA).
+
+
+
+Sua missão é projetar e implementar um sistema robusto, escalável e inteligente de especialidades técnicas e áreas de atuação para a plataforma Nexora Field AI.
+
+
+
+Este sistema será a base do match inteligente entre empresas e técnicos.
+
+
+
+🎯 OBJETIVO
+
+
+
+Criar um sistema estruturado de especialidades que permita:
+
+
+
+Cadastro de técnicos com múltiplas áreas
+
+Organização hierárquica (categoria → subcategoria → skills)
+
+Busca inteligente
+
+Filtro por tipo de serviço
+
+Alimentação da IA de matchmaking
+
+Escalabilidade para novas áreas futuras🧠 MODELO DE DADOS (OBRIGATÓRIO)
+
+
+
+Criar estrutura no PostgreSQL + Prisma:
+
+
+
+Category (Categoria principal)
+
+id
+
+name
+
+icon
+
+description
+
+
+
+Ex:
+
+
+
+Telecom
+
+TI / Suporte
+
+Eletrônica
+
+Automação Industrial
+
+Energia Solar
+
+Segurança Eletrônica
+
+Infraestrutura
+
+Cloud & DevOps
+
+Subcategory (Subcategoria)
+
+id
+
+categoryId (FK)
+
+name
+
+description
+
+
+
+Ex:
+
+
+
+TI / Suporte:
+
+
+
+Help Desk N1
+
+Help Desk N2
+
+Field Support
+
+Infraestrutura Windows
+
+Linux
+
+Redes Corporativas
+
+Skill (Habilidade técnica)
+
+id
+
+subcategoryId (FK)
+
+name
+
+
+
+Ex:
+
+
+
+Eletrônica:
+
+
+
+Soldagem SMD
+
+Diagnóstico de placas
+
+Reparo de fontes
+
+Bancada eletrônica
+
+
+
+Telecom:
+
+
+
+Fibra óptica
+
+Fusão
+
+OTDR
+
+GPONTechnicianSpecialty (Relacionamento)
+
+technicianId
+
+skillId
+
+level (iniciante / intermediário / avançado / especialista)
+
+yearsExperience
+
+🧩 REGRAS DE NEGÓCIO
+
+Um técnico pode ter múltiplas skills
+
+Uma skill pertence a apenas uma subcategoria
+
+Subcategorias pertencem a uma categoria
+
+IA deve usar pesos por nível e experiência
+
+🎨 UI/UX (OBRIGATÓRIO)
+
+
+
+Criar interface moderna e intuitiva:
+
+
+
+Cadastro de Técnico
+
+Etapa "Especialidades":
+
+Campo de busca inteligente
+
+Árvore expansível:
+
+
+
+Categoria → Subcategoria → Skills
+
+
+
+Exibição:
+
+
+
+Accordion lateral
+
+Checkboxes múltiplos
+
+Chips selecionados
+
+Busca em tempo real
+
+UX obrigatória:
+
+Filtro por categoria
+
+Pesquisa instantânea
+
+Seleção rápida por tags
+
+Mobile-first
+
+Interface estilo Notion / Stripe
+
+🤖 IA MATCHING (CRÍTICO)
+
+
+
+A IA deve usar:
+
+
+
+Skills selecionadas
+
+Nível de experiência
+
+Distância geográfica
+
+Avaliações
+
+Histórico de chamados
+
+Tempo de respostaScore de compatibilidade:
+
+Match Score =
+
+40% skill match
+
+20% nível de experiência
+
+15% localização
+
+15% avaliação
+
+10% disponibilidade
+
+⚙️ PAINEL ADMINISTRATIVO
+
+
+
+Criar painel para:
+
+
+
+Criar categorias
+
+Criar subcategorias
+
+Criar skills
+
+Editar hierarquia
+
+Desativar skills obsoletas
+
+Adicionar novas áreas sem deploy
+
+📦 SEED INICIAL (OBRIGATÓRIO)
+
+
+
+Inserir automaticamente estas categorias:
+
+
+
+📡 Telecom
+
+Fibra óptica
+
+GPON
+
+OTDR
+
+Redes ISP
+
+Rádio enlace
+
+💻 TI / SUPORTE
+
+Help Desk N1/N2
+
+Redes
+
+Windows Server
+
+Linux
+
+Microsoft 365
+
+Google Workspace
+
+🔌 ELETRÔNICA
+
+Bancada eletrônica
+
+SMD
+
+Diagnóstico de placas
+
+Fontes
+
+Reparo de equipamentos
+
+⚙️ AUTOMAÇÃO INDUSTRIAL
+
+CLP
+
+SCADA
+
+IHM
+
+Modbus
+
+Sensores industriais
+
+📹 SEGURANÇA ELETRÔNICA
+
+CFTV IP
+
+CFTV analógico
+
+Controle de acesso
+
+Alarmes☀️ ENERGIA SOLAR
+
+Instalação fotovoltaica
+
+Inversores
+
+Manutenção solar
+
+☁️ CLOUD & DEVOPS
+
+AWS
+
+Azure
+
+Docker
+
+Kubernetes
+
+CI/CD
+
+🏗 INFRAESTRUTURA
+
+Cabeamento estruturado
+
+Rack
+
+Data center
+
+🔍 BUSCA INTELIGENTE
+
+
+
+Implementar:
+
+
+
+Search global de skills
+
+Autocomplete
+
+Fuzzy matching
+
+Sugestão automática de especialidade durante cadastro
+
+📱 MOBILE FIRST
+
+
+
+Obrigatório:
+
+
+
+UI adaptada para técnicos em campo
+
+Uso rápido com 2–3 cliques
+
+Botões grandes
+
+Seleção simplificada
+
+🚀 RESULTADO ESPERADO
+
+
+
+Ao final, o sistema deve permitir:
+
+
+
+✔ Técnico se cadastrar e escolher especialidades em segundos
+
+✔ Empresa encontrar técnico ideal via IA
+
+✔ Sistema escalar novas áreas sem reescrita de código
+
+✔ Match inteligente baseado em dados reais
+
+✔ Estrutura preparada para marketplace nacional
+
+
+
+🧠 REGRA FINAL
+
+
+
+A arquitetura deve ser:
+
+
+
+Escalável (novas categorias sem impacto)
+
+Flexível (multi-skill por técnico)
+
+Inteligente (IA baseada em score)
+
+Simples para o usuário final
+
+Pronta para produção SaaS
