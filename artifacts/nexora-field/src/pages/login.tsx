@@ -48,8 +48,8 @@ export default function Login() {
 
   return (
     <div className="max-w-md mx-auto mt-16 p-8 bg-card rounded-xl border border-border shadow-lg">
-      <div className="flex justify-center mb-8">
-        <img src="/nexora-logo.png" alt="Nexora Field" className="w-[260px]" />
+      <div className="flex justify-center mb-8 pt-2">
+        <img src="/nexora-logo.png" alt="Nexora Field" className="w-[220px] h-auto" />
       </div>
 
       <h2 className="text-xl font-semibold text-center text-foreground mb-6">Entrar na plataforma</h2>

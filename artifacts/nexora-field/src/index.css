@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
@@ -14,6 +15,9 @@
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
   --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
 
   --color-primary: hsl(var(--primary));
   --color-primary-foreground: hsl(var(--primary-foreground));
@@ -34,52 +38,77 @@
   --radius: 0.5rem;
 }
 
+/* Nexora Brand Palette
+   Background : #1B2942  → hsl(215 42% 18%)
+   Blue       : #0A84FF  → hsl(212 100% 52%)
+   Green      : #8EDB65  → hsl(104 64% 63%)
+   White      : #FFFFFF
+   Gray       : #AAB4C3  → hsl(214 17% 72%)
+*/
+
 :root {
-  --background: 215 28% 17%; /* #161D27 lightened for light mode but we are dark first */
-  --foreground: 0 0% 98%;
-  --card: 215 28% 17%;
-  --card-foreground: 0 0% 98%;
-  --card-border: 215 28% 22%;
-  --popover: 215 28% 17%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 215 28% 22%;
-  --primary: 215 84% 50%; /* #1A6FE8 */
+  /* Base */
+  --background: 215 42% 18%;        /* #1B2942 */
+  --foreground: 0 0% 100%;          /* #FFFFFF */
+
+  /* Card */
+  --card: 215 42% 14%;
+  --card-foreground: 0 0% 100%;
+  --card-border: 215 42% 24%;
+
+  /* Popover */
+  --popover: 215 42% 14%;
+  --popover-foreground: 0 0% 100%;
+  --popover-border: 215 42% 24%;
+
+  /* Brand Blue #0A84FF */
+  --primary: 212 100% 52%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 105 52% 51%; /* #7DC242 */
-  --secondary-foreground: 0 0% 100%;
-  --muted: 215 28% 22%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 215 28% 25%;
-  --accent-foreground: 0 0% 98%;
+
+  /* Brand Green #8EDB65 */
+  --secondary: 104 64% 63%;
+  --secondary-foreground: 215 42% 12%;
+
+  /* Muted / Gray #AAB4C3 */
+  --muted: 215 42% 23%;
+  --muted-foreground: 214 17% 72%;   /* #AAB4C3 */
+
+  /* Accent */
+  --accent: 215 42% 26%;
+  --accent-foreground: 0 0% 100%;
+
+  /* Destructive */
   --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 215 28% 22%;
-  --input: 215 28% 22%;
-  --ring: 215 84% 50%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* UI */
+  --border: 215 42% 24%;
+  --input: 215 42% 22%;
+  --ring: 212 100% 52%;
 }
 
 .dark {
-  --background: 216 28% 7%; /* #0D1117 */
-  --foreground: 0 0% 98%;
-  --card: 215 28% 12%; /* #161D27 */
-  --card-foreground: 0 0% 98%;
-  --card-border: 215 28% 17%;
-  --popover: 215 28% 12%;
-  --popover-foreground: 0 0% 98%;
-  --popover-border: 215 28% 17%;
-  --primary: 215 84% 50%; /* #1A6FE8 */
+  --background: 215 42% 10%;
+  --foreground: 0 0% 100%;
+  --card: 215 42% 13%;
+  --card-foreground: 0 0% 100%;
+  --card-border: 215 42% 20%;
+  --popover: 215 42% 13%;
+  --popover-foreground: 0 0% 100%;
+  --popover-border: 215 42% 20%;
+  --primary: 212 100% 52%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 105 52% 51%; /* #7DC242 */
-  --secondary-foreground: 0 0% 100%;
-  --muted: 215 28% 17%;
-  --muted-foreground: 215 20% 65%;
-  --accent: 215 28% 20%;
-  --accent-foreground: 0 0% 98%;
+  --secondary: 104 64% 63%;
+  --secondary-foreground: 215 42% 12%;
+  --muted: 215 42% 18%;
+  --muted-foreground: 214 17% 65%;
+  --accent: 215 42% 22%;
+  --accent-foreground: 0 0% 100%;
   --destructive: 0 62% 30%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 215 28% 17%;
-  --input: 215 28% 17%;
-  --ring: 215 84% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 215 42% 20%;
+  --input: 215 42% 18%;
+  --ring: 212 100% 52%;
 }
 
 @layer base {
@@ -88,5 +117,20 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(215 42% 14%);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(215 42% 28%);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(212 100% 52% / 0.5);
   }
 }

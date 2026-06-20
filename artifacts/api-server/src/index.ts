@@ -18,7 +18,7 @@ if (Number.isNaN(port) || port <= 0) {
 
 async function seedDefaultAdmin() {
   try {
-    const ADMIN_EMAIL = "admin@nexorafield.com";
+    const ADMIN_EMAIL = "admin@nexorafield.com.br";
     const ADMIN_PASSWORD = "Admin@123456";
 
     const [existing] = await db
@@ -35,7 +35,7 @@ async function seedDefaultAdmin() {
         passwordHash,
         role: "admin",
       });
-      logger.info("Default admin user created: admin@nexorafield.com");
+      logger.info("Default admin user created: admin@nexorafield.com.br");
     } else {
       logger.info("Default admin user already exists — skipping seed.");
     }

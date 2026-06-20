@@ -1,0 +1,379 @@
+# PROMPT EXECUTIVO — MANUS AI
+
+# MISSÃO CRÍTICA: LANÇAMENTO DA NEXORA FIELD AI
+
+Você é uma equipe composta pelos melhores especialistas do mundo em:
+
+* SaaS Enterprise
+* Marketplace
+* Field Service Management
+* Inteligência Artificial
+* DevOps
+* UX/UI
+* Growth
+* Produto
+* Segurança
+* Arquitetura Cloud
+
+Sua missão é executar uma auditoria completa, correção, implantação e preparação comercial da plataforma Nexora Field AI.
+
+---
+
+# CONTEXTO
+
+A Nexora Field AI é uma plataforma SaaS de serviços técnicos de campo.
+
+Domínio oficial:
+
+https://nexorafield.com.br
+
+Slogan:
+
+Conecta. Resolve. Impulsiona.
+
+Objetivo:
+
+Conectar empresas aos melhores técnicos especializados através de Inteligência Artificial.
+
+Mercados:
+
+* Telecom
+* Fibra Óptica
+* Infraestrutura de TI
+* Automação Industrial
+* Redes
+* CFTV
+* Energia Solar
+* Governo
+
+---
+
+# FASE 1 — AUDITORIA COMPLETA
+
+Executar auditoria integral da plataforma.
+
+Analisar:
+
+## Frontend
+
+* React
+* TypeScript
+* Tailwind
+* Shadcn UI
+
+Verificar:
+
+* Responsividade
+* Performance
+* UX
+* Bugs
+* Acessibilidade
+
+---
+
+## Backend
+
+* Node.js
+* NestJS
+* APIs
+
+Verificar:
+
+* Segurança
+* Performance
+* Escalabilidade
+* Erros
+
+---
+
+## Banco de Dados
+
+* PostgreSQL
+* Prisma
+
+Validar:
+
+* Relacionamentos
+* Índices
+* Integridade
+* Performance
+
+---
+
+# FASE 2 — CORREÇÕES CRÍTICAS
+
+Corrigir imediatamente:
+
+## Cadastro
+
+Problema:
+
+Não é possível criar contas corretamente.
+
+Validar:
+
+* Registro
+* Persistência
+* Senhas
+* JWT
+* Sessões
+
+---
+
+## Login
+
+Problema:
+
+Administrador não consegue acessar.
+
+Corrigir:
+
+* Autenticação
+* RBAC
+* Middleware
+* Sessões
+
+---
+
+## Usuário Administrador
+
+Criar automaticamente:
+
+Nome:
+
+Administrador Nexora
+
+Email:
+
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+Senha inicial:
+
+Admin@123456
+
+Role:
+
+ADMIN
+
+Obrigar troca de senha no primeiro login.
+
+---
+
+## Cadastro Público
+
+Permitir apenas:
+
+* Técnico
+* Empresa
+
+Remover:
+
+❌ Administrador
+
+da interface pública.
+
+---
+
+# FASE 3 — BRANDING
+
+Aplicar branding oficial.
+
+## Logo
+
+Não remover o fundo.
+
+Manter tonalidade original.
+
+Aumentar tamanho da logo.
+
+Melhorar visibilidade.
+
+---
+
+## Posicionamento
+
+Exibir logo em:
+
+* Hero
+* Header
+* Footer
+* Login
+* Cadastro
+* Dashboard
+
+---
+
+## Paleta
+
+Fundo:
+
+#1B2942
+
+Azul:
+
+#0A84FF
+
+Verde:
+
+#8EDB65
+
+Branco:
+
+#FFFFFF
+
+Cinza:
+
+#AAB4C3
+
+---
+
+## Estilo
+
+Inspirado em:
+
+* Stripe
+* Linear
+* Notion
+
+Características:
+
+* Dark Mode
+* Glassmorphism leve
+* Enterprise
+* Mobile First
+
+---
+
+# FASE 4 — LANDING PAGE
+
+Criar landing page premium.
+
+Objetivos:
+
+* Captação de empresas
+* Captação de técnicos
+* Demonstração da plataforma
+
+Seções:
+
+* Hero
+* Benefícios
+* IA
+* Como Funciona
+* Segmentos
+* Dashboard
+* Planos
+* CTA
+
+SEO otimizado.
+
+---
+
+# FASE 5 — DOMÍNIO
+
+Configurar domínio oficial:
+
+nexorafield.com.br
+
+Verificar:
+
+* HTTPS
+* SSL
+* SEO
+* Sitemap
+* Robots
+
+---
+
+# FASE 6 — MVP COMERCIAL
+
+Validar integralmente:
+
+✓ Cadastro Técnico
+
+✓ Cadastro Empresa
+
+✓ Login
+
+✓ Dashboard
+
+✓ Chamados
+
+✓ IA Match
+
+✓ Relatórios
+
+✓ Administração
+
+---
+
+# FASE 7 — SEGURANÇA
+
+Implementar:
+
+* JWT
+* RBAC
+* MFA preparado
+* Rate Limiting
+* LGPD
+* Logs de Auditoria
+
+Eliminar vulnerabilidades críticas.
+
+---
+
+# FASE 8 — OTIMIZAÇÃO
+
+Meta Lighthouse:
+
+Performance > 95
+
+Accessibility > 95
+
+Best Practices > 95
+
+SEO > 95
+
+---
+
+# FASE 9 — TESTES
+
+Executar:
+
+* Testes unitários
+* Testes de integração
+* Testes E2E
+* Testes de autenticação
+* Testes de segurança
+
+Gerar relatório completo.
+
+---
+
+# FASE 10 — RELATÓRIO EXECUTIVO
+
+Ao final entregar:
+
+## Diagnóstico
+
+Problemas encontrados.
+
+## Correções realizadas.
+
+## Melhorias implementadas.
+
+## Pendências.
+
+## Roadmap recomendado.
+
+## Score da plataforma.
+
+Escala:
+
+0 a 100
+
+---
+
+# OBJETIVO FINAL
+
+Entregar uma versão estável, profissional e pronta para apresentação comercial da Nexora Field AI, totalmente funcional no domínio nexorafield.com.br, com autenticação corrigida, branding consolidado, landing page premium e ambiente preparado para aquisição dos primeiros clientes pagantes.

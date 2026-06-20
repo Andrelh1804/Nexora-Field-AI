@@ -1,0 +1,178 @@
+# CONFIGURAÇÃO OFICIAL DE DOMÍNIO — NEXORA FIELD AI
+
+## Domínio Principal
+
+nexorafield.com.br
+
+Este será o domínio oficial da plataforma.
+
+Configurar toda a aplicação para utilizar este domínio como referência principal.
+
+---
+
+# URLs Oficiais
+
+## Portal Principal
+
+https://nexorafield.com.br
+
+---
+
+## Login
+
+https://nexorafield.com.br/login
+
+---
+
+## Cadastro
+
+https://nexorafield.com.br/register
+
+---
+
+## Dashboard
+
+https://nexorafield.com.br/dashboard
+
+---
+
+## Área do Técnico
+
+https://nexorafield.com.br/technician
+
+---
+
+## Área da Empresa
+
+https://nexorafield.com.br/company
+
+---
+
+## Área Administrativa
+
+https://nexorafield.com.br/admin
+
+---
+
+# E-mails Corporativos
+
+Configurar estrutura para:
+
+[contato@nexorafield.com.br](mailto:contato@nexorafield.com.br)
+
+[comercial@nexorafield.com.br](mailto:comercial@nexorafield.com.br)
+
+[suporte@nexorafield.com.br](mailto:suporte@nexorafield.com.br)
+
+[financeiro@nexorafield.com.br](mailto:financeiro@nexorafield.com.br)
+
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+[naoresponda@nexorafield.com.br](mailto:naoresponda@nexorafield.com.br)
+
+---
+
+# Usuário Administrador Padrão
+
+Nome:
+Administrador Nexora
+
+E-mail:
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+Senha inicial:
+Admin@123456
+
+Role:
+ADMIN
+
+Obrigar alteração de senha no primeiro acesso.
+
+---
+
+# SEO
+
+Configurar:
+
+Título:
+
+Nexora Field AI | Plataforma Inteligente de Serviços Técnicos
+
+Descrição:
+
+Conecte empresas aos melhores técnicos especializados através da Inteligência Artificial. Gestão de chamados, SLA, geolocalização, relatórios automáticos e marketplace de serviços técnicos.
+
+Palavras-chave:
+
+field service
+
+serviços técnicos
+
+telecom
+
+fibra óptica
+
+automação industrial
+
+infraestrutura de TI
+
+marketplace de técnicos
+
+gestão de chamados
+
+---
+
+# Branding
+
+Nome da plataforma:
+
+Nexora Field AI
+
+Slogan:
+
+Conecta. Resolve. Impulsiona.
+
+Domínio oficial:
+
+https://nexorafield.com.br
+
+Utilizar em:
+
+* Landing Page
+* Login
+* Cadastro
+* Dashboard
+* Rodapé
+* E-mails
+* PDFs
+* Relatórios
+* Contratos
+* Certificados
+
+---
+
+# SSL
+
+Configurar HTTPS obrigatório.
+
+Redirecionar:
+
+http://nexorafield.com.br
+
+para
+
+https://nexorafield.com.br
+
+---
+
+# Deploy
+
+Preparar para:
+
+* Cloudflare
+* Replit Deployments
+* VPS futura
+* Docker
+* Kubernetes
+
+Sem necessidade de alteração de código ao migrar de infraestrutura.
