@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router, type Response } from "express";
 import { GoogleGenAI } from "@google/genai";
-import { requireAuth } from "../middleware/auth";
+import { requireAuth, type AuthRequest } from "../middlewares/auth";
 import { db } from "@workspace/db";
 import { copilotSessionsTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
@@ -9,7 +9,6 @@ const router = Router();
 
 const ai = new GoogleGenAI({
   apiKey: process.env["AI_INTEGRATIONS_GEMINI_API_KEY"] || process.env["GEMINI_API_KEY"] || "",
-  baseURL: process.env["AI_INTEGRATIONS_GEMINI_BASE_URL"],
 });
 
 const SYSTEM_PROMPT = `Você é o Nexora Copilot, um assistente técnico especialista em:
@@ -29,19 +28,19 @@ Princípios:
 - Organize respostas longas com tópicos/listas
 - Pergunte por mais detalhes quando necessário para dar um diagnóstico preciso`;
 
-router.get("/sessions", requireAuth, async (req, res) => {
+router.get("/sessions", requireAuth, async (req: AuthRequest, res: Response) => {
   const sessions = await db.select()
     .from(copilotSessionsTable)
-    .where(eq(copilotSessionsTable.userId, req.user!.id))
+    .where(eq(copilotSessionsTable.userId, req.userId!))
     .orderBy(desc(copilotSessionsTable.updatedAt))
     .limit(20);
   res.json(sessions);
 });
 
-router.post("/sessions", requireAuth, async (req, res) => {
+router.post("/sessions", requireAuth, async (req: AuthRequest, res: Response) => {
   const { specialty } = req.body;
   const [session] = await db.insert(copilotSessionsTable).values({
-    userId: req.user!.id,
+    userId: req.userId!,
     title: "Nova conversa",
     specialty: specialty || null,
     messages: [],
@@ -49,7 +48,7 @@ router.post("/sessions", requireAuth, async (req, res) => {
   res.json(session);
 });
 
-router.post("/sessions/:id/chat", requireAuth, async (req, res) => {
+router.post("/sessions/:id/chat", requireAuth, async (req: AuthRequest, res: Response) => {
   const sessionId = Number(req.params["id"]);
   const { message } = req.body;
 
@@ -61,7 +60,7 @@ router.post("/sessions/:id/chat", requireAuth, async (req, res) => {
   const [session] = await db.select().from(copilotSessionsTable)
     .where(eq(copilotSessionsTable.id, sessionId));
 
-  if (!session || session.userId !== req.user!.id) {
+  if (!session || session.userId !== req.userId!) {
     res.status(404).json({ error: "Session not found" });
     return;
   }
@@ -104,7 +103,7 @@ router.post("/sessions/:id/chat", requireAuth, async (req, res) => {
   }
 });
 
-router.delete("/sessions/:id", requireAuth, async (req, res) => {
+router.delete("/sessions/:id", requireAuth, async (req: AuthRequest, res: Response) => {
   const sessionId = Number(req.params["id"]);
   await db.delete(copilotSessionsTable).where(eq(copilotSessionsTable.id, sessionId));
   res.json({ ok: true });

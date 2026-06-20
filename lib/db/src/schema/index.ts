@@ -23,3 +23,8 @@ export * from "./copilot-sessions";
 export * from "./knowledge-base";
 export * from "./digital-signatures";
 export * from "./mobile-devices";
+export * from "./crm";
+export * from "./academy";
+export * from "./community";
+export * from "./contracts";
+export * from "./api-keys";

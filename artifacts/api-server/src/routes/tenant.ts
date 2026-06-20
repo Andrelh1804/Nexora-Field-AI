@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { requireAuth, requireRole } from "../middleware/auth";
+import { Router, type Response } from "express";
+import { requireAuth, requireRole, type AuthRequest } from "../middlewares/auth";
 import { db } from "@workspace/db";
 import { tenantsTable, tenantBrandingTable } from "@workspace/db";
 import { eq } from "drizzle-orm";

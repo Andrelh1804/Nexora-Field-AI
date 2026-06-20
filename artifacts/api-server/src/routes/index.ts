@@ -16,6 +16,18 @@ import plansRouter from "./plans";
 import walletsRouter from "./wallets";
 import aiRouter from "./ai";
 import dispatchRouter from "./dispatch";
+import visionRouter from "./vision";
+import copilotRouter from "./copilot";
+import knowledgeRouter from "./knowledge";
+import auditRouter from "./audit";
+import tenantRouter from "./tenant";
+import signaturesRouter from "./signatures";
+import crmRouter from "./crm";
+import academyRouter from "./academy";
+import communityRouter from "./community";
+import apiKeysRouter from "./api-keys";
+import contractsRouter from "./contracts";
+import executiveRouter from "./executive";
 
 const router: IRouter = Router();
 
@@ -36,5 +48,17 @@ router.use(plansRouter);
 router.use(walletsRouter);
 router.use(aiRouter);
 router.use(dispatchRouter);
+router.use(visionRouter);
+router.use(copilotRouter);
+router.use(knowledgeRouter);
+router.use(auditRouter);
+router.use(tenantRouter);
+router.use(signaturesRouter);
+router.use(crmRouter);
+router.use(academyRouter);
+router.use(communityRouter);
+router.use(apiKeysRouter);
+router.use(contractsRouter);
+router.use(executiveRouter);
 
 export default router;

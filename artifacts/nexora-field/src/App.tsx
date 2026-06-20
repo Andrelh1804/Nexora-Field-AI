@@ -22,6 +22,15 @@ import Ranking from "@/pages/ranking";
 import Planos from "@/pages/planos";
 import Carteira from "@/pages/carteira";
 import Notificacoes from "@/pages/notificacoes";
+import Academy from "@/pages/academy";
+import Community from "@/pages/community";
+import Crm from "@/pages/crm";
+import Contratos from "@/pages/contratos";
+import Developer from "@/pages/developer";
+import Executive from "@/pages/executive";
+import Copilot from "@/pages/copilot";
+import Visao from "@/pages/visao";
+import Conhecimento from "@/pages/conhecimento";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30000, retry: 1 } },
@@ -64,6 +73,9 @@ function Router() {
         <Route path="/ranking" component={Ranking} />
         <Route path="/planos" component={Planos} />
         <Route path="/mapa" component={Mapa} />
+        <Route path="/academy" component={Academy} />
+        <Route path="/comunidade" component={Community} />
+        <Route path="/conhecimento" component={Conhecimento} />
         <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
         <Route path="/chamados" component={() => <ProtectedRoute component={Chamados} />} />
         <Route path="/chamados/novo" component={() => <ProtectedRoute component={ChamadoNovo} roles={["company"]} />} />
@@ -74,6 +86,12 @@ function Router() {
         <Route path="/admin" component={() => <ProtectedRoute component={Admin} roles={["admin"]} />} />
         <Route path="/carteira" component={() => <ProtectedRoute component={Carteira} />} />
         <Route path="/notificacoes" component={() => <ProtectedRoute component={Notificacoes} />} />
+        <Route path="/copilot" component={() => <ProtectedRoute component={Copilot} />} />
+        <Route path="/visao" component={() => <ProtectedRoute component={Visao} />} />
+        <Route path="/contratos" component={() => <ProtectedRoute component={Contratos} />} />
+        <Route path="/crm" component={() => <ProtectedRoute component={Crm} roles={["admin"]} />} />
+        <Route path="/developer" component={() => <ProtectedRoute component={Developer} />} />
+        <Route path="/executive" component={() => <ProtectedRoute component={Executive} roles={["admin"]} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { GoogleGenAI } from "@google/genai";
-import { requireAuth } from "../middleware/auth";
+import { requireAuth, type AuthRequest } from "../middlewares/auth";
+import { type Response } from "express";
 import { db } from "@workspace/db";
 import { visionAnalysisTable } from "@workspace/db";
 import { eq, desc } from "drizzle-orm";
@@ -9,7 +10,7 @@ const router = Router();
 
 const ai = new GoogleGenAI({
   apiKey: process.env["AI_INTEGRATIONS_GEMINI_API_KEY"] || process.env["GEMINI_API_KEY"] || "",
-  baseURL: process.env["AI_INTEGRATIONS_GEMINI_BASE_URL"],
+  
 });
 
 const EQUIPMENT_LIST = [
@@ -25,7 +26,7 @@ const DEFECT_LIST = [
   "superaquecimento", "pó excessivo", "umidade"
 ];
 
-router.post("/analyze", requireAuth, async (req, res) => {
+router.post("/analyze", requireAuth, async (req: AuthRequest, res: Response) => {
   const { imageBase64, imageUrl, mimeType = "image/jpeg", serviceOrderId, notes } = req.body;
 
   if (!imageBase64 && !imageUrl) {
@@ -93,7 +94,7 @@ Responda APENAS com o JSON, sem markdown, sem explicações.`;
     }
 
     const [analysis] = await db.insert(visionAnalysisTable).values({
-      userId: req.user!.id,
+      userId: req.userId!,
       serviceOrderId: serviceOrderId ? Number(serviceOrderId) : undefined,
       imageUrl: imageUrl || "base64",
       equipmentDetected: parsed.equipmentDetected,
@@ -115,10 +116,10 @@ Responda APENAS com o JSON, sem markdown, sem explicações.`;
   }
 });
 
-router.get("/history", requireAuth, async (req, res) => {
+router.get("/history", requireAuth, async (req: AuthRequest, res: Response) => {
   const analyses = await db.select()
     .from(visionAnalysisTable)
-    .where(eq(visionAnalysisTable.userId, req.user!.id))
+    .where(eq(visionAnalysisTable.userId, req.userId!))
     .orderBy(desc(visionAnalysisTable.createdAt))
     .limit(20);
   res.json(analyses);

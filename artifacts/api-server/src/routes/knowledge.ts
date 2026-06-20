@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { requireAuth, requireRole } from "../middleware/auth";
+import { Router, type Response } from "express";
+import { requireAuth, requireRole, type AuthRequest } from "../middlewares/auth";
 import { db } from "@workspace/db";
 import { knowledgeDocumentsTable } from "@workspace/db";
 import { eq, desc, ilike, or, sql } from "drizzle-orm";
@@ -50,12 +50,12 @@ router.get("/:id", async (req, res) => {
   res.json({ ...doc, views: doc.views + 1 });
 });
 
-router.post("/", requireAuth, requireRole("admin"), async (req, res) => {
+router.post("/", requireAuth, requireRole("admin"), async (req: AuthRequest, res: Response) => {
   const { title, category, specialty, content, tags } = req.body;
   const [doc] = await db.insert(knowledgeDocumentsTable).values({
     title, category, specialty, content,
     tags: tags || [],
-    authorId: req.user!.id,
+    authorId: req.userId!,
     published: true,
   }).returning();
   res.json(doc);

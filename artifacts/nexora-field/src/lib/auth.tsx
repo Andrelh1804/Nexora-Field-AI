@@ -12,6 +12,10 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 setAuthTokenGetter(() => localStorage.getItem("nexora_token"));
 
+export function getAuthToken(): string | null {
+  return localStorage.getItem("nexora_token");
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setTokenState] = useState<string | null>(localStorage.getItem("nexora_token"));
 
