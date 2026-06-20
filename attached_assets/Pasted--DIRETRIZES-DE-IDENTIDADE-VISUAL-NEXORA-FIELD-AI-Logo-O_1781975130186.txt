@@ -1,0 +1,200 @@
+# DIRETRIZES DE IDENTIDADE VISUAL — NEXORA FIELD AI
+
+## Logo Oficial
+
+Utilizar a logo oficial da Nexora Field AI em todas as páginas da plataforma.
+
+### Regras obrigatórias
+
+* NÃO remover o fundo da logo.
+* Manter o fundo na tonalidade original da marca.
+* Preservar integralmente as cores, gradientes e elementos visuais.
+* Não alterar proporções.
+* Não simplificar o ícone.
+* Não modificar tipografia.
+
+### Ajustes obrigatórios
+
+* Aumentar o tamanho da logo em aproximadamente 40% a 60% em relação ao layout atual.
+* Melhorar a visibilidade da marca em telas desktop e mobile.
+* Garantir excelente legibilidade em resoluções Full HD, 2K e 4K.
+
+### Posicionamento estratégico
+
+A logo deve aparecer em locais de maior visibilidade:
+
+#### Hero Section
+
+* Logo centralizada acima do título principal.
+* Tamanho ampliado.
+* Destaque visual premium.
+
+#### Header
+
+* Logo posicionada no canto superior esquerdo.
+* Sempre visível durante a navegação.
+
+#### Rodapé
+
+* Logo completa com slogan.
+
+#### Dashboard
+
+* Logo presente na barra lateral.
+* Versão completa em desktop.
+* Versão compacta em dispositivos móveis.
+
+#### Tela de Login
+
+* Logo centralizada.
+* Destaque principal da página.
+
+#### Tela de Cadastro
+
+* Logo centralizada acima do formulário.
+
+---
+
+# Slogan Oficial
+
+Utilizar abaixo da logo:
+
+Conecta. Resolve. Impulsiona.
+
+Alternativa corporativa:
+
+O Sistema Operacional Inteligente para Serviços de Campo.
+
+---
+
+# Paleta Oficial
+
+## Fundo Principal
+
+#1B2942
+
+Utilizar como cor predominante em:
+
+* Hero Section
+* Header
+* Footer
+* Login
+* Dashboard
+
+---
+
+## Azul Institucional
+
+#0A84FF
+
+Aplicar em:
+
+* Botões principais
+* Links
+* Destaques
+* Indicadores
+
+---
+
+## Verde Institucional
+
+#8EDB65
+
+Aplicar em:
+
+* CTAs
+* Status positivos
+* Métricas
+* Conversões
+
+---
+
+## Branco
+
+#FFFFFF
+
+Aplicar em:
+
+* Títulos
+* Elementos de destaque
+
+---
+
+## Cinza
+
+#AAB4C3
+
+Aplicar em:
+
+* Textos secundários
+* Descrições
+* Legendas
+
+---
+
+# Direção Visual
+
+Inspirar em:
+
+* Stripe
+* Linear
+* Notion
+* ServiceNow
+* Salesforce
+
+Características:
+
+* Design Enterprise Premium
+* Dark Mode Nativo
+* Interface Moderna
+* Alta Performance
+* Mobile First
+* Responsiva
+
+---
+
+# Hero Section
+
+Estrutura:
+
+LOGO AMPLIADA
+
+Título Principal
+
+Subtítulo
+
+Botões CTA
+
+Mockup do Dashboard
+
+O mockup do dashboard deve ficar à direita.
+
+A logo deve ser o primeiro elemento visual percebido pelo usuário.
+
+---
+
+# Glassmorphism
+
+Aplicar de forma leve:
+
+* Cards
+* Estatísticas
+* Dashboards
+* Painéis
+
+Sem comprometer legibilidade.
+
+---
+
+# Objetivo Visual
+
+Transmitir:
+
+* Tecnologia
+* Inteligência Artificial
+* Escalabilidade
+* Confiabilidade
+* Mercado Enterprise
+* Inovação
+
+A experiência visual deve posicionar a Nexora Field AI acima de marketplaces tradicionais, transmitindo percepção semelhante a plataformas corporativas globais de alto valor.

@@ -1,0 +1,311 @@
+# LANDING PAGE — NEXORA FIELD AI
+
+## HERO SECTION
+
+### Título Principal
+
+# A Plataforma Inteligente que Conecta Empresas aos Melhores Técnicos de Campo
+
+### Subtítulo
+
+Automatize a contratação, gestão e execução de serviços técnicos com Inteligência Artificial. Encontre profissionais qualificados em telecom, fibra óptica, infraestrutura de TI, automação industrial, CFTV e manutenção em minutos.
+
+### Botões
+
+[ Solicitar Demonstração ]
+
+[ Sou Técnico ]
+
+### Estatísticas
+
++50.000 Técnicos Especializados
+
++10.000 Empresas Conectadas
+
++1 Milhão de Chamados Gerenciados
+
+99,9% Disponibilidade
+
+---
+
+## SEÇÃO PROBLEMA
+
+### Sua operação ainda depende de planilhas, grupos de WhatsApp e processos manuais?
+
+Empresas perdem tempo e dinheiro tentando localizar profissionais qualificados para executar serviços em campo.
+
+Problemas comuns:
+
+❌ Dificuldade para encontrar técnicos
+
+❌ Falta de controle operacional
+
+❌ SLA sem monitoramento
+
+❌ Relatórios inconsistentes
+
+❌ Alto custo operacional
+
+❌ Pouca visibilidade sobre resultados
+
+---
+
+## SEÇÃO SOLUÇÃO
+
+### Conheça a Nexora Field AI
+
+A primeira plataforma brasileira que combina Marketplace de Técnicos, Gestão Operacional e Inteligência Artificial em uma única solução.
+
+Recursos:
+
+✅ Match Inteligente por IA
+
+✅ Geolocalização em Tempo Real
+
+✅ Gestão de Chamados
+
+✅ Relatórios Automáticos
+
+✅ Aplicativo Android e iOS
+
+✅ WhatsApp Integrado
+
+✅ Dashboard Executivo
+
+✅ Controle de SLA
+
+---
+
+## SEÇÃO IA
+
+### Inteligência Artificial Aplicada à Operação
+
+#### AI Match
+
+Identifica automaticamente os profissionais mais qualificados para cada serviço.
+
+#### AI Dispatcher
+
+Distribui chamados de forma automática e inteligente.
+
+#### AI Vision
+
+Analisa fotos e identifica equipamentos, falhas e inconformidades.
+
+#### AI Reports
+
+Gera relatórios técnicos completos em segundos.
+
+#### AI Copilot
+
+Assistente especializado para técnicos e gestores.
+
+---
+
+## SEÇÃO COMO FUNCIONA
+
+### Simples. Rápido. Inteligente.
+
+### 1
+
+A empresa cria o chamado.
+
+### 2
+
+A IA identifica os melhores técnicos.
+
+### 3
+
+O técnico aceita o serviço.
+
+### 4
+
+O atendimento é executado.
+
+### 5
+
+A IA gera o relatório automaticamente.
+
+### 6
+
+O pagamento é liberado.
+
+---
+
+## SEÇÃO SEGMENTOS
+
+### Soluções para diversos mercados
+
+Telecom
+
+Provedores de Internet
+
+Infraestrutura de TI
+
+Automação Industrial
+
+Energia Solar
+
+CFTV
+
+Datacenters
+
+Órgãos Públicos
+
+---
+
+## SEÇÃO BENEFÍCIOS
+
+### Para Empresas
+
+Redução de custos operacionais
+
+Maior velocidade de atendimento
+
+Controle total dos chamados
+
+Gestão de SLA
+
+Relatórios automáticos
+
+Indicadores em tempo real
+
+---
+
+### Para Técnicos
+
+Mais oportunidades de trabalho
+
+Pagamentos organizados
+
+Visibilidade nacional
+
+Certificações
+
+Aplicativo completo
+
+Ranking profissional
+
+---
+
+## SEÇÃO DASHBOARD
+
+### Gestão Completa em um Único Painel
+
+Monitoramento em tempo real
+
+Financeiro
+
+Indicadores operacionais
+
+Mapa de técnicos
+
+Performance de equipes
+
+Análises por IA
+
+---
+
+## SEÇÃO PLANOS
+
+### Starter
+
+R$ 199/mês
+
+Até 20 chamados
+
+Dashboard básico
+
+Suporte padrão
+
+---
+
+### Professional
+
+R$ 599/mês
+
+Até 100 chamados
+
+IA Match
+
+WhatsApp
+
+Relatórios IA
+
+---
+
+### Business
+
+R$ 1.499/mês
+
+Chamados ilimitados
+
+IA Vision
+
+Dashboard avançado
+
+API
+
+White Label básico
+
+---
+
+### Enterprise
+
+Sob consulta
+
+Multiempresa
+
+White Label completo
+
+SSO
+
+SLA corporativo
+
+Suporte dedicado
+
+---
+
+## SEÇÃO DEPOIMENTOS
+
+"A Nexora reduziu nosso tempo de contratação de técnicos em mais de 70%."
+
+Diretor de Operações
+
+---
+
+"A plataforma transformou nossa gestão de serviços de campo."
+
+Gerente de Infraestrutura
+
+---
+
+## CTA FINAL
+
+### Pronto para modernizar sua operação?
+
+Conecte sua empresa à maior rede inteligente de técnicos especializados do Brasil.
+
+[ Solicitar Demonstração ]
+
+[ Falar com Especialista ]
+
+---
+
+## RODAPÉ
+
+Nexora Field AI
+
+Conecta. Resolve. Impulsiona.
+
+Marketplace Inteligente de Serviços Técnicos
+
+Contato
+
+Comercial
+
+Suporte
+
+Política de Privacidade
+
+Termos de Uso
