@@ -25,11 +25,17 @@ const staggerContainer = {
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hasSession, setHasSession] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("nexora_token");
+    setHasSession(!!token);
   }, []);
 
   return (
@@ -49,10 +55,22 @@ export default function Home() {
           </nav>
           
           <div className="hidden lg:flex items-center gap-4">
-            <a href="/login"><Button variant="ghost" className="text-white hover:bg-white/10">Login</Button></a>
-            <a href="/register"><Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_20px_rgba(142,219,101,0.3)]">
-              Solicitar Demonstração
-            </Button></a>
+            {hasSession ? (
+              <a href="/dashboard">
+                <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_20px_rgba(142,219,101,0.4)] flex items-center gap-2">
+                  <span className="flex h-2 w-2 rounded-full bg-secondary-foreground/70 animate-pulse"></span>
+                  Acessar Dashboard
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </a>
+            ) : (
+              <>
+                <a href="/login"><Button variant="ghost" className="text-white hover:bg-white/10">Login</Button></a>
+                <a href="/register"><Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-[0_0_20px_rgba(142,219,101,0.3)]">
+                  Solicitar Demonstração
+                </Button></a>
+              </>
+            )}
           </div>
           
           <button className="lg:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -60,6 +78,27 @@ export default function Home() {
           </button>
         </div>
       </header>
+
+      {/* Session Banner */}
+      <AnimatePresence>
+        {hasSession && (
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -40 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="fixed top-[60px] md:top-[76px] left-0 w-full z-40 flex justify-center px-4 pointer-events-none"
+          >
+            <div className="pointer-events-auto flex items-center gap-3 bg-secondary/10 border border-secondary/30 backdrop-blur-md rounded-full px-5 py-2.5 shadow-[0_4px_24px_rgba(142,219,101,0.15)]">
+              <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse shrink-0"></span>
+              <span className="text-sm text-white/90">Você já tem uma sessão ativa.</span>
+              <a href="/dashboard" className="text-sm font-semibold text-secondary hover:text-secondary/80 transition-colors flex items-center gap-1">
+                Acessar Dashboard <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -76,8 +115,19 @@ export default function Home() {
               <a href="#mercados" className="text-muted-foreground hover:text-white p-2" onClick={() => setMobileMenuOpen(false)}>Mercados</a>
               <a href="#planos" className="text-muted-foreground hover:text-white p-2" onClick={() => setMobileMenuOpen(false)}>Planos</a>
               <div className="h-px bg-white/10 my-2"></div>
-              <a href="/login" className="w-full"><Button variant="outline" className="w-full justify-center border-white/20">Login</Button></a>
-              <a href="/register" className="w-full"><Button className="w-full justify-center bg-secondary text-secondary-foreground hover:bg-secondary/90">Solicitar Demonstração</Button></a>
+              {hasSession ? (
+                <a href="/dashboard" className="w-full">
+                  <Button className="w-full justify-center bg-secondary text-secondary-foreground hover:bg-secondary/90 gap-2">
+                    <span className="flex h-2 w-2 rounded-full bg-secondary-foreground/70 animate-pulse"></span>
+                    Acessar Dashboard
+                  </Button>
+                </a>
+              ) : (
+                <>
+                  <a href="/login" className="w-full"><Button variant="outline" className="w-full justify-center border-white/20">Login</Button></a>
+                  <a href="/register" className="w-full"><Button className="w-full justify-center bg-secondary text-secondary-foreground hover:bg-secondary/90">Solicitar Demonstração</Button></a>
+                </>
+              )}
             </div>
           </motion.div>
         )}
