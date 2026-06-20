@@ -30,6 +30,7 @@ import Developer from "@/pages/developer";
 import Executive from "@/pages/executive";
 import Copilot from "@/pages/copilot";
 import Visao from "@/pages/visao";
+import Onboarding from "@/pages/onboarding";
 import Conhecimento from "@/pages/conhecimento";
 
 const queryClient = new QueryClient({
@@ -65,36 +66,41 @@ function ProtectedRoute({ component: Component, roles }: { component: React.Comp
 
 function Router() {
   return (
-    <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/ranking" component={Ranking} />
-        <Route path="/planos" component={Planos} />
-        <Route path="/mapa" component={Mapa} />
-        <Route path="/academy" component={Academy} />
-        <Route path="/comunidade" component={Community} />
-        <Route path="/conhecimento" component={Conhecimento} />
-        <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
-        <Route path="/chamados" component={() => <ProtectedRoute component={Chamados} />} />
-        <Route path="/chamados/novo" component={() => <ProtectedRoute component={ChamadoNovo} roles={["company"]} />} />
-        <Route path="/chamados/:id" component={() => <ProtectedRoute component={ChamadoDetail} />} />
-        <Route path="/tecnicos" component={() => <ProtectedRoute component={Tecnicos} />} />
-        <Route path="/tecnicos/:id" component={() => <ProtectedRoute component={TecnicoProfile} />} />
-        <Route path="/perfil" component={() => <ProtectedRoute component={Perfil} />} />
-        <Route path="/admin" component={() => <ProtectedRoute component={Admin} roles={["admin"]} />} />
-        <Route path="/carteira" component={() => <ProtectedRoute component={Carteira} />} />
-        <Route path="/notificacoes" component={() => <ProtectedRoute component={Notificacoes} />} />
-        <Route path="/copilot" component={() => <ProtectedRoute component={Copilot} />} />
-        <Route path="/visao" component={() => <ProtectedRoute component={Visao} />} />
-        <Route path="/contratos" component={() => <ProtectedRoute component={Contratos} />} />
-        <Route path="/crm" component={() => <ProtectedRoute component={Crm} roles={["admin"]} />} />
-        <Route path="/developer" component={() => <ProtectedRoute component={Developer} />} />
-        <Route path="/executive" component={() => <ProtectedRoute component={Executive} roles={["admin"]} />} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
+    <Switch>
+      <Route path="/onboarding" component={Onboarding} />
+      <Route component={() => (
+        <Layout>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/ranking" component={Ranking} />
+            <Route path="/planos" component={Planos} />
+            <Route path="/mapa" component={Mapa} />
+            <Route path="/academy" component={Academy} />
+            <Route path="/comunidade" component={Community} />
+            <Route path="/conhecimento" component={Conhecimento} />
+            <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
+            <Route path="/chamados" component={() => <ProtectedRoute component={Chamados} />} />
+            <Route path="/chamados/novo" component={() => <ProtectedRoute component={ChamadoNovo} roles={["company"]} />} />
+            <Route path="/chamados/:id" component={() => <ProtectedRoute component={ChamadoDetail} />} />
+            <Route path="/tecnicos" component={() => <ProtectedRoute component={Tecnicos} />} />
+            <Route path="/tecnicos/:id" component={() => <ProtectedRoute component={TecnicoProfile} />} />
+            <Route path="/perfil" component={() => <ProtectedRoute component={Perfil} />} />
+            <Route path="/admin" component={() => <ProtectedRoute component={Admin} roles={["admin"]} />} />
+            <Route path="/carteira" component={() => <ProtectedRoute component={Carteira} />} />
+            <Route path="/notificacoes" component={() => <ProtectedRoute component={Notificacoes} />} />
+            <Route path="/copilot" component={() => <ProtectedRoute component={Copilot} />} />
+            <Route path="/visao" component={() => <ProtectedRoute component={Visao} />} />
+            <Route path="/contratos" component={() => <ProtectedRoute component={Contratos} />} />
+            <Route path="/crm" component={() => <ProtectedRoute component={Crm} roles={["admin"]} />} />
+            <Route path="/developer" component={() => <ProtectedRoute component={Developer} />} />
+            <Route path="/executive" component={() => <ProtectedRoute component={Executive} roles={["admin"]} />} />
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
+      )} />
+    </Switch>
   );
 }
 

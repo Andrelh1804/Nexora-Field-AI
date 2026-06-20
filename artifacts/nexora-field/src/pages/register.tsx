@@ -26,7 +26,7 @@ export default function Register() {
       const response = await registerMutation.mutateAsync({ data: { name, email, password, role } });
       setToken(response.token);
       toast({ title: "Sucesso", description: "Conta criada com sucesso." });
-      setLocation("/dashboard");
+      setLocation("/onboarding");
     } catch (error) {
       toast({ title: "Erro", description: "Não foi possível criar a conta.", variant: "destructive" });
     }
