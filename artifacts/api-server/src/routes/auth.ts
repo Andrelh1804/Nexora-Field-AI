@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { db, usersTable } from "@workspace/db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { generateToken, requireAuth, type AuthRequest } from "../middlewares/auth";
 import { type Response } from "express";
 
@@ -16,26 +16,22 @@ router.post("/auth/register", async (req, res) => {
       return;
     }
 
-    // Validate name length
     if (name.trim().length < 2) {
       res.status(400).json({ error: "Nome deve ter pelo menos 2 caracteres." });
       return;
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       res.status(400).json({ error: "E-mail inválido." });
       return;
     }
 
-    // Validate password strength
     if (password.length < 8) {
       res.status(400).json({ error: "A senha deve ter pelo menos 8 caracteres." });
       return;
     }
 
-    // SECURITY: Block public admin creation — only company and technician allowed
     const publicRoles = ["company", "technician"];
     if (!publicRoles.includes(role)) {
       res.status(403).json({ error: "Perfil não permitido no cadastro público." });
@@ -166,6 +162,84 @@ router.patch("/auth/change-password", requireAuth, async (req: AuthRequest, res:
   } catch (err) {
     req.log.error(err);
     res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+// LGPD — Exportação de dados pessoais (Art. 18, II da LGPD)
+router.get("/auth/export-data", requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.userId!;
+
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId)).limit(1);
+    if (!user) {
+      res.status(404).json({ error: "Usuário não encontrado." });
+      return;
+    }
+
+    // Collect all user data via raw SQL for portability
+    const [techData] = await db.execute(sql`SELECT * FROM technicians WHERE user_id = ${userId} LIMIT 1`);
+    const [companyData] = await db.execute(sql`SELECT * FROM companies WHERE user_id = ${userId} LIMIT 1`);
+    const ordersData = await db.execute(sql`SELECT id, title, description, category, city, state, status, created_at FROM service_orders WHERE company_id IN (SELECT id FROM companies WHERE user_id = ${userId})`);
+    const ratingsData = await db.execute(sql`SELECT score, comment, created_at FROM ratings WHERE technician_id IN (SELECT id FROM technicians WHERE user_id = ${userId})`);
+    const transactionsData = await db.execute(sql`SELECT type, amount, description, status, created_at FROM transactions WHERE user_id = ${userId}`);
+
+    const exportPayload = {
+      exportedAt: new Date().toISOString(),
+      legalBasis: "LGPD — Lei nº 13.709/2018 — Art. 18, II (Portabilidade de dados)",
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+      technicianProfile: techData ?? null,
+      companyProfile: companyData ?? null,
+      serviceOrders: ordersData ?? [],
+      ratings: ratingsData ?? [],
+      financialTransactions: transactionsData ?? [],
+    };
+
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Disposition", `attachment; filename="nexorafield-meus-dados-${userId}-${Date.now()}.json"`);
+    res.json(exportPayload);
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Erro ao exportar dados." });
+  }
+});
+
+// LGPD — Exclusão de conta (Art. 18, VI da LGPD — Direito ao apagamento)
+router.delete("/auth/account", requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const { password } = req.body;
+    const userId = req.userId!;
+
+    if (!password) {
+      res.status(400).json({ error: "Confirmação de senha é obrigatória para excluir a conta." });
+      return;
+    }
+
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId)).limit(1);
+    if (!user) {
+      res.status(404).json({ error: "Usuário não encontrado." });
+      return;
+    }
+
+    const valid = await bcrypt.compare(password, user.passwordHash);
+    if (!valid) {
+      res.status(400).json({ error: "Senha incorreta. A exclusão foi cancelada por segurança." });
+      return;
+    }
+
+    // Cascade deletes will handle related records (FKs configured with onDelete: "cascade")
+    await db.delete(usersTable).where(eq(usersTable.id, userId));
+
+    res.json({ success: true, message: "Conta excluída com sucesso. Seus dados foram removidos da plataforma conforme a LGPD." });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Erro ao excluir conta." });
   }
 });
 

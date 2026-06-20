@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, integer, real, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer, real, pgEnum, index } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 import { usersTable } from "./users";
@@ -32,7 +32,13 @@ export const transactionsTable = pgTable("transactions", {
   reference: text("reference"),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-});
+}, (t) => [
+  index("idx_transactions_wallet_id").on(t.walletId),
+  index("idx_transactions_user_id").on(t.userId),
+  index("idx_transactions_status").on(t.status),
+  index("idx_transactions_created_at").on(t.createdAt),
+  index("idx_transactions_type").on(t.type),
+]);
 
 export const insertTransactionSchema = createInsertSchema(transactionsTable).omit({ id: true, createdAt: true });
 export type InsertTransaction = z.infer<typeof insertTransactionSchema>;

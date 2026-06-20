@@ -8,6 +8,8 @@ Allow: /register
 Allow: /planos
 Allow: /ranking
 Allow: /academy
+Allow: /privacidade
+Allow: /termos
 Disallow: /dashboard
 Disallow: /chamados
 Disallow: /admin
