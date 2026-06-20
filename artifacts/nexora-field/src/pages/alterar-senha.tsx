@@ -9,7 +9,7 @@ import { AlertCircle, ShieldCheck, Eye, EyeOff } from "lucide-react";
 import { getAuthToken } from "@/lib/auth";
 
 export default function AlterarSenha() {
-  const { user, logout } = useAuth();
+  const { user, logout, refreshUser } = useAuth();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
@@ -58,9 +58,17 @@ export default function AlterarSenha() {
         return;
       }
 
-      toast({ title: "Senha alterada!", description: "Sua senha foi atualizada com sucesso. Faça login novamente." });
-      logout();
-      setLocation("/login");
+      toast({ title: "Senha alterada!", description: "Sua senha foi atualizada com sucesso." });
+
+      if (user?.mustChangePassword) {
+        // Mandatory change: refresh user state (mustChangePassword now false) and go to dashboard
+        refreshUser();
+        setLocation("/dashboard");
+      } else {
+        // Voluntary change: logout and go to login (standard security practice)
+        logout();
+        setLocation("/login");
+      }
     } catch {
       toast({ title: "Erro", description: "Erro de conexão. Tente novamente.", variant: "destructive" });
     } finally {
