@@ -43,7 +43,7 @@ export default function Home() {
       {/* Header */}
       <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent py-5"}`}>
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
-          <a href="/" className="flex items-center">
+          <a href="/landing/" className="flex items-center">
             <img src="/nexora-logo.png" alt="Nexora Field AI" className="h-12 w-12 md:h-14 md:w-14" />
           </a>
           
