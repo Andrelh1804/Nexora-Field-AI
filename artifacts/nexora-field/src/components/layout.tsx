@@ -73,7 +73,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     ] : []),
     { href: "/academy", label: "🎓 Academy" },
     { href: "/comunidade", label: "💬 Comunidade" },
-    { href: "/conhecimento", label: "📚 Knowledge" },
+    { href: "/conhecimento", label: "📚 Conhecimento" },
     { href: "/planos", label: "Planos" },
     { href: "/developer", label: "⚙️ Dev" },
   ] : [];
