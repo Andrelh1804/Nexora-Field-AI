@@ -35,6 +35,7 @@ import Conhecimento from "@/pages/conhecimento";
 import AlterarSenha from "@/pages/alterar-senha";
 import Privacidade from "@/pages/privacidade";
 import Termos from "@/pages/termos";
+import { CookieBanner } from "@/components/cookie-banner";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30000, retry: 1 } },
@@ -126,6 +127,7 @@ function App() {
           </WouterRouter>
         </AuthProvider>
         <Toaster />
+        <CookieBanner />
       </TooltipProvider>
     </QueryClientProvider>
   );

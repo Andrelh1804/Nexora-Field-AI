@@ -154,13 +154,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t border-border py-4 px-6 flex items-center justify-between text-xs text-muted-foreground">
-        <span>© 2026 Nexora Field AI · Todos os direitos reservados</span>
-        <div className="flex items-center gap-4">
+      <footer className="border-t border-border py-4 px-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+        <span>© {new Date().getFullYear()} Nexora Field AI · CNPJ 58.453.955/0001-84 · Todos os direitos reservados</span>
+        <div className="flex items-center gap-4 flex-wrap justify-center">
+          <Link href="/privacidade" className="hover:text-foreground transition-colors">Privacidade</Link>
+          <Link href="/termos" className="hover:text-foreground transition-colors">Termos de Uso</Link>
           <Link href="/planos" className="hover:text-foreground transition-colors">Planos</Link>
           <Link href="/ranking" className="hover:text-foreground transition-colors">Ranking</Link>
           <Link href="/academy" className="hover:text-foreground transition-colors">Academy</Link>
-          <Link href="/comunidade" className="hover:text-foreground transition-colors">Comunidade</Link>
         </div>
       </footer>
     </div>

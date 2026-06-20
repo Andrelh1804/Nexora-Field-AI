@@ -860,12 +860,17 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-white/10 text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center gap-2">
-            <p>&copy; {new Date().getFullYear()} Nexora Field AI · Todos os direitos reservados.</p>
-            <div className="flex items-center gap-4">
+          <div className="pt-8 border-t border-white/10 text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center gap-3">
+            <div className="flex flex-col items-center md:items-start gap-1 text-xs">
+              <p>&copy; {new Date().getFullYear()} Nexora Field AI · Todos os direitos reservados.</p>
+              <p>CNPJ 58.453.955/0001-84 · Feito no Brasil 🇧🇷</p>
+            </div>
+            <div className="flex items-center gap-4 text-xs">
               <a href="https://nexorafield.com.br" className="hover:text-primary transition-colors">nexorafield.com.br</a>
               <span>·</span>
-              <span>Feito no Brasil 🇧🇷</span>
+              <a href="/privacidade" className="hover:text-primary transition-colors">Privacidade</a>
+              <span>·</span>
+              <a href="/termos" className="hover:text-primary transition-colors">Termos</a>
             </div>
           </div>
         </div>
