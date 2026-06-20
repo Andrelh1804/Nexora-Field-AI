@@ -854,8 +854,8 @@ export default function Home() {
                 <li>
                   <a href="mailto:financeiro@nexorafield.com.br" className="hover:text-primary transition-colors">Financeiro</a>
                 </li>
-                <li><a href="#" className="hover:text-primary transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso (LGPD)</a></li>
+                <li><a href="/privacidade" className="hover:text-primary transition-colors">Política de Privacidade</a></li>
+                <li><a href="/termos" className="hover:text-primary transition-colors">Termos de Uso (LGPD)</a></li>
               </ul>
             </div>
           </div>

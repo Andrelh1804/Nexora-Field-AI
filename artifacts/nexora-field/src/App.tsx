@@ -33,6 +33,8 @@ import Visao from "@/pages/visao";
 import Onboarding from "@/pages/onboarding";
 import Conhecimento from "@/pages/conhecimento";
 import AlterarSenha from "@/pages/alterar-senha";
+import Privacidade from "@/pages/privacidade";
+import Termos from "@/pages/termos";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30000, retry: 1 } },
@@ -88,6 +90,8 @@ function Router() {
             <Route path="/academy" component={Academy} />
             <Route path="/comunidade" component={Community} />
             <Route path="/conhecimento" component={Conhecimento} />
+            <Route path="/privacidade" component={Privacidade} />
+            <Route path="/termos" component={Termos} />
             <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
             <Route path="/chamados" component={() => <ProtectedRoute component={Chamados} />} />
             <Route path="/chamados/novo" component={() => <ProtectedRoute component={ChamadoNovo} roles={["company"]} />} />
