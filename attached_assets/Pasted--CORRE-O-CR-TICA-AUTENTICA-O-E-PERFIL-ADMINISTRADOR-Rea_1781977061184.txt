@@ -1,0 +1,174 @@
+# CORREÇÃO CRÍTICA — AUTENTICAÇÃO E PERFIL ADMINISTRADOR
+
+Realize uma auditoria completa no sistema de autenticação da plataforma Nexora Field AI.
+
+## Problemas Identificados
+
+### Problema 1
+
+Não é possível criar contas corretamente.
+
+Verificar:
+
+* Cadastro de usuários
+* Persistência no banco PostgreSQL
+* Prisma ORM
+* Validação de formulários
+* Criação de sessão
+* Hash de senha
+* JWT
+
+Corrigir todo o fluxo de registro.
+
+---
+
+### Problema 2
+
+Não é possível acessar o sistema utilizando o usuário administrador.
+
+Verificar:
+
+* Seed inicial
+* Tabela Users
+* Roles
+* Permissões
+* Middleware de autenticação
+* Controle RBAC
+
+Corrigir login administrativo.
+
+---
+
+# Criar Usuário Administrador Padrão
+
+Criar automaticamente durante o seed do banco:
+
+Nome:
+Administrador Nexora
+
+Email:
+[admin@nexorafield.com](mailto:admin@nexorafield.com)
+
+Senha:
+Admin@123456
+
+Role:
+ADMIN
+
+Status:
+ATIVO
+
+Permissões:
+
+* Gestão total da plataforma
+* Gestão de usuários
+* Gestão de empresas
+* Gestão de técnicos
+* Gestão financeira
+* Dashboard administrativo
+* Configurações globais
+
+A senha deve ser armazenada com hash bcrypt.
+
+---
+
+# Cadastro Público
+
+O perfil ADMIN não deve ser exibido para usuários.
+
+Na tela de cadastro permitir apenas:
+
+* Técnico
+* Empresa
+
+Remover completamente:
+
+❌ Administrador
+
+---
+
+# Segurança
+
+Impedir:
+
+* Criação pública de administradores
+* Alteração manual de role para ADMIN
+* Escalação de privilégios
+
+Somente administradores existentes podem criar novos administradores.
+
+---
+
+# Menu de Cadastro
+
+Antes:
+
+* Técnico
+* Empresa
+* Administrador
+
+Depois:
+
+* Técnico
+* Empresa
+
+Administrador não deve aparecer em nenhuma tela pública.
+
+---
+
+# Login
+
+Implementar validações:
+
+* E-mail obrigatório
+* Senha obrigatória
+* Mensagens de erro amigáveis
+* Recuperação de senha
+
+---
+
+# Seed Automático
+
+Ao iniciar a aplicação:
+
+Verificar:
+
+Existe administrador?
+
+Se NÃO existir:
+
+Criar automaticamente usuário ADMIN padrão.
+
+---
+
+# Testes
+
+Validar:
+
+✓ Cadastro Técnico
+
+✓ Cadastro Empresa
+
+✓ Login Técnico
+
+✓ Login Empresa
+
+✓ Login Administrador
+
+✓ Recuperação de Senha
+
+✓ Controle RBAC
+
+✓ Bloqueio de criação pública de administradores
+
+---
+
+# Entregáveis
+
+1. Correção do sistema de cadastro
+2. Correção do login administrativo
+3. Seed automático do administrador
+4. Remoção da opção Administrador da tela pública
+5. Auditoria de segurança RBAC
+6. Testes automatizados de autenticação
+7. Documentação das credenciais iniciais

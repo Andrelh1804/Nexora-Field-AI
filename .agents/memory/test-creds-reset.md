@@ -1,26 +1,29 @@
 ---
 name: Test credentials reset
-description: How to reset test user passwords when bcrypt hash doesn't match
+description: Current admin and test user credentials for Nexora Field AI
 ---
 
-## Problem
-Original seed script used unknown password — stored hash does NOT match "password".
+## Admin padrão (criado via seed automático no startup)
+| Campo | Valor |
+|-------|-------|
+| Email | admin@nexorafield.com |
+| Senha | Admin@123456 |
+| Role | admin |
 
-## Fix
-Generate a new hash and update directly:
-```bash
-node -e "const b=require('./artifacts/api-server/node_modules/bcryptjs'); b.hash('password',10).then(h=>console.log(h))"
-psql "$DATABASE_URL" -c "UPDATE users SET password_hash='<hash>' WHERE email IN ('admin@nexora.com','empresa@techpro.com','carlos@tecnico.com',...);"
-```
+**Why:** Admin é criado automaticamente em `artifacts/api-server/src/index.ts` via `seedDefaultAdmin()` ao iniciar o servidor, se não existir. Idempotente — roda sempre mas só insere se não existir.
 
-## Test credentials (password: "password")
-| Email | Role |
-|-------|------|
-| admin@nexora.com | admin |
-| empresa@techpro.com | company |
-| empresa@infracorp.com | company |
-| carlos@tecnico.com | technician |
-| ana@tecnico.com | technician |
-| joao@tecnico.com | technician |
+## Segurança implementada
+- Cadastro público aceita apenas roles `company` e `technician`
+- Tentativa de criar role `admin` via POST /auth/register retorna HTTP 403
+- Somente admins existentes (com acesso direto ao banco ou via seed) podem criar novos admins
 
-**Why:** bcryptjs version differences or different original passwords can cause hash mismatch. Always verify with bcrypt.compare() before debugging auth routes.
+## Banco de dados
+- Tabelas criadas via `drizzle-kit push --force` em `lib/db/`
+- Sem arquivo de migrations — usa push direto
+- Para recriar: `cd lib/db && pnpm run push-force`
+
+## Validações no cadastro público
+- Nome: mínimo 2 caracteres
+- Email: formato regex + lowercase normalizado
+- Senha: mínimo 8 caracteres
+- bcrypt rounds: 12 (antes era 10)
