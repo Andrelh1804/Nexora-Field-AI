@@ -1,0 +1,438 @@
+# NEXORA FIELD AI — SPRINT 4 (MOBILE, IA VISION E WHITE LABEL ENTERPRISE)
+
+Atue como uma equipe composta por especialistas em Mobile Development, Inteligência Artificial, Computer Vision, SaaS Enterprise, Multi-Tenant Architecture, UX/UI Premium e Escalabilidade Global.
+
+Evolua a plataforma Nexora Field AI para uma solução Enterprise pronta para expansão nacional.
+
+Objetivo:
+
+Transformar a Nexora Field AI em uma plataforma omnichannel com aplicativos móveis, IA visual avançada, arquitetura white label e recursos corporativos de alta escala.
+
+Tecnologias obrigatórias:
+
+## Mobile
+
+* React Native
+* Expo
+* TypeScript
+
+## Backend
+
+* Node.js
+* NestJS
+* PostgreSQL
+* Redis
+
+## IA
+
+* Gemini 2.5 Pro
+* Gemini Vision
+* Embeddings
+* RAG
+
+## Infraestrutura
+
+* Docker
+* Kubernetes
+* Cloudflare
+* CDN
+
+---
+
+# MÓDULO 1 — APLICATIVO ANDROID
+
+Criar aplicativo completo para técnicos.
+
+Funcionalidades:
+
+* Login biométrico
+* Recebimento de chamados
+* Push notifications
+* Geolocalização
+* Check-in
+* Check-out
+* Upload de evidências
+* Relatórios
+* Chat
+
+Modo Offline:
+
+* Sincronização automática
+* Armazenamento local
+* Upload posterior
+
+---
+
+# MÓDULO 2 — APLICATIVO IOS
+
+Replicar funcionalidades Android.
+
+Garantir:
+
+* Compatibilidade Apple
+* Performance nativa
+* Publicação App Store
+
+---
+
+# MÓDULO 3 — IA VISION
+
+Criar sistema avançado de diagnóstico por imagem.
+
+Analisar:
+
+* Fotos
+* Vídeos
+* Evidências
+
+Reconhecer:
+
+* ONU
+* OLT
+* Switch
+* Mikrotik
+* Cisco
+* Huawei
+* Patch Panel
+* Rack
+* Nobreak
+* Câmeras
+* Sensores industriais
+
+---
+
+# MÓDULO 4 — DETECÇÃO DE DEFEITOS
+
+IA deve identificar:
+
+* Conectores mal instalados
+* Cabos rompidos
+* Oxidação
+* Equipamentos danificados
+* Ausência de componentes
+* Instalações fora do padrão
+
+Retornar:
+
+* Diagnóstico
+* Grau de criticidade
+* Recomendações
+
+---
+
+# MÓDULO 5 — ASSISTENTE TÉCNICO VISUAL
+
+Fluxo:
+
+Técnico envia foto
+
+↓
+
+IA analisa
+
+↓
+
+IA identifica equipamento
+
+↓
+
+IA sugere solução
+
+↓
+
+IA gera passo a passo
+
+Exemplo:
+
+"Detectamos uma ONU Huawei EG8145X6."
+
+Possíveis problemas:
+
+* Potência óptica baixa
+* Configuração incorreta
+* Perda de sinal
+
+---
+
+# MÓDULO 6 — CHAT COPILOT
+
+Criar assistente técnico avançado.
+
+Especializações:
+
+* Telecom
+* Redes
+* Fibra Óptica
+* Automação Industrial
+* CFTV
+* Datacenter
+* Energia Solar
+
+Recursos:
+
+* Chat contextual
+* Consulta a documentos
+* Consulta a manuais
+* Histórico de conversas
+
+---
+
+# MÓDULO 7 — BASE DE CONHECIMENTO
+
+Criar repositório central.
+
+Conteúdo:
+
+* Procedimentos
+* Manuais
+* CATs
+* SOPs
+* Checklists
+* Normas técnicas
+
+Implementar:
+
+* Vetorização
+* Busca semântica
+* RAG
+
+---
+
+# MÓDULO 8 — WHITE LABEL
+
+Permitir criação de plataformas personalizadas.
+
+Configurações:
+
+* Nome
+* Logo
+* Domínio
+* Subdomínio
+* Cores
+* E-mails
+
+Exemplos:
+
+Claro Field
+
+Vivo Field
+
+TIM Service
+
+Prefeitura Digital
+
+---
+
+# MÓDULO 9 — MULTI-TENANT ENTERPRISE
+
+Criar isolamento completo.
+
+Cada cliente possui:
+
+* Usuários
+* Técnicos
+* Contratos
+* Chamados
+* Dashboards
+* Financeiro
+
+Isolados logicamente.
+
+---
+
+# MÓDULO 10 — PORTAL CORPORATIVO
+
+Área exclusiva para grandes empresas.
+
+Recursos:
+
+* SLA corporativo
+* Gestão de equipes
+* Centros de custo
+* Contratos
+* KPIs
+
+---
+
+# MÓDULO 11 — AUDITORIA COMPLETA
+
+Registrar:
+
+* Logins
+* Alterações
+* Aprovações
+* Pagamentos
+* Chamados
+
+Criar trilha de auditoria.
+
+---
+
+# MÓDULO 12 — ASSINATURA DIGITAL
+
+Implementar:
+
+* Aceite eletrônico
+* Assinatura digital
+* Evidência jurídica
+* Versionamento
+
+---
+
+# MÓDULO 13 — DASHBOARD EXECUTIVO
+
+Criar indicadores:
+
+Operação
+
+Financeiro
+
+SLA
+
+Produtividade
+
+Receita
+
+NPS
+
+Margem
+
+Rentabilidade
+
+---
+
+# MÓDULO 14 — ANALYTICS AVANÇADO
+
+Implementar:
+
+* BI interno
+* Tendências
+* Heatmaps
+* Distribuição geográfica
+* Regiões com maior demanda
+
+---
+
+# MÓDULO 15 — OBSERVABILIDADE
+
+Integrar:
+
+* Grafana
+* Prometheus
+* Loki
+
+Monitorar:
+
+* APIs
+* Banco
+* Filas
+* Aplicativos
+
+---
+
+# MÓDULO 16 — SEGURANÇA ENTERPRISE
+
+Implementar:
+
+* MFA
+* RBAC
+* SSO
+* OAuth2
+* LGPD
+* Criptografia
+
+---
+
+# NOVAS TABELAS PRISMA
+
+Tenants
+
+TenantSettings
+
+KnowledgeBase
+
+KnowledgeDocuments
+
+VisionAnalysis
+
+EquipmentCatalog
+
+Diagnostics
+
+CopilotSessions
+
+MobileDevices
+
+AuditLogs
+
+DigitalSignatures
+
+AnalyticsEvents
+
+CorporateContracts
+
+TenantBranding
+
+---
+
+# TESTES DE ESCALA
+
+Simular:
+
+10.000 empresas
+
+50.000 técnicos
+
+1.000.000 chamados
+
+100.000 usuários simultâneos
+
+Validar:
+
+* Banco
+* APIs
+* Mobile
+* IA
+* Multiempresa
+
+---
+
+# UX/UI
+
+Inspirar em:
+
+* ServiceNow
+* Salesforce Field Service
+* Field Nation
+* Jira Service Management
+* Stripe
+
+Características:
+
+* Design Premium
+* Dark Mode
+* Mobile First
+* Responsivo
+* Experiência Enterprise
+
+---
+
+# ENTREGÁVEIS
+
+1. Aplicativo Android completo
+2. Aplicativo iOS completo
+3. IA Vision
+4. Assistente Técnico IA
+5. Base de Conhecimento RAG
+6. White Label
+7. Multi-Tenant Enterprise
+8. Auditoria Completa
+9. Dashboard Executivo
+10. Analytics Avançado
+11. Observabilidade
+12. Documentação Técnica
+13. Plano de Publicação Google Play
+14. Plano de Publicação App Store
+15. Guia de Escalabilidade Enterprise
+
+Todos os módulos devem ser integrados às Sprints 1, 2 e 3, mantendo compatibilidade total e preparando a Nexora Field AI para operação nacional e futura expansão internacional.

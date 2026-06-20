@@ -1,0 +1,341 @@
+# NEXORA FIELD AI — SPRINT 2 (OPERAÇÃO E AUTOMAÇÃO)
+
+Atue como uma equipe de arquitetura de software enterprise especializada em SaaS, Marketplace, Field Service Management, Geolocalização e Inteligência Artificial.
+
+Evolua a plataforma Nexora Field AI a partir do MVP V1 já existente.
+
+Objetivo:
+
+Transformar o MVP em uma plataforma operacional pronta para aquisição dos primeiros clientes pagantes.
+
+Tecnologias:
+
+* React
+* TypeScript
+* Node.js
+* NestJS
+* PostgreSQL
+* Prisma ORM
+* Tailwind
+* Shadcn UI
+* Gemini API
+
+Manter toda estrutura existente.
+
+Implementar os módulos abaixo.
+
+---
+
+# MÓDULO 1 — GEOLOCALIZAÇÃO
+
+Implementar Google Maps.
+
+Recursos:
+
+* Mapa interativo
+* Localização dos chamados
+* Localização dos técnicos
+* Cálculo de distância
+* Tempo estimado de deslocamento
+* Rota otimizada
+
+Permitir:
+
+* Encontrar técnicos próximos
+* Filtrar por raio
+
+Exemplos:
+
+5 km
+
+10 km
+
+20 km
+
+50 km
+
+---
+
+# MÓDULO 2 — DESPACHO AUTOMÁTICO
+
+Criar motor inteligente.
+
+Fluxo:
+
+Empresa cria chamado
+
+↓
+
+Sistema calcula técnicos elegíveis
+
+↓
+
+Sistema gera ranking
+
+↓
+
+Sistema envia convites automáticos
+
+↓
+
+Primeiro técnico aceita
+
+↓
+
+Chamado bloqueado para demais
+
+Variáveis:
+
+* Distância
+* Especialidade
+* Avaliação
+* SLA
+* Histórico
+
+---
+
+# MÓDULO 3 — NOTIFICAÇÕES
+
+Implementar:
+
+* Notificações em tempo real
+* Push notifications
+* Alertas de SLA
+
+Eventos:
+
+* Novo chamado
+* Chamado aceito
+* Chamado finalizado
+* Avaliação recebida
+* Pagamento liberado
+
+---
+
+# MÓDULO 4 — WHATSAPP BUSINESS
+
+Integração oficial.
+
+Permitir:
+
+* Avisar técnico sobre novos chamados
+* Atualizações automáticas
+* Confirmação de aceite
+* Envio de relatórios
+
+Criar templates:
+
+Novo Chamado
+
+Chamado Aceito
+
+Chamado Finalizado
+
+Pagamento Disponível
+
+---
+
+# MÓDULO 5 — CHECK-IN E CHECK-OUT
+
+No aplicativo e versão web mobile.
+
+Check-in:
+
+* GPS obrigatório
+* Horário automático
+* Foto obrigatória
+
+Check-out:
+
+* GPS obrigatório
+* Horário automático
+* Foto final
+
+Registrar:
+
+* Localização
+* Tempo de permanência
+
+---
+
+# MÓDULO 6 — EVIDÊNCIAS
+
+Upload de:
+
+* Fotos
+* Vídeos
+* Documentos
+
+Categorias:
+
+Antes
+
+Durante
+
+Depois
+
+Criar galeria por chamado.
+
+---
+
+# MÓDULO 7 — AVALIAÇÕES
+
+Empresas avaliam técnicos.
+
+Critérios:
+
+* Qualidade
+* Prazo
+* Comunicação
+* Conhecimento técnico
+
+Nota:
+
+1 a 5 estrelas
+
+Calcular:
+
+Score geral do técnico.
+
+---
+
+# MÓDULO 8 — DASHBOARD OPERACIONAL
+
+Indicadores:
+
+* Chamados abertos
+* Chamados concluídos
+* Tempo médio atendimento
+* Tempo médio deslocamento
+* Técnicos ativos
+* Técnicos disponíveis
+
+Criar gráficos.
+
+---
+
+# MÓDULO 9 — IA OPERACIONAL
+
+Gemini integrado.
+
+Funções:
+
+Analisar chamados.
+
+Classificar automaticamente:
+
+* Telecom
+* Redes
+* Automação
+* CFTV
+* Infraestrutura
+
+Sugerir:
+
+* Melhor técnico
+* Tempo estimado
+* Nível de complexidade
+
+---
+
+# MÓDULO 10 — RANKING DE TÉCNICOS
+
+Criar ranking nacional.
+
+Pontuação baseada em:
+
+* Chamados concluídos
+* Avaliações
+* SLA
+* Certificações
+
+Níveis:
+
+Bronze
+
+Prata
+
+Ouro
+
+Platina
+
+Diamante
+
+---
+
+# NOVAS TABELAS PRISMA
+
+Criar:
+
+Notifications
+
+Locations
+
+TechnicianRanking
+
+ServiceEvidence
+
+CheckinCheckout
+
+WhatsAppLogs
+
+DispatchHistory
+
+---
+
+# UX/UI
+
+Criar:
+
+Mapa operacional em tempo real.
+
+Painel estilo:
+
+Uber
+
+Field Nation
+
+ServiceNow
+
+Jira Service Management
+
+Design:
+
+* Dark Mode
+* Responsivo
+* Mobile First
+
+---
+
+# TESTES
+
+Gerar:
+
+* Seeds completos
+* Dados fictícios
+* Cenários reais
+
+Simular:
+
+100 técnicos
+
+20 empresas
+
+500 chamados
+
+---
+
+# ENTREGÁVEIS
+
+Gerar:
+
+1. Novas migrations Prisma
+2. APIs REST
+3. Componentes React
+4. Integração Google Maps
+5. Integração WhatsApp
+6. Sistema de notificações
+7. Dashboard operacional
+8. Documentação técnica atualizada
+
+Todos os módulos devem ser integrados ao MVP V1 existente sem quebrar funcionalidades já implementadas.

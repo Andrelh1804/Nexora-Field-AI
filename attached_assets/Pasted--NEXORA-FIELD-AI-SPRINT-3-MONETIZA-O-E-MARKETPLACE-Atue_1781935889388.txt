@@ -1,0 +1,512 @@
+# NEXORA FIELD AI — SPRINT 3 (MONETIZAÇÃO E MARKETPLACE)
+
+Atue como uma equipe composta por especialistas em SaaS Marketplace, Fintech, Field Service Management, Growth, Billing, Revenue Operations e Arquitetura Enterprise.
+
+Evolua a plataforma Nexora Field AI da Sprint 2 para uma versão comercial capaz de gerar receita recorrente.
+
+Objetivo:
+
+Transformar a Nexora Field AI em um marketplace monetizado com assinaturas, comissões, pagamentos automatizados e controle financeiro completo.
+
+Tecnologias:
+
+* React
+* TypeScript
+* Node.js
+* NestJS
+* PostgreSQL
+* Prisma ORM
+* Mercado Pago
+* Stripe
+* PIX
+* Redis
+
+Manter toda a estrutura existente.
+
+---
+
+# MÓDULO 1 — ASSINATURAS
+
+Criar sistema SaaS completo.
+
+Planos:
+
+## Técnico
+
+Free
+
+* Até 10 candidaturas/mês
+* Perfil básico
+
+Pro
+
+R$ 29,90/mês
+
+* Candidaturas ilimitadas
+* Destaque nas buscas
+* Ranking privilegiado
+
+Premium
+
+R$ 59,90/mês
+
+* IA avançada
+* Prioridade nos chamados
+* Relatórios premium
+
+---
+
+## Empresas
+
+Starter
+
+R$ 199/mês
+
+* Até 20 chamados
+
+Pro
+
+R$ 599/mês
+
+* Até 100 chamados
+
+Business
+
+R$ 1.499/mês
+
+* Chamados ilimitados
+
+Enterprise
+
+Personalizado
+
+---
+
+# MÓDULO 2 — BILLING
+
+Criar motor de cobrança.
+
+Recursos:
+
+* Assinaturas recorrentes
+* Renovação automática
+* Cobrança PIX
+* Cartão
+* Boleto
+* Faturas
+
+Status:
+
+* Ativa
+* Suspensa
+* Cancelada
+* Inadimplente
+
+---
+
+# MÓDULO 3 — MERCADO PAGO
+
+Implementação completa.
+
+Permitir:
+
+* PIX
+* Cartão
+* Boleto
+
+Fluxos:
+
+Empresa paga
+
+↓
+
+Sistema recebe
+
+↓
+
+Retém comissão
+
+↓
+
+Libera saldo técnico
+
+---
+
+# MÓDULO 4 — SPLIT PAYMENT
+
+Sistema de divisão automática.
+
+Exemplo:
+
+Serviço:
+
+R$ 200
+
+Comissão Nexora:
+
+15%
+
+Nexora:
+
+R$ 30
+
+Técnico:
+
+R$ 170
+
+Processo automático.
+
+---
+
+# MÓDULO 5 — CARTEIRA DIGITAL
+
+Criar wallet.
+
+Cada usuário possui:
+
+Saldo disponível
+
+Saldo pendente
+
+Saldo bloqueado
+
+Histórico financeiro
+
+Extrato
+
+Transferências
+
+Saques
+
+---
+
+# MÓDULO 6 — SAQUES
+
+Permitir:
+
+PIX
+
+Transferência bancária
+
+Configurações:
+
+Valor mínimo
+
+Taxa administrativa
+
+Validação antifraude
+
+---
+
+# MÓDULO 7 — COMISSÕES
+
+Configuração dinâmica.
+
+Por:
+
+Empresa
+
+Plano
+
+Categoria
+
+Região
+
+Percentual:
+
+5% a 25%
+
+---
+
+# MÓDULO 8 — DASHBOARD FINANCEIRO
+
+Criar dashboards.
+
+Indicadores:
+
+MRR
+
+ARR
+
+Receita total
+
+Receita recorrente
+
+Receita por empresa
+
+Receita por região
+
+Ticket médio
+
+LTV
+
+CAC
+
+Churn
+
+GMV
+
+Take Rate
+
+---
+
+# MÓDULO 9 — GESTÃO DE CONTRATOS
+
+Permitir:
+
+Contratos digitais
+
+Aceite eletrônico
+
+Assinatura digital
+
+Histórico de versões
+
+Vigência
+
+Renovação automática
+
+---
+
+# MÓDULO 10 — CUPONS
+
+Criar sistema promocional.
+
+Tipos:
+
+Percentual
+
+Valor fixo
+
+Primeiro mês grátis
+
+Período gratuito
+
+---
+
+# MÓDULO 11 — PROGRAMA DE INDICAÇÃO
+
+Técnicos indicam técnicos.
+
+Empresas indicam empresas.
+
+Gerar:
+
+Código exclusivo
+
+Link exclusivo
+
+Comissão por indicação
+
+Bonificações
+
+---
+
+# MÓDULO 12 — FINOPS
+
+Painel administrativo.
+
+Controle:
+
+Receitas
+
+Custos
+
+Lucro
+
+Taxas
+
+Fluxo de caixa
+
+Pagamentos
+
+Comissões
+
+Assinaturas
+
+---
+
+# MÓDULO 13 — IA DE PRECIFICAÇÃO
+
+Gemini integrado.
+
+Analisar:
+
+Localização
+
+Urgência
+
+Complexidade
+
+Tempo estimado
+
+Especialidade
+
+Sugerir:
+
+Valor mínimo
+
+Valor ideal
+
+Valor premium
+
+---
+
+# MÓDULO 14 — IA DE FRAUDE
+
+Detectar:
+
+Contas duplicadas
+
+Atividades suspeitas
+
+Avaliações falsas
+
+Fraudes financeiras
+
+Abuso de sistema
+
+Gerar score de risco.
+
+---
+
+# MÓDULO 15 — RELATÓRIOS EXECUTIVOS
+
+Gerar:
+
+Receita
+
+Lucro
+
+Performance
+
+Empresas
+
+Técnicos
+
+Financeiro
+
+Exportação:
+
+PDF
+
+Excel
+
+CSV
+
+---
+
+# NOVAS TABELAS PRISMA
+
+Subscriptions
+
+Plans
+
+Invoices
+
+Payments
+
+Wallets
+
+Transactions
+
+Withdrawals
+
+Commissions
+
+Contracts
+
+Coupons
+
+Referrals
+
+FraudAnalysis
+
+FinancialReports
+
+---
+
+# SEGURANÇA
+
+Implementar:
+
+LGPD
+
+Auditoria completa
+
+Logs financeiros
+
+Rate limiting
+
+MFA
+
+Proteção antifraude
+
+Monitoramento de transações
+
+---
+
+# TESTES
+
+Simular:
+
+1.000 técnicos
+
+200 empresas
+
+10.000 chamados
+
+R$ 500.000 em transações
+
+Validar:
+
+Pagamentos
+
+Split
+
+Saques
+
+Assinaturas
+
+Comissões
+
+---
+
+# UX/UI
+
+Criar dashboards inspirados em:
+
+* Stripe
+* Mercado Pago
+* Asaas
+* Pagar.me
+* Shopify
+
+Visual:
+
+Premium
+
+Responsivo
+
+Dark Mode
+
+Mobile First
+
+---
+
+# ENTREGÁVEIS
+
+1. Sistema de assinaturas
+2. Integração Mercado Pago
+3. Split Payment
+4. Carteira Digital
+5. Dashboard Financeiro
+6. Gestão de Contratos
+7. Programa de Indicação
+8. IA de Precificação
+9. IA Antifraude
+10. APIs REST completas
+11. Migrations Prisma
+12. Documentação técnica
+
+Todos os módulos devem ser integrados às Sprints 1 e 2 sem regressões e preparados para evolução futura em White Label, Multiempresa Avançado, Aplicativos Mobile e IA Vision.

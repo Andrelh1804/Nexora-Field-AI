@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Nexora Field AI"
+version = "1.0.0"
+id = "artifacts/nexora-field"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25074
+
+[services.development]
+run = "pnpm --filter @workspace/nexora-field run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/nexora-field", "run", "build" ]
+publicDir = "artifacts/nexora-field/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25074"
+BASE_PATH = "/"

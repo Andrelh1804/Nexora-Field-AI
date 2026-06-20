@@ -1,0 +1,244 @@
+# NEXORA FIELD AI - MVP V1
+
+Atue como um arquiteto de software sênior especializado em SaaS Marketplace, Field Service Management, Inteligência Artificial e sistemas escaláveis.
+
+Desenvolva a primeira versão funcional da plataforma Nexora Field AI.
+
+Objetivo:
+
+Conectar empresas que necessitam de suporte técnico em campo a técnicos autônomos especializados.
+
+O MVP deve ser focado em validação de mercado e geração de receita.
+
+Tecnologias obrigatórias:
+
+* React
+* TypeScript
+* Tailwind
+* Shadcn UI
+* Node.js
+* PostgreSQL
+* Prisma ORM
+* Gemini API
+
+Criar sistema completo com:
+
+# AUTENTICAÇÃO
+
+* Login
+* Cadastro
+* Recuperação de senha
+* JWT
+* Controle de acesso
+
+Perfis:
+
+* Administrador
+* Empresa
+* Técnico
+
+---
+
+# CADASTRO DE TÉCNICOS
+
+Campos:
+
+* Nome
+* CPF
+* Telefone
+* WhatsApp
+* E-mail
+* Cidade
+* Estado
+* Foto
+* Especialidades
+
+Especialidades:
+
+* Fibra Óptica
+* Redes
+* Infraestrutura
+* Automação Industrial
+* CFTV
+* Telecom
+
+Permitir:
+
+* Upload de currículo
+* Upload de certificados
+
+---
+
+# CADASTRO DE EMPRESAS
+
+Campos:
+
+* Razão Social
+* Nome Fantasia
+* CNPJ
+* Responsável
+* Telefone
+* E-mail
+* Endereço
+
+---
+
+# MARKETPLACE DE CHAMADOS
+
+Empresa pode criar chamados.
+
+Campos:
+
+* Título
+* Descrição
+* Categoria
+* Cidade
+* Estado
+* Endereço
+* Valor
+* SLA
+
+Status:
+
+* Aberto
+* Aceito
+* Em andamento
+* Finalizado
+* Cancelado
+
+---
+
+# PAINEL DO TÉCNICO
+
+Exibir:
+
+* Chamados disponíveis
+* Chamados aceitos
+* Histórico
+* Ganhos
+
+Permitir:
+
+* Aceitar chamado
+* Recusar chamado
+* Atualizar status
+
+---
+
+# PAINEL DA EMPRESA
+
+Exibir:
+
+* Chamados ativos
+* Chamados finalizados
+* Técnicos contratados
+* Custos
+
+Permitir:
+
+* Criar chamado
+* Avaliar técnico
+* Acompanhar execução
+
+---
+
+# IA MATCH
+
+Integrar Gemini.
+
+Ao criar chamado:
+
+Analisar:
+
+* Localização
+* Especialidade
+* Experiência
+
+Retornar ranking dos melhores técnicos.
+
+Exibir score:
+
+95%
+90%
+85%
+
+---
+
+# RELATÓRIO IA
+
+Ao finalizar serviço:
+
+IA gera automaticamente:
+
+* Resumo técnico
+* Relatório final
+* PDF
+
+Baseado em:
+
+* Observações do técnico
+* Fotos
+* Checklist
+
+---
+
+# DASHBOARD ADMINISTRATIVO
+
+Exibir:
+
+* Total de técnicos
+* Total de empresas
+* Total de chamados
+* Receita simulada
+
+---
+
+# BANCO DE DADOS
+
+Criar modelagem Prisma completa.
+
+Tabelas:
+
+* Users
+* Technicians
+* Companies
+* ServiceOrders
+* Applications
+* Ratings
+* Reports
+
+---
+
+# UX/UI
+
+Visual premium.
+
+Inspirado em:
+
+* Stripe
+* Linear
+* Notion
+
+Características:
+
+* Dark Mode
+* Responsivo
+* Mobile First
+
+---
+
+# ENTREGÁVEIS
+
+Gerar:
+
+1. Estrutura completa do projeto
+2. Banco de dados
+3. Backend
+4. Frontend
+5. APIs
+6. Integração Gemini
+7. Dashboard
+8. Documentação
+9. Seeds de dados para testes
+
+Sistema deve estar funcional e pronto para deploy no Replit.
