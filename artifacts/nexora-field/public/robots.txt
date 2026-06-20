@@ -1,2 +1,27 @@
+# Nexora Field AI — nexorafield.com.br
+# Robots.txt — Plataforma (área autenticada)
+# As páginas da plataforma não devem ser indexadas (requer autenticação)
+
 User-agent: *
-Allow: /
+Allow: /login
+Allow: /register
+Allow: /planos
+Allow: /ranking
+Allow: /academy
+Disallow: /dashboard
+Disallow: /chamados
+Disallow: /admin
+Disallow: /perfil
+Disallow: /carteira
+Disallow: /notificacoes
+Disallow: /executive
+Disallow: /crm
+Disallow: /copilot
+Disallow: /visao
+Disallow: /contratos
+Disallow: /tecnicos
+Disallow: /alterar-senha
+Disallow: /onboarding
+
+# Sitemap
+Sitemap: https://nexorafield.com.br/sitemap.xml

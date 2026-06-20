@@ -1,2 +1,16 @@
+# Nexora Field AI — nexorafield.com.br
+# Robots.txt — Configuração de rastreamento para mecanismos de busca
+
 User-agent: *
 Allow: /
+
+# Bloquear rastreamento de assets internos
+Disallow: /src/
+Disallow: /.local/
+Disallow: /node_modules/
+
+# Sitemap
+Sitemap: https://nexorafield.com.br/sitemap.xml
+
+# Host canônico
+Host: https://nexorafield.com.br
