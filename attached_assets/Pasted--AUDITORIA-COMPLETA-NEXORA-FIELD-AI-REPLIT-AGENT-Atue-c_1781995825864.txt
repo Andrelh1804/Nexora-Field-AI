@@ -1,0 +1,460 @@
+# AUDITORIA COMPLETA NEXORA FIELD AI — REPLIT AGENT
+
+Atue como uma equipe de elite composta por:
+
+* Arquiteto de Software Enterprise
+* Especialista React
+* Especialista TypeScript
+* Especialista Node.js
+* Especialista PostgreSQL
+* Especialista Prisma ORM
+* Especialista DevOps
+* Especialista Segurança
+* Especialista UX/UI
+* Especialista SaaS Marketplace
+* Especialista Performance Web
+
+Sua missão é realizar uma auditoria completa e profunda da plataforma Nexora Field AI antes da publicação em produção.
+
+NÃO implemente novas funcionalidades.
+
+Primeiro identifique, documente e corrija todos os problemas existentes.
+
+---
+
+# OBJETIVO
+
+Garantir que a plataforma esteja:
+
+✓ Estável
+
+✓ Segura
+
+✓ Escalável
+
+✓ Responsiva
+
+✓ Sem erros de build
+
+✓ Sem erros TypeScript
+
+✓ Sem falhas de autenticação
+
+✓ Pronta para deploy em produção
+
+---
+
+# FASE 1 — INVENTÁRIO DO PROJETO
+
+Mapear completamente:
+
+## Frontend
+
+* React
+* TypeScript
+* Tailwind
+* Shadcn UI
+* Componentes
+* Hooks
+* Rotas
+
+Gerar relatório.
+
+---
+
+## Backend
+
+Mapear:
+
+* APIs
+* Controllers
+* Services
+* Middlewares
+* Autenticação
+* JWT
+
+Gerar relatório.
+
+---
+
+## Banco de Dados
+
+Mapear:
+
+* PostgreSQL
+* Prisma
+* Models
+* Relacionamentos
+* Índices
+
+Gerar relatório.
+
+---
+
+# FASE 2 — BUILD E COMPILAÇÃO
+
+Executar:
+
+```bash
+npm install
+
+npm run build
+```
+
+Identificar:
+
+* Erros
+* Warnings
+* Dependências quebradas
+* Imports inválidos
+* Tipagens incorretas
+
+Corrigir automaticamente.
+
+Executar novamente até obter:
+
+✓ Build sem erros
+
+---
+
+# FASE 3 — AUDITORIA TYPESCRIPT
+
+Verificar:
+
+* Any desnecessário
+* Tipagens incorretas
+* Interfaces ausentes
+* Tipos inconsistentes
+
+Corrigir.
+
+Meta:
+
+0 erros TypeScript.
+
+---
+
+# FASE 4 — AUDITORIA DE AUTENTICAÇÃO
+
+Validar completamente:
+
+Cadastro
+
+Login
+
+Logout
+
+Sessão
+
+JWT
+
+Recuperação de senha
+
+Controle de acesso
+
+RBAC
+
+Identificar vulnerabilidades.
+
+Corrigir.
+
+---
+
+# FASE 5 — ADMINISTRADOR
+
+Validar existência do administrador.
+
+Caso não exista:
+
+Criar automaticamente.
+
+Dados:
+
+Nome:
+Administrador Nexora
+
+Email:
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+Senha:
+Admin@123456
+
+Role:
+ADMIN
+
+Status:
+ATIVO
+
+Forçar troca de senha no primeiro login.
+
+---
+
+# FASE 6 — CADASTRO PÚBLICO
+
+Auditar tela de registro.
+
+Permitir somente:
+
+✓ Técnico
+
+✓ Empresa
+
+Remover completamente:
+
+❌ Administrador
+
+da interface pública.
+
+Validar backend.
+
+Impedir criação pública de administradores.
+
+---
+
+# FASE 7 — SEGURANÇA
+
+Auditar:
+
+* JWT
+* Senhas
+* Bcrypt
+* Sessões
+* Middleware
+* Validações
+* Rate Limiting
+* Escalação de privilégios
+
+Corrigir vulnerabilidades.
+
+Classificar:
+
+Crítica
+
+Alta
+
+Média
+
+Baixa
+
+---
+
+# FASE 8 — BANCO DE DADOS
+
+Validar:
+
+* Relacionamentos
+* Chaves estrangeiras
+* Integridade
+* Migrations
+* Seeds
+
+Corrigir:
+
+* Campos inconsistentes
+* Relacionamentos quebrados
+* Índices ausentes
+
+---
+
+# FASE 9 — PERFORMANCE
+
+Analisar:
+
+* Componentes pesados
+* Queries lentas
+* Re-renderizações
+* Bundle size
+
+Gerar recomendações.
+
+Meta:
+
+Performance > 90
+
+---
+
+# FASE 10 — UX/UI
+
+Auditar:
+
+* Responsividade
+* Mobile
+* Desktop
+* Navegação
+* Acessibilidade
+
+Validar:
+
+* Header
+* Menu
+* Dashboard
+* Login
+* Cadastro
+* Landing Page
+
+Corrigir problemas visuais.
+
+---
+
+# FASE 11 — BRANDING
+
+Validar:
+
+Logo Nexora Field AI
+
+Paleta oficial:
+
+#1B2942
+
+#0A84FF
+
+#8EDB65
+
+#FFFFFF
+
+#AAB4C3
+
+Verificar:
+
+* Consistência visual
+* Tamanho da logo
+* Posicionamento
+
+Aumentar visibilidade da marca onde necessário.
+
+---
+
+# FASE 12 — SEO
+
+Auditar:
+
+* Meta Tags
+* Open Graph
+* Sitemap
+* Robots
+* Performance SEO
+
+Gerar correções.
+
+---
+
+# FASE 13 — TESTES FUNCIONAIS
+
+Executar testes completos:
+
+✓ Cadastro Técnico
+
+✓ Cadastro Empresa
+
+✓ Login
+
+✓ Logout
+
+✓ Recuperação de Senha
+
+✓ Dashboard
+
+✓ Chamados
+
+✓ Administração
+
+✓ Relatórios
+
+✓ Navegação
+
+Documentar falhas encontradas.
+
+Corrigir.
+
+---
+
+# FASE 14 — TESTE DE PRODUÇÃO
+
+Simular ambiente real.
+
+Validar:
+
+100 usuários
+
+500 chamados
+
+50 empresas
+
+Verificar:
+
+* Banco
+* APIs
+* Sessões
+* Performance
+
+---
+
+# FASE 15 — RELATÓRIO EXECUTIVO
+
+Gerar relatório detalhado.
+
+## Resumo Executivo
+
+Score geral:
+
+0 a 100
+
+---
+
+## Problemas Encontrados
+
+Listar todos.
+
+---
+
+## Correções Realizadas
+
+Listar todas.
+
+---
+
+## Vulnerabilidades
+
+Classificar.
+
+---
+
+## Melhorias Recomendadas
+
+Prioridade:
+
+Crítica
+
+Alta
+
+Média
+
+Baixa
+
+---
+
+## Status Final
+
+Frontend
+
+Backend
+
+Banco
+
+Segurança
+
+UX
+
+SEO
+
+Deploy
+
+---
+
+# OBJETIVO FINAL
+
+Entregar uma plataforma Nexora Field AI totalmente auditada, corrigida, documentada e pronta para seguir para a fase de Deploy, Vercel, Supabase e publicação no domínio nexorafield.com.br.
+
+NÃO interrompa a auditoria ao encontrar erros.
+
+Corrija todos os problemas possíveis e somente finalize após gerar o relatório completo com score final da plataforma.

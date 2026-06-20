@@ -73,7 +73,7 @@ export default function AlterarSenha() {
       <div className="w-full max-w-md">
         <div className="bg-card border border-border rounded-2xl p-8 shadow-xl">
           <div className="flex justify-center mb-6">
-            <img src="/nexora-logo.png" alt="Nexora Field AI" className="w-[200px] h-auto" />
+            <img src="/nexora-logo.png" alt="Nexora Field AI" className="w-[180px] h-[180px] object-contain" />
           </div>
 
           {/* Alert Banner */}

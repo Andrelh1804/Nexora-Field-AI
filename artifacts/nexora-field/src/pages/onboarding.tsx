@@ -147,7 +147,7 @@ export default function Onboarding() {
 
       {/* Logo */}
       <a href="/" className="mb-10 z-10">
-        <img src="/nexora-logo.png" alt="Nexora Field" className="h-10 w-auto" />
+        <img src="/nexora-logo.png" alt="Nexora Field" className="h-16 w-16" />
       </a>
 
       {/* Progress bar */}

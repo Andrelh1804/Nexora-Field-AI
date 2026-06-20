@@ -81,11 +81,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-50 px-4 py-3 flex items-center justify-between">
         {user ? (
           <Link href="/" className="flex items-center gap-2">
-            <img src="/nexora-logo.png" alt="Nexora Field" className="h-7" />
+            <img src="/nexora-logo.png" alt="Nexora Field" className="h-11 w-11" />
           </Link>
         ) : (
           <a href="/landing/" className="flex items-center gap-2">
-            <img src="/nexora-logo.png" alt="Nexora Field" className="h-7" />
+            <img src="/nexora-logo.png" alt="Nexora Field" className="h-11 w-11" />
           </a>
         )}
 

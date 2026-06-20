@@ -44,7 +44,7 @@ export default function Home() {
       <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent py-5"}`}>
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
           <a href="/" className="flex items-center">
-            <img src="/nexora-logo.png" alt="Nexora Field AI" className="h-8 md:h-10 w-auto" />
+            <img src="/nexora-logo.png" alt="Nexora Field AI" className="h-12 w-12 md:h-14 md:w-14" />
           </a>
           
           <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-muted-foreground">
@@ -152,7 +152,7 @@ export default function Home() {
                 </motion.div>
                 
                 <motion.div variants={fadeIn} className="mb-8">
-                  <img src="/nexora-logo.png" alt="Nexora" className="h-16 md:h-20 w-auto mb-6" />
+                  <img src="/nexora-logo.png" alt="Nexora" className="h-28 w-28 md:h-36 md:w-36 mb-6" />
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
                     A Plataforma Inteligente que Conecta Empresas aos <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Melhores Técnicos de Campo</span>
                   </h1>
@@ -559,7 +559,7 @@ export default function Home() {
                 {/* Header Mockup */}
                 <div className="h-14 border-b border-white/5 flex items-center justify-between px-6 bg-black/20">
                   <div className="flex gap-4 items-center">
-                    <img src="/nexora-logo.png" alt="Logo" className="h-6 opacity-80" />
+                    <img src="/nexora-logo.png" alt="Logo" className="h-9 w-9 opacity-90" />
                     <div className="h-4 w-px bg-white/10 mx-2"></div>
                     <span className="text-sm font-medium text-white">Dashboard Executivo</span>
                   </div>
@@ -810,7 +810,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-8">
           <div className="grid md:grid-cols-4 gap-12 md:gap-8 mb-12">
             <div className="md:col-span-2">
-              <img src="/nexora-logo.png" alt="Nexora" className="h-10 w-auto mb-6" />
+              <img src="/nexora-logo.png" alt="Nexora" className="h-16 w-16 mb-6" />
               <p className="text-lg font-medium text-white mb-2">Conecta. Resolve. Impulsiona.</p>
               <p className="text-sm text-muted-foreground max-w-sm mb-4">
                 Marketplace Inteligente de Serviços Técnicos. O sistema operacional definitivo para operações em campo no Brasil.
