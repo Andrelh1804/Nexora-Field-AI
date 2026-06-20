@@ -1,5 +1,5 @@
 kind = "web"
-previewPath = "/"
+previewPath = "/landing/"
 title = "Nexora Field AI — Landing Page"
 version = "1.0.0"
 id = "artifacts/nexora-landing"
@@ -11,7 +11,7 @@ version = "1.0.0"
 
 [[services]]
 name = "web"
-paths = [ "/" ]
+paths = [ "/landing/" ]
 localPort = 18143
 
 [services.development]
@@ -28,4 +28,4 @@ to = "/index.html"
 
 [services.env]
 PORT = "18143"
-BASE_PATH = "/"
+BASE_PATH = "/landing/"
