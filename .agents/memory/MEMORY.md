@@ -3,3 +3,4 @@
 - [Ratings table constraints](ratings-constraints.md) — service_order_id NOT NULL, score is integer (not real), requires valid FK to completed orders
 - [Seed bulk script pattern](seed-bulk-pattern.md) — use timestamp in email to avoid conflicts; expose errors not swallow them; plans seeded separately via psql
 - [Test credentials](test-creds-reset.md) — original seed used unknown password; reset all test users via direct SQL UPDATE using bcryptjs hash
+- [Specialties system](specialties-system.md) — 4-table hierarchy (specialty_categories → subcategories → skills → technician_specialties); seeded on server startup; batch-replace pattern for upserts

@@ -6,22 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { CheckCircle2, ArrowRight, Building2, Wrench, MapPin, Phone, Zap } from "lucide-react";
-
-const SPECIALTIES = [
-  "Fibra Óptica",
-  "Telecom",
-  "Infraestrutura de TI",
-  "CFTV / Segurança",
-  "Energia Solar",
-  "Automação Industrial",
-  "Redes e Cabeamento",
-  "Manutenção Elétrica",
-  "Datacenters",
-  "Refrigeração / HVAC",
-  "Wi-Fi / Roteamento",
-  "Instalações Elétricas",
-];
+import { SpecialtySelector, type SelectedSkill } from "@/components/specialty-selector";
+import { CheckCircle2, ArrowRight, Building2, Wrench, MapPin, Zap, Sparkles } from "lucide-react";
 
 const STATES = [
   "AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG",
@@ -33,6 +19,8 @@ const fadeSlide = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.35 } },
   exit: { opacity: 0, x: -40, transition: { duration: 0.25 } },
 };
+
+const apiBase = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export default function Onboarding() {
   const { user, isLoading } = useAuth();
@@ -55,7 +43,7 @@ export default function Onboarding() {
   const [techState, setTechState] = useState("");
   const [techPhone, setTechPhone] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [specialties, setSpecialties] = useState<string[]>([]);
+  const [skills, setSkills] = useState<SelectedSkill[]>([]);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -64,12 +52,6 @@ export default function Onboarding() {
   }, [user, isLoading]);
 
   const totalSteps = 3;
-
-  const toggleSpecialty = (s: string) => {
-    setSpecialties(prev =>
-      prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
-    );
-  };
 
   const handleCompanyStep1 = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +64,7 @@ export default function Onboarding() {
     if (!companyCity.trim() || !companyState) return;
     setSubmitting(true);
     try {
-      const res = await fetch("/api/companies/me", {
+      const res = await fetch(`${apiBase}/api/companies/me`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${getAuthToken()}` },
         body: JSON.stringify({
@@ -110,13 +92,14 @@ export default function Onboarding() {
   };
 
   const handleTechStep2 = async () => {
-    if (specialties.length === 0) {
+    if (skills.length === 0) {
       toast({ title: "Atenção", description: "Selecione pelo menos uma especialidade.", variant: "destructive" });
       return;
     }
     setSubmitting(true);
     try {
-      const res = await fetch("/api/technicians/me", {
+      // 1. Create/update technician profile
+      const profileRes = await fetch(`${apiBase}/api/technicians/me`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${getAuthToken()}` },
         body: JSON.stringify({
@@ -124,10 +107,25 @@ export default function Onboarding() {
           state: techState,
           phone: techPhone,
           whatsapp: whatsapp || techPhone,
-          specialties,
+          specialties: skills.map(s => s.skillName),
         }),
       });
-      if (!res.ok) throw new Error("failed");
+      if (!profileRes.ok) throw new Error("profile failed");
+
+      // 2. Save structured specialties
+      const specRes = await fetch(`${apiBase}/api/technicians/me/specialties`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json", "Authorization": `Bearer ${getAuthToken()}` },
+        body: JSON.stringify({
+          specialties: skills.map(s => ({
+            skillId: s.skillId,
+            level: s.level,
+            yearsExperience: s.yearsExperience,
+          })),
+        }),
+      });
+      if (!specRes.ok) throw new Error("specialties failed");
+
       setStep(3);
     } catch {
       toast({ title: "Erro", description: "Não foi possível salvar. Tente novamente.", variant: "destructive" });
@@ -139,6 +137,9 @@ export default function Onboarding() {
   if (isLoading || !user) return null;
 
   const isCompany = user.role === "company";
+
+  // Wider card for the specialty step
+  const isSpecialtyStep = !isCompany && step === 2;
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-4 py-12 relative overflow-hidden">
@@ -171,7 +172,7 @@ export default function Onboarding() {
       </div>
 
       {/* Step card */}
-      <div className="w-full max-w-md z-10">
+      <div className={`w-full z-10 ${isSpecialtyStep ? "max-w-2xl" : "max-w-md"}`}>
         <AnimatePresence mode="wait">
 
           {/* ========== COMPANY STEPS ========== */}
@@ -352,37 +353,24 @@ export default function Onboarding() {
           {!isCompany && step === 2 && (
             <motion.div key="t2" variants={fadeSlide} initial="hidden" animate="visible" exit="exit">
               <div className="bg-card border border-border rounded-2xl p-8 shadow-xl">
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-4">
                   <div className="h-10 w-10 rounded-xl bg-secondary/15 flex items-center justify-center text-secondary">
-                    <Wrench size={20} />
+                    <Sparkles size={20} />
                   </div>
                   <div>
                     <h2 className="text-xl font-bold text-foreground">Suas Especialidades</h2>
-                    <p className="text-sm text-muted-foreground">Selecione as áreas em que você atua.</p>
+                    <p className="text-sm text-muted-foreground">
+                      Escolha skills específicas para ter mais matches.{" "}
+                      {skills.length > 0 && (
+                        <span className="text-primary font-medium">{skills.length} selecionadas</span>
+                      )}
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {SPECIALTIES.map(s => {
-                    const selected = specialties.includes(s);
-                    return (
-                      <button
-                        key={s}
-                        type="button"
-                        onClick={() => toggleSpecialty(s)}
-                        className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                          selected
-                            ? "bg-secondary text-secondary-foreground border-secondary shadow-[0_0_10px_rgba(142,219,101,0.3)]"
-                            : "bg-white/5 border-white/15 text-muted-foreground hover:border-white/30 hover:text-foreground"
-                        }`}
-                      >
-                        {s}
-                      </button>
-                    );
-                  })}
-                </div>
+                <SpecialtySelector value={skills} onChange={setSkills} maxSkills={25} />
 
-                <div className="flex gap-3">
+                <div className="flex gap-3 mt-6">
                   <Button type="button" variant="outline" className="flex-1" onClick={() => setStep(1)}>
                     Voltar
                   </Button>
@@ -390,7 +378,7 @@ export default function Onboarding() {
                     type="button"
                     className="flex-1 flex items-center gap-2 bg-secondary text-secondary-foreground hover:bg-secondary/90"
                     onClick={handleTechStep2}
-                    disabled={submitting}
+                    disabled={submitting || skills.length === 0}
                   >
                     {submitting ? "Salvando..." : (<>Concluir <ArrowRight size={16} /></>)}
                   </Button>
@@ -418,7 +406,7 @@ export default function Onboarding() {
                 <p className="text-muted-foreground mb-8">
                   {isCompany
                     ? "Sua empresa está pronta para começar a contratar técnicos com inteligência artificial."
-                    : "Seu perfil está pronto. Agora você pode receber chamados compatíveis com suas especialidades."}
+                    : `Seu perfil está pronto com ${skills.length} especialidades cadastradas. Agora você receberá chamados compatíveis com suas skills.`}
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 mb-8 text-left">
@@ -427,7 +415,7 @@ export default function Onboarding() {
                     { icon: <Building2 size={14} />, label: "Acesse o dashboard executivo" },
                   ] : [
                     { icon: <Zap size={14} />, label: "Veja os chamados disponíveis" },
-                    { icon: <Wrench size={14} />, label: "Complete seu perfil técnico" },
+                    { icon: <Wrench size={14} />, label: "Gerencie suas especialidades" },
                   ]).map((item, i) => (
                     <div key={i} className="flex items-center gap-2 bg-white/5 rounded-lg p-3 text-sm text-muted-foreground">
                       <span className="text-primary shrink-0">{item.icon}</span>

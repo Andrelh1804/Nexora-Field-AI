@@ -28,6 +28,7 @@ import communityRouter from "./community";
 import apiKeysRouter from "./api-keys";
 import contractsRouter from "./contracts";
 import executiveRouter from "./executive";
+import specialtiesRouter from "./specialties";
 
 const router: IRouter = Router();
 
@@ -60,5 +61,6 @@ router.use(communityRouter);
 router.use(apiKeysRouter);
 router.use(contractsRouter);
 router.use(executiveRouter);
+router.use(specialtiesRouter);
 
 export default router;

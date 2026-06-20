@@ -56,6 +56,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const roleLinks = user ? [
     ...(user.role === "technician" ? [
+      { href: "/especialidades", label: "⚡ Especialidades" },
       { href: "/carteira", label: "💰 Carteira" },
       { href: "/copilot", label: "🤖 Copiloto" },
       { href: "/visao", label: "👁️ Visão IA" },
@@ -65,6 +66,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     ] : []),
     ...(user.role === "admin" ? [
       { href: "/admin", label: "⚡ Admin" },
+      { href: "/admin/especialidades", label: "🗂️ Especialidades" },
       { href: "/executive", label: "🧠 Executive" },
       { href: "/crm", label: "🎯 CRM" },
       { href: "/contratos", label: "📋 Contratos" },

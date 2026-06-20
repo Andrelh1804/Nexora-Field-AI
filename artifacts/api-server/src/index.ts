@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db, usersTable } from "@workspace/db";
 import app from "./app";
 import { logger } from "./lib/logger";
+import { seedSpecialties } from "./scripts/seed-specialties";
 
 const rawPort = process.env["PORT"];
 
@@ -53,4 +54,5 @@ app.listen(port, async (err) => {
 
   logger.info({ port }, "Server listening");
   await seedDefaultAdmin();
+  await seedSpecialties();
 });

@@ -35,6 +35,8 @@ import Conhecimento from "@/pages/conhecimento";
 import AlterarSenha from "@/pages/alterar-senha";
 import Privacidade from "@/pages/privacidade";
 import Termos from "@/pages/termos";
+import Especialidades from "@/pages/especialidades";
+import AdminEspecialidades from "@/pages/admin-especialidades";
 import { CookieBanner } from "@/components/cookie-banner";
 
 const queryClient = new QueryClient({
@@ -109,6 +111,8 @@ function Router() {
             <Route path="/crm" component={() => <ProtectedRoute component={Crm} roles={["admin"]} />} />
             <Route path="/developer" component={() => <ProtectedRoute component={Developer} />} />
             <Route path="/executive" component={() => <ProtectedRoute component={Executive} roles={["admin"]} />} />
+            <Route path="/especialidades" component={() => <ProtectedRoute component={Especialidades} roles={["technician"]} />} />
+            <Route path="/admin/especialidades" component={() => <ProtectedRoute component={AdminEspecialidades} roles={["admin"]} />} />
             <Route component={NotFound} />
           </Switch>
         </Layout>

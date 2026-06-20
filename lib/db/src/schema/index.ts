@@ -28,3 +28,5 @@ export * from "./academy";
 export * from "./community";
 export * from "./contracts";
 export * from "./api-keys";
+export * from "./specialty-categories";
+export * from "./technician-specialties";
