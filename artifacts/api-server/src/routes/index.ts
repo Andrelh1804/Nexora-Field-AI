@@ -7,6 +7,15 @@ import serviceOrdersRouter from "./service-orders";
 import applicationsRouter from "./applications";
 import ratingsRouter from "./ratings";
 import dashboardRouter from "./dashboard";
+import notificationsRouter from "./notifications";
+import locationsRouter from "./locations";
+import rankingsRouter from "./rankings";
+import evidencesRouter from "./evidences";
+import checkinRouter from "./checkin";
+import plansRouter from "./plans";
+import walletsRouter from "./wallets";
+import aiRouter from "./ai";
+import dispatchRouter from "./dispatch";
 
 const router: IRouter = Router();
 
@@ -18,5 +27,14 @@ router.use(serviceOrdersRouter);
 router.use(applicationsRouter);
 router.use(ratingsRouter);
 router.use(dashboardRouter);
+router.use(notificationsRouter);
+router.use(locationsRouter);
+router.use(rankingsRouter);
+router.use(evidencesRouter);
+router.use(checkinRouter);
+router.use(plansRouter);
+router.use(walletsRouter);
+router.use(aiRouter);
+router.use(dispatchRouter);
 
 export default router;

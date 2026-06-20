@@ -25,6 +25,24 @@ tags:
     description: Ratings and reviews
   - name: dashboard
     description: Dashboard and analytics
+  - name: notifications
+    description: Notifications
+  - name: locations
+    description: Geolocation
+  - name: rankings
+    description: Technician rankings
+  - name: evidences
+    description: Service evidences
+  - name: checkin
+    description: Check-in and checkout
+  - name: billing
+    description: Plans and subscriptions
+  - name: wallet
+    description: Digital wallet
+  - name: ai
+    description: AI features
+  - name: dispatch
+    description: Auto-dispatch
 
 paths:
   /healthz:
@@ -550,6 +568,491 @@ paths:
               schema:
                 $ref: "#/components/schemas/TechnicianDashboard"
 
+  # NOTIFICATIONS
+  /notifications:
+    get:
+      operationId: listNotifications
+      tags: [notifications]
+      summary: List my notifications
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /notifications/unread-count:
+    get:
+      operationId: getUnreadCount
+      tags: [notifications]
+      summary: Get unread notification count
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [count]
+                properties:
+                  count:
+                    type: integer
+
+  /notifications/read-all:
+    patch:
+      operationId: markAllNotificationsRead
+      tags: [notifications]
+      summary: Mark all notifications as read
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OkResponse"
+
+  /notifications/{id}/read:
+    patch:
+      operationId: markNotificationRead
+      tags: [notifications]
+      summary: Mark a notification as read
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OkResponse"
+
+  # LOCATIONS / MAP
+  /locations/me:
+    put:
+      operationId: updateMyLocation
+      tags: [locations]
+      summary: Update technician location
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocationInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TechnicianLocation"
+
+  /locations/technicians:
+    get:
+      operationId: listTechnicianLocations
+      tags: [locations]
+      summary: Get all technician locations for map
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TechnicianLocation"
+
+  /locations/orders:
+    get:
+      operationId: listOrderLocations
+      tags: [locations]
+      summary: Get service orders for map
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+
+  # RANKINGS
+  /rankings:
+    get:
+      operationId: listRankings
+      tags: [rankings]
+      summary: Get global technician leaderboard
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RankingEntry"
+
+  /rankings/me:
+    get:
+      operationId: getMyRanking
+      tags: [rankings]
+      summary: Get my ranking
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RankingEntry"
+
+  # EVIDENCES
+  /service-orders/{id}/evidences:
+    get:
+      operationId: listEvidences
+      tags: [evidences]
+      summary: List evidences for a service order
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ServiceEvidence"
+    post:
+      operationId: addEvidence
+      tags: [evidences]
+      summary: Add evidence to a service order
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EvidenceInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceEvidence"
+
+  # CHECK-IN / CHECK-OUT
+  /service-orders/{id}/checkin:
+    get:
+      operationId: getCheckin
+      tags: [checkin]
+      summary: Get checkin record for service order
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckinRecord"
+    post:
+      operationId: doCheckin
+      tags: [checkin]
+      summary: Perform check-in
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckinInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckinRecord"
+
+  /service-orders/{id}/checkout:
+    post:
+      operationId: doCheckout
+      tags: [checkin]
+      summary: Perform check-out
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CheckoutInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CheckinRecord"
+
+  # PLANS & SUBSCRIPTIONS
+  /plans:
+    get:
+      operationId: listPlans
+      tags: [billing]
+      summary: List available plans
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plan"
+
+  /subscriptions:
+    post:
+      operationId: subscribeToPlan
+      tags: [billing]
+      summary: Subscribe to a plan
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeToPlanInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+
+  /subscriptions/me:
+    get:
+      operationId: getMySubscription
+      tags: [billing]
+      summary: Get my current subscription
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+    delete:
+      operationId: cancelSubscription
+      tags: [billing]
+      summary: Cancel my subscription
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OkResponse"
+
+  # WALLET
+  /wallet:
+    get:
+      operationId: getWallet
+      tags: [wallet]
+      summary: Get my wallet
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+
+  /wallet/transactions:
+    get:
+      operationId: listTransactions
+      tags: [wallet]
+      summary: Get my transactions
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Transaction"
+
+  /wallet/withdraw:
+    post:
+      operationId: requestWithdrawal
+      tags: [wallet]
+      summary: Request withdrawal
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WithdrawalInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transaction"
+
+  # AI
+  /ai/classify/{id}:
+    post:
+      operationId: classifyOrder
+      tags: [ai]
+      summary: AI classification of service order
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiClassification"
+
+  /ai/pricing:
+    post:
+      operationId: getAiPricing
+      tags: [ai]
+      summary: AI pricing suggestion
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiPricingInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiPricingResult"
+
+  /ai/match/{orderId}:
+    get:
+      operationId: getAiMatchV2
+      tags: [ai]
+      summary: AI-powered technician matching
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TechnicianMatch"
+
+  # DISPATCH
+  /dispatch/{orderId}:
+    post:
+      operationId: triggerDispatch
+      tags: [dispatch]
+      summary: Trigger auto-dispatch for a service order
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DispatchResult"
+
+  /dispatch/{orderId}/accept:
+    post:
+      operationId: acceptDispatch
+      tags: [dispatch]
+      summary: Accept a dispatch invite
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OkResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -1000,4 +1503,391 @@ components:
         category:
           type: string
         count:
+          type: integer
+
+    OkResponse:
+      type: object
+      required: [ok]
+      properties:
+        ok:
+          type: boolean
+
+    # NOTIFICATIONS
+    Notification:
+      type: object
+      required: [id, userId, type, title, message, read, createdAt]
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        type:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+        data:
+          type: ["string", "null"]
+        read:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    # LOCATIONS
+    TechnicianLocation:
+      type: object
+      required: [technician_id, latitude, longitude]
+      properties:
+        technician_id:
+          type: integer
+        latitude:
+          type: number
+        longitude:
+          type: number
+        city:
+          type: ["string", "null"]
+        state:
+          type: ["string", "null"]
+        name:
+          type: string
+        specialties:
+          type: array
+          items:
+            type: string
+        rating:
+          type: ["number", "null"]
+        photo_url:
+          type: ["string", "null"]
+        updated_at:
+          type: string
+          format: date-time
+
+    LocationInput:
+      type: object
+      required: [latitude, longitude]
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        city:
+          type: string
+        state:
+          type: string
+
+    # RANKINGS
+    RankingEntry:
+      type: object
+      required: [id, technicianId, level, score]
+      properties:
+        id:
+          type: integer
+        technicianId:
+          type: integer
+        level:
+          type: string
+          enum: [bronze, prata, ouro, platina, diamante]
+        score:
+          type: number
+        completedOrders:
+          type: integer
+        avgRating:
+          type: ["number", "null"]
+        position:
+          type: ["integer", "null"]
+        name:
+          type: string
+        photo_url:
+          type: ["string", "null"]
+        city:
+          type: string
+        state:
+          type: string
+        levelConfig:
+          type: object
+
+    # EVIDENCES
+    ServiceEvidence:
+      type: object
+      required: [id, serviceOrderId, technicianId, category, type, url, filename, createdAt]
+      properties:
+        id:
+          type: integer
+        serviceOrderId:
+          type: integer
+        technicianId:
+          type: integer
+        category:
+          type: string
+          enum: [antes, durante, depois]
+        type:
+          type: string
+          enum: [foto, video, documento]
+        url:
+          type: string
+        filename:
+          type: string
+        description:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    EvidenceInput:
+      type: object
+      required: [category, url, filename]
+      properties:
+        category:
+          type: string
+          enum: [antes, durante, depois]
+        type:
+          type: string
+          enum: [foto, video, documento]
+        url:
+          type: string
+        filename:
+          type: string
+        description:
+          type: string
+
+    # CHECK-IN
+    CheckinRecord:
+      type: object
+      required: [id, serviceOrderId, technicianId]
+      properties:
+        id:
+          type: integer
+        serviceOrderId:
+          type: integer
+        technicianId:
+          type: integer
+        checkinAt:
+          type: ["string", "null"]
+          format: date-time
+        checkinLatitude:
+          type: ["number", "null"]
+        checkinLongitude:
+          type: ["number", "null"]
+        checkinPhotoUrl:
+          type: ["string", "null"]
+        checkoutAt:
+          type: ["string", "null"]
+          format: date-time
+        checkoutLatitude:
+          type: ["number", "null"]
+        checkoutLongitude:
+          type: ["number", "null"]
+        checkoutPhotoUrl:
+          type: ["string", "null"]
+        durationMinutes:
+          type: ["integer", "null"]
+        notes:
+          type: ["string", "null"]
+
+    CheckinInput:
+      type: object
+      required: [latitude, longitude]
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        photoUrl:
+          type: string
+
+    CheckoutInput:
+      type: object
+      required: [latitude, longitude]
+      properties:
+        latitude:
+          type: number
+        longitude:
+          type: number
+        photoUrl:
+          type: string
+        notes:
+          type: string
+
+    # PLANS & BILLING
+    Plan:
+      type: object
+      required: [id, name, slug, target, price, features, active]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        target:
+          type: string
+          enum: [technician, company]
+        price:
+          type: number
+        maxOrders:
+          type: ["integer", "null"]
+        features:
+          type: array
+          items:
+            type: string
+        stripePriceId:
+          type: ["string", "null"]
+        active:
+          type: boolean
+
+    Subscription:
+      type: object
+      required: [id, userId, planId, status]
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        planId:
+          type: integer
+        status:
+          type: string
+          enum: [ativa, suspensa, cancelada, inadimplente, trial]
+        planName:
+          type: ["string", "null"]
+        planSlug:
+          type: ["string", "null"]
+        planPrice:
+          type: ["number", "null"]
+        planTarget:
+          type: ["string", "null"]
+        planFeatures:
+          type: ["array", "null"]
+          items:
+            type: string
+        currentPeriodEnd:
+          type: ["string", "null"]
+          format: date-time
+
+    # WALLET
+    Wallet:
+      type: object
+      required: [id, userId, balance, pendingBalance, blockedBalance, totalEarned, totalWithdrawn]
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        balance:
+          type: number
+        pendingBalance:
+          type: number
+        blockedBalance:
+          type: number
+        totalEarned:
+          type: number
+        totalWithdrawn:
+          type: number
+
+    Transaction:
+      type: object
+      required: [id, walletId, userId, type, status, amount, description, createdAt]
+      properties:
+        id:
+          type: integer
+        walletId:
+          type: integer
+        userId:
+          type: integer
+        type:
+          type: string
+        status:
+          type: string
+        amount:
+          type: number
+        description:
+          type: string
+        reference:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    WithdrawalInput:
+      type: object
+      required: [amount]
+      properties:
+        amount:
+          type: number
+          minimum: 50
+        pixKey:
+          type: string
+
+    # AI
+    AiClassification:
+      type: object
+      required: [orderId, category, complexity]
+      properties:
+        orderId:
+          type: integer
+        category:
+          type: string
+        complexity:
+          type: string
+          enum: [baixa, media, alta]
+        estimatedHours:
+          type: ["number", "null"]
+        reasoning:
+          type: ["string", "null"]
+        aiGenerated:
+          type: boolean
+
+    AiPricingInput:
+      type: object
+      required: [title, description, category, city, state]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        complexity:
+          type: string
+
+    AiPricingResult:
+      type: object
+      required: [minValue, idealValue, premiumValue]
+      properties:
+        minValue:
+          type: number
+        idealValue:
+          type: number
+        premiumValue:
+          type: number
+        reasoning:
+          type: ["string", "null"]
+        aiGenerated:
+          type: boolean
+
+    # DISPATCH
+    SubscribeToPlanInput:
+      type: object
+      required: [planId]
+      properties:
+        planId:
+          type: integer
+
+    DispatchResult:
+      type: object
+      required: [orderId, dispatched, total]
+      properties:
+        orderId:
+          type: integer
+        dispatched:
+          type: array
+          items:
+            type: object
+        total:
           type: integer

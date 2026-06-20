@@ -337,6 +337,304 @@ export interface TechnicianDashboard {
   recentApplications: Application[];
 }
 
+export interface OkResponse {
+  ok: boolean;
+}
+
+export interface Notification {
+  id: number;
+  userId: number;
+  type: string;
+  title: string;
+  message: string;
+  /** @nullable */
+  data?: string | null;
+  read: boolean;
+  createdAt: string;
+}
+
+export interface TechnicianLocation {
+  technician_id: number;
+  latitude: number;
+  longitude: number;
+  /** @nullable */
+  city?: string | null;
+  /** @nullable */
+  state?: string | null;
+  name?: string;
+  specialties?: string[];
+  /** @nullable */
+  rating?: number | null;
+  /** @nullable */
+  photo_url?: string | null;
+  updated_at?: string;
+}
+
+export interface LocationInput {
+  latitude: number;
+  longitude: number;
+  city?: string;
+  state?: string;
+}
+
+export type RankingEntryLevel = typeof RankingEntryLevel[keyof typeof RankingEntryLevel];
+
+
+export const RankingEntryLevel = {
+  bronze: 'bronze',
+  prata: 'prata',
+  ouro: 'ouro',
+  platina: 'platina',
+  diamante: 'diamante',
+} as const;
+
+export type RankingEntryLevelConfig = { [key: string]: unknown };
+
+export interface RankingEntry {
+  id: number;
+  technicianId: number;
+  level: RankingEntryLevel;
+  score: number;
+  completedOrders?: number;
+  /** @nullable */
+  avgRating?: number | null;
+  /** @nullable */
+  position?: number | null;
+  name?: string;
+  /** @nullable */
+  photo_url?: string | null;
+  city?: string;
+  state?: string;
+  levelConfig?: RankingEntryLevelConfig;
+}
+
+export type ServiceEvidenceCategory = typeof ServiceEvidenceCategory[keyof typeof ServiceEvidenceCategory];
+
+
+export const ServiceEvidenceCategory = {
+  antes: 'antes',
+  durante: 'durante',
+  depois: 'depois',
+} as const;
+
+export type ServiceEvidenceType = typeof ServiceEvidenceType[keyof typeof ServiceEvidenceType];
+
+
+export const ServiceEvidenceType = {
+  foto: 'foto',
+  video: 'video',
+  documento: 'documento',
+} as const;
+
+export interface ServiceEvidence {
+  id: number;
+  serviceOrderId: number;
+  technicianId: number;
+  category: ServiceEvidenceCategory;
+  type: ServiceEvidenceType;
+  url: string;
+  filename: string;
+  /** @nullable */
+  description?: string | null;
+  createdAt: string;
+}
+
+export type EvidenceInputCategory = typeof EvidenceInputCategory[keyof typeof EvidenceInputCategory];
+
+
+export const EvidenceInputCategory = {
+  antes: 'antes',
+  durante: 'durante',
+  depois: 'depois',
+} as const;
+
+export type EvidenceInputType = typeof EvidenceInputType[keyof typeof EvidenceInputType];
+
+
+export const EvidenceInputType = {
+  foto: 'foto',
+  video: 'video',
+  documento: 'documento',
+} as const;
+
+export interface EvidenceInput {
+  category: EvidenceInputCategory;
+  type?: EvidenceInputType;
+  url: string;
+  filename: string;
+  description?: string;
+}
+
+export interface CheckinRecord {
+  id: number;
+  serviceOrderId: number;
+  technicianId: number;
+  /** @nullable */
+  checkinAt?: string | null;
+  /** @nullable */
+  checkinLatitude?: number | null;
+  /** @nullable */
+  checkinLongitude?: number | null;
+  /** @nullable */
+  checkinPhotoUrl?: string | null;
+  /** @nullable */
+  checkoutAt?: string | null;
+  /** @nullable */
+  checkoutLatitude?: number | null;
+  /** @nullable */
+  checkoutLongitude?: number | null;
+  /** @nullable */
+  checkoutPhotoUrl?: string | null;
+  /** @nullable */
+  durationMinutes?: number | null;
+  /** @nullable */
+  notes?: string | null;
+}
+
+export interface CheckinInput {
+  latitude: number;
+  longitude: number;
+  photoUrl?: string;
+}
+
+export interface CheckoutInput {
+  latitude: number;
+  longitude: number;
+  photoUrl?: string;
+  notes?: string;
+}
+
+export type PlanTarget = typeof PlanTarget[keyof typeof PlanTarget];
+
+
+export const PlanTarget = {
+  technician: 'technician',
+  company: 'company',
+} as const;
+
+export interface Plan {
+  id: number;
+  name: string;
+  slug: string;
+  target: PlanTarget;
+  price: number;
+  /** @nullable */
+  maxOrders?: number | null;
+  features: string[];
+  /** @nullable */
+  stripePriceId?: string | null;
+  active: boolean;
+}
+
+export type SubscriptionStatus = typeof SubscriptionStatus[keyof typeof SubscriptionStatus];
+
+
+export const SubscriptionStatus = {
+  ativa: 'ativa',
+  suspensa: 'suspensa',
+  cancelada: 'cancelada',
+  inadimplente: 'inadimplente',
+  trial: 'trial',
+} as const;
+
+export interface Subscription {
+  id: number;
+  userId: number;
+  planId: number;
+  status: SubscriptionStatus;
+  /** @nullable */
+  planName?: string | null;
+  /** @nullable */
+  planSlug?: string | null;
+  /** @nullable */
+  planPrice?: number | null;
+  /** @nullable */
+  planTarget?: string | null;
+  /** @nullable */
+  planFeatures?: string[] | null;
+  /** @nullable */
+  currentPeriodEnd?: string | null;
+}
+
+export interface Wallet {
+  id: number;
+  userId: number;
+  balance: number;
+  pendingBalance: number;
+  blockedBalance: number;
+  totalEarned: number;
+  totalWithdrawn: number;
+}
+
+export interface Transaction {
+  id: number;
+  walletId: number;
+  userId: number;
+  type: string;
+  status: string;
+  amount: number;
+  description: string;
+  /** @nullable */
+  reference?: string | null;
+  createdAt: string;
+}
+
+export interface WithdrawalInput {
+  /** @minimum 50 */
+  amount: number;
+  pixKey?: string;
+}
+
+export type AiClassificationComplexity = typeof AiClassificationComplexity[keyof typeof AiClassificationComplexity];
+
+
+export const AiClassificationComplexity = {
+  baixa: 'baixa',
+  media: 'media',
+  alta: 'alta',
+} as const;
+
+export interface AiClassification {
+  orderId: number;
+  category: string;
+  complexity: AiClassificationComplexity;
+  /** @nullable */
+  estimatedHours?: number | null;
+  /** @nullable */
+  reasoning?: string | null;
+  aiGenerated?: boolean;
+}
+
+export interface AiPricingInput {
+  title: string;
+  description: string;
+  category: string;
+  city: string;
+  state: string;
+  complexity?: string;
+}
+
+export interface AiPricingResult {
+  minValue: number;
+  idealValue: number;
+  premiumValue: number;
+  /** @nullable */
+  reasoning?: string | null;
+  aiGenerated?: boolean;
+}
+
+export interface SubscribeToPlanInput {
+  planId: number;
+}
+
+export type DispatchResultDispatchedItem = { [key: string]: unknown };
+
+export interface DispatchResult {
+  orderId: number;
+  dispatched: DispatchResultDispatchedItem[];
+  total: number;
+}
+
 export type ListTechniciansParams = {
 specialty?: string;
 city?: string;
@@ -349,4 +647,10 @@ category?: string;
 city?: string;
 state?: string;
 };
+
+export type GetUnreadCount200 = {
+  count: number;
+};
+
+export type ListOrderLocations200Item = { [key: string]: unknown };
 

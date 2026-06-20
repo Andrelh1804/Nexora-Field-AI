@@ -1082,3 +1082,455 @@ export const GetTechnicianDashboardResponse = zod.object({
 })
 
 
+/**
+ * @summary List my notifications
+ */
+export const ListNotificationsResponseItem = zod.object({
+  "id": zod.number(),
+  "userId": zod.number(),
+  "type": zod.string(),
+  "title": zod.string(),
+  "message": zod.string(),
+  "data": zod.string().nullish(),
+  "read": zod.boolean(),
+  "createdAt": zod.coerce.date()
+})
+export const ListNotificationsResponse = zod.array(ListNotificationsResponseItem)
+
+
+/**
+ * @summary Get unread notification count
+ */
+export const GetUnreadCountResponse = zod.object({
+  "count": zod.number()
+})
+
+
+/**
+ * @summary Mark all notifications as read
+ */
+export const MarkAllNotificationsReadResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+
+/**
+ * @summary Mark a notification as read
+ */
+export const MarkNotificationReadParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const MarkNotificationReadResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+
+/**
+ * @summary Update technician location
+ */
+export const UpdateMyLocationBody = zod.object({
+  "latitude": zod.number(),
+  "longitude": zod.number(),
+  "city": zod.string().optional(),
+  "state": zod.string().optional()
+})
+
+export const UpdateMyLocationResponse = zod.object({
+  "technician_id": zod.number(),
+  "latitude": zod.number(),
+  "longitude": zod.number(),
+  "city": zod.string().nullish(),
+  "state": zod.string().nullish(),
+  "name": zod.string().optional(),
+  "specialties": zod.array(zod.string()).optional(),
+  "rating": zod.number().nullish(),
+  "photo_url": zod.string().nullish(),
+  "updated_at": zod.coerce.date().optional()
+})
+
+
+/**
+ * @summary Get all technician locations for map
+ */
+export const ListTechnicianLocationsResponseItem = zod.object({
+  "technician_id": zod.number(),
+  "latitude": zod.number(),
+  "longitude": zod.number(),
+  "city": zod.string().nullish(),
+  "state": zod.string().nullish(),
+  "name": zod.string().optional(),
+  "specialties": zod.array(zod.string()).optional(),
+  "rating": zod.number().nullish(),
+  "photo_url": zod.string().nullish(),
+  "updated_at": zod.coerce.date().optional()
+})
+export const ListTechnicianLocationsResponse = zod.array(ListTechnicianLocationsResponseItem)
+
+
+/**
+ * @summary Get service orders for map
+ */
+export const ListOrderLocationsResponseItem = zod.object({
+
+}).passthrough()
+export const ListOrderLocationsResponse = zod.array(ListOrderLocationsResponseItem)
+
+
+/**
+ * @summary Get global technician leaderboard
+ */
+export const ListRankingsResponseItem = zod.object({
+  "id": zod.number(),
+  "technicianId": zod.number(),
+  "level": zod.enum(['bronze', 'prata', 'ouro', 'platina', 'diamante']),
+  "score": zod.number(),
+  "completedOrders": zod.number().optional(),
+  "avgRating": zod.number().nullish(),
+  "position": zod.number().nullish(),
+  "name": zod.string().optional(),
+  "photo_url": zod.string().nullish(),
+  "city": zod.string().optional(),
+  "state": zod.string().optional(),
+  "levelConfig": zod.object({
+
+}).passthrough().optional()
+})
+export const ListRankingsResponse = zod.array(ListRankingsResponseItem)
+
+
+/**
+ * @summary Get my ranking
+ */
+export const GetMyRankingResponse = zod.object({
+  "id": zod.number(),
+  "technicianId": zod.number(),
+  "level": zod.enum(['bronze', 'prata', 'ouro', 'platina', 'diamante']),
+  "score": zod.number(),
+  "completedOrders": zod.number().optional(),
+  "avgRating": zod.number().nullish(),
+  "position": zod.number().nullish(),
+  "name": zod.string().optional(),
+  "photo_url": zod.string().nullish(),
+  "city": zod.string().optional(),
+  "state": zod.string().optional(),
+  "levelConfig": zod.object({
+
+}).passthrough().optional()
+})
+
+
+/**
+ * @summary List evidences for a service order
+ */
+export const ListEvidencesParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const ListEvidencesResponseItem = zod.object({
+  "id": zod.number(),
+  "serviceOrderId": zod.number(),
+  "technicianId": zod.number(),
+  "category": zod.enum(['antes', 'durante', 'depois']),
+  "type": zod.enum(['foto', 'video', 'documento']),
+  "url": zod.string(),
+  "filename": zod.string(),
+  "description": zod.string().nullish(),
+  "createdAt": zod.coerce.date()
+})
+export const ListEvidencesResponse = zod.array(ListEvidencesResponseItem)
+
+
+/**
+ * @summary Add evidence to a service order
+ */
+export const AddEvidenceParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const AddEvidenceBody = zod.object({
+  "category": zod.enum(['antes', 'durante', 'depois']),
+  "type": zod.enum(['foto', 'video', 'documento']).optional(),
+  "url": zod.string(),
+  "filename": zod.string(),
+  "description": zod.string().optional()
+})
+
+
+/**
+ * @summary Get checkin record for service order
+ */
+export const GetCheckinParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const GetCheckinResponse = zod.object({
+  "id": zod.number(),
+  "serviceOrderId": zod.number(),
+  "technicianId": zod.number(),
+  "checkinAt": zod.coerce.date().nullish(),
+  "checkinLatitude": zod.number().nullish(),
+  "checkinLongitude": zod.number().nullish(),
+  "checkinPhotoUrl": zod.string().nullish(),
+  "checkoutAt": zod.coerce.date().nullish(),
+  "checkoutLatitude": zod.number().nullish(),
+  "checkoutLongitude": zod.number().nullish(),
+  "checkoutPhotoUrl": zod.string().nullish(),
+  "durationMinutes": zod.number().nullish(),
+  "notes": zod.string().nullish()
+})
+
+
+/**
+ * @summary Perform check-in
+ */
+export const DoCheckinParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const DoCheckinBody = zod.object({
+  "latitude": zod.number(),
+  "longitude": zod.number(),
+  "photoUrl": zod.string().optional()
+})
+
+export const DoCheckinResponse = zod.object({
+  "id": zod.number(),
+  "serviceOrderId": zod.number(),
+  "technicianId": zod.number(),
+  "checkinAt": zod.coerce.date().nullish(),
+  "checkinLatitude": zod.number().nullish(),
+  "checkinLongitude": zod.number().nullish(),
+  "checkinPhotoUrl": zod.string().nullish(),
+  "checkoutAt": zod.coerce.date().nullish(),
+  "checkoutLatitude": zod.number().nullish(),
+  "checkoutLongitude": zod.number().nullish(),
+  "checkoutPhotoUrl": zod.string().nullish(),
+  "durationMinutes": zod.number().nullish(),
+  "notes": zod.string().nullish()
+})
+
+
+/**
+ * @summary Perform check-out
+ */
+export const DoCheckoutParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const DoCheckoutBody = zod.object({
+  "latitude": zod.number(),
+  "longitude": zod.number(),
+  "photoUrl": zod.string().optional(),
+  "notes": zod.string().optional()
+})
+
+export const DoCheckoutResponse = zod.object({
+  "id": zod.number(),
+  "serviceOrderId": zod.number(),
+  "technicianId": zod.number(),
+  "checkinAt": zod.coerce.date().nullish(),
+  "checkinLatitude": zod.number().nullish(),
+  "checkinLongitude": zod.number().nullish(),
+  "checkinPhotoUrl": zod.string().nullish(),
+  "checkoutAt": zod.coerce.date().nullish(),
+  "checkoutLatitude": zod.number().nullish(),
+  "checkoutLongitude": zod.number().nullish(),
+  "checkoutPhotoUrl": zod.string().nullish(),
+  "durationMinutes": zod.number().nullish(),
+  "notes": zod.string().nullish()
+})
+
+
+/**
+ * @summary List available plans
+ */
+export const ListPlansResponseItem = zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "slug": zod.string(),
+  "target": zod.enum(['technician', 'company']),
+  "price": zod.number(),
+  "maxOrders": zod.number().nullish(),
+  "features": zod.array(zod.string()),
+  "stripePriceId": zod.string().nullish(),
+  "active": zod.boolean()
+})
+export const ListPlansResponse = zod.array(ListPlansResponseItem)
+
+
+/**
+ * @summary Subscribe to a plan
+ */
+export const SubscribeToPlanBody = zod.object({
+  "planId": zod.number()
+})
+
+
+/**
+ * @summary Get my current subscription
+ */
+export const GetMySubscriptionResponse = zod.object({
+  "id": zod.number(),
+  "userId": zod.number(),
+  "planId": zod.number(),
+  "status": zod.enum(['ativa', 'suspensa', 'cancelada', 'inadimplente', 'trial']),
+  "planName": zod.string().nullish(),
+  "planSlug": zod.string().nullish(),
+  "planPrice": zod.number().nullish(),
+  "planTarget": zod.string().nullish(),
+  "planFeatures": zod.array(zod.string()).nullish(),
+  "currentPeriodEnd": zod.coerce.date().nullish()
+})
+
+
+/**
+ * @summary Cancel my subscription
+ */
+export const CancelSubscriptionResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+
+/**
+ * @summary Get my wallet
+ */
+export const GetWalletResponse = zod.object({
+  "id": zod.number(),
+  "userId": zod.number(),
+  "balance": zod.number(),
+  "pendingBalance": zod.number(),
+  "blockedBalance": zod.number(),
+  "totalEarned": zod.number(),
+  "totalWithdrawn": zod.number()
+})
+
+
+/**
+ * @summary Get my transactions
+ */
+export const ListTransactionsResponseItem = zod.object({
+  "id": zod.number(),
+  "walletId": zod.number(),
+  "userId": zod.number(),
+  "type": zod.string(),
+  "status": zod.string(),
+  "amount": zod.number(),
+  "description": zod.string(),
+  "reference": zod.string().nullish(),
+  "createdAt": zod.coerce.date()
+})
+export const ListTransactionsResponse = zod.array(ListTransactionsResponseItem)
+
+
+/**
+ * @summary Request withdrawal
+ */
+export const requestWithdrawalBodyAmountMin = 50;
+
+
+
+export const RequestWithdrawalBody = zod.object({
+  "amount": zod.number().min(requestWithdrawalBodyAmountMin),
+  "pixKey": zod.string().optional()
+})
+
+
+/**
+ * @summary AI classification of service order
+ */
+export const ClassifyOrderParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const ClassifyOrderResponse = zod.object({
+  "orderId": zod.number(),
+  "category": zod.string(),
+  "complexity": zod.enum(['baixa', 'media', 'alta']),
+  "estimatedHours": zod.number().nullish(),
+  "reasoning": zod.string().nullish(),
+  "aiGenerated": zod.boolean().optional()
+})
+
+
+/**
+ * @summary AI pricing suggestion
+ */
+export const GetAiPricingBody = zod.object({
+  "title": zod.string(),
+  "description": zod.string(),
+  "category": zod.string(),
+  "city": zod.string(),
+  "state": zod.string(),
+  "complexity": zod.string().optional()
+})
+
+export const GetAiPricingResponse = zod.object({
+  "minValue": zod.number(),
+  "idealValue": zod.number(),
+  "premiumValue": zod.number(),
+  "reasoning": zod.string().nullish(),
+  "aiGenerated": zod.boolean().optional()
+})
+
+
+/**
+ * @summary AI-powered technician matching
+ */
+export const GetAiMatchV2Params = zod.object({
+  "orderId": zod.coerce.number()
+})
+
+export const GetAiMatchV2ResponseItem = zod.object({
+  "technician": zod.object({
+  "id": zod.number(),
+  "userId": zod.number(),
+  "name": zod.string(),
+  "email": zod.string(),
+  "phone": zod.string().nullish(),
+  "whatsapp": zod.string().nullish(),
+  "cpf": zod.string().nullish(),
+  "city": zod.string(),
+  "state": zod.string(),
+  "photoUrl": zod.string().nullish(),
+  "bio": zod.string().nullish(),
+  "specialties": zod.array(zod.string()),
+  "rating": zod.number().nullish(),
+  "totalServices": zod.number().optional(),
+  "totalEarnings": zod.number().nullish(),
+  "createdAt": zod.coerce.date()
+}),
+  "score": zod.number().describe('Match score 0-100'),
+  "reasoning": zod.string()
+})
+export const GetAiMatchV2Response = zod.array(GetAiMatchV2ResponseItem)
+
+
+/**
+ * @summary Trigger auto-dispatch for a service order
+ */
+export const TriggerDispatchParams = zod.object({
+  "orderId": zod.coerce.number()
+})
+
+export const TriggerDispatchResponse = zod.object({
+  "orderId": zod.number(),
+  "dispatched": zod.array(zod.object({
+
+}).passthrough()),
+  "total": zod.number()
+})
+
+
+/**
+ * @summary Accept a dispatch invite
+ */
+export const AcceptDispatchParams = zod.object({
+  "orderId": zod.coerce.number()
+})
+
+export const AcceptDispatchResponse = zod.object({
+  "ok": zod.boolean()
+})
+
+

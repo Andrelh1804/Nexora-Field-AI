@@ -17,18 +17,38 @@ import Tecnicos from "@/pages/tecnicos";
 import TecnicoProfile from "@/pages/tecnico-profile";
 import Perfil from "@/pages/perfil";
 import Admin from "@/pages/admin";
+import Mapa from "@/pages/mapa";
+import Ranking from "@/pages/ranking";
+import Planos from "@/pages/planos";
+import Carteira from "@/pages/carteira";
+import Notificacoes from "@/pages/notificacoes";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: 30000, retry: 1 } },
+});
 
-function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
+function ProtectedRoute({ component: Component, roles }: { component: React.ComponentType; roles?: string[] }) {
   const { user, isLoading } = useAuth();
   const [, setLocation] = useLocation();
 
-  if (isLoading) return <div>Carregando...</div>;
-  
+  if (isLoading) return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="text-muted-foreground animate-pulse">Carregando...</div>
+    </div>
+  );
+
   if (!user) {
     setLocation("/login");
     return null;
+  }
+
+  if (roles && !roles.includes(user.role)) {
+    return (
+      <div className="text-center py-20">
+        <p className="text-2xl">🔒</p>
+        <p className="text-muted-foreground mt-2">Acesso não autorizado.</p>
+      </div>
+    );
   }
 
   return <Component />;
@@ -41,14 +61,19 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
+        <Route path="/ranking" component={Ranking} />
+        <Route path="/planos" component={Planos} />
+        <Route path="/mapa" component={Mapa} />
         <Route path="/dashboard" component={() => <ProtectedRoute component={Dashboard} />} />
         <Route path="/chamados" component={() => <ProtectedRoute component={Chamados} />} />
-        <Route path="/chamados/novo" component={() => <ProtectedRoute component={ChamadoNovo} />} />
+        <Route path="/chamados/novo" component={() => <ProtectedRoute component={ChamadoNovo} roles={["company"]} />} />
         <Route path="/chamados/:id" component={() => <ProtectedRoute component={ChamadoDetail} />} />
         <Route path="/tecnicos" component={() => <ProtectedRoute component={Tecnicos} />} />
         <Route path="/tecnicos/:id" component={() => <ProtectedRoute component={TecnicoProfile} />} />
         <Route path="/perfil" component={() => <ProtectedRoute component={Perfil} />} />
-        <Route path="/admin" component={() => <ProtectedRoute component={Admin} />} />
+        <Route path="/admin" component={() => <ProtectedRoute component={Admin} roles={["admin"]} />} />
+        <Route path="/carteira" component={() => <ProtectedRoute component={Carteira} />} />
+        <Route path="/notificacoes" component={() => <ProtectedRoute component={Notificacoes} />} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

@@ -1,0 +1,5 @@
+- [DB schema column names](db-schema-columns.md) — users.password_hash, companies.razao_social/nome_fantasia, technicians has no daily_rate/available/experience_years
+- [Service status enum](service-status-enum.md) — valid values: aberto, aceito, em_andamento, finalizado, cancelado (NOT "concluido")
+- [Ratings table constraints](ratings-constraints.md) — service_order_id NOT NULL, score is integer (not real), requires valid FK to completed orders
+- [Seed bulk script pattern](seed-bulk-pattern.md) — use timestamp in email to avoid conflicts; expose errors not swallow them; plans seeded separately via psql
+- [Test credentials](test-creds-reset.md) — original seed used unknown password; reset all test users via direct SQL UPDATE using bcryptjs hash
