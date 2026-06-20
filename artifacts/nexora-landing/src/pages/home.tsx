@@ -812,9 +812,20 @@ export default function Home() {
             <div className="md:col-span-2">
               <img src="/nexora-logo.png" alt="Nexora" className="h-10 w-auto mb-6" />
               <p className="text-lg font-medium text-white mb-2">Conecta. Resolve. Impulsiona.</p>
-              <p className="text-sm text-muted-foreground max-w-sm">
+              <p className="text-sm text-muted-foreground max-w-sm mb-4">
                 Marketplace Inteligente de Serviços Técnicos. O sistema operacional definitivo para operações em campo no Brasil.
               </p>
+              <div className="space-y-1 text-sm">
+                <a href="mailto:contato@nexorafield.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                  <span className="text-primary/60">✉</span> contato@nexorafield.com.br
+                </a>
+                <a href="mailto:comercial@nexorafield.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                  <span className="text-primary/60">✉</span> comercial@nexorafield.com.br
+                </a>
+                <a href="mailto:suporte@nexorafield.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                  <span className="text-primary/60">✉</span> suporte@nexorafield.com.br
+                </a>
+              </div>
             </div>
             
             <div>
@@ -823,6 +834,7 @@ export default function Home() {
                 <li><a href="/register" className="hover:text-primary transition-colors">Para Empresas</a></li>
                 <li><a href="/register?role=technician" className="hover:text-primary transition-colors">Para Técnicos</a></li>
                 <li><a href="#planos" className="hover:text-primary transition-colors">Preços</a></li>
+                <li><a href="/dashboard" className="hover:text-primary transition-colors">Dashboard</a></li>
                 <li><a href="/developer" className="hover:text-primary transition-colors">API Docs</a></li>
               </ul>
             </div>
@@ -830,18 +842,31 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-white mb-4">Empresa</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="/register" className="hover:text-primary transition-colors">Contato</a></li>
-                <li><a href="/register" className="hover:text-primary transition-colors">Comercial</a></li>
-                <li><a href="/login" className="hover:text-primary transition-colors">Suporte</a></li>
+                <li>
+                  <a href="https://nexorafield.com.br" className="hover:text-primary transition-colors">nexorafield.com.br</a>
+                </li>
+                <li>
+                  <a href="mailto:comercial@nexorafield.com.br" className="hover:text-primary transition-colors">Comercial</a>
+                </li>
+                <li>
+                  <a href="mailto:suporte@nexorafield.com.br" className="hover:text-primary transition-colors">Suporte</a>
+                </li>
+                <li>
+                  <a href="mailto:financeiro@nexorafield.com.br" className="hover:text-primary transition-colors">Financeiro</a>
+                </li>
                 <li><a href="#" className="hover:text-primary transition-colors">Política de Privacidade</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Termos de Uso (LGPD)</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-white/10 text-center text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center">
-            <p>&copy; {new Date().getFullYear()} Nexora Field AI. Todos os direitos reservados.</p>
-            <p className="mt-2 md:mt-0">Feito no Brasil 🇧🇷</p>
+          <div className="pt-8 border-t border-white/10 text-sm text-muted-foreground flex flex-col md:flex-row justify-between items-center gap-2">
+            <p>&copy; {new Date().getFullYear()} Nexora Field AI · Todos os direitos reservados.</p>
+            <div className="flex items-center gap-4">
+              <a href="https://nexorafield.com.br" className="hover:text-primary transition-colors">nexorafield.com.br</a>
+              <span>·</span>
+              <span>Feito no Brasil 🇧🇷</span>
+            </div>
           </div>
         </div>
       </footer>

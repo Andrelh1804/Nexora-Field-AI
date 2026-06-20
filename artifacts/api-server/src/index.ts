@@ -34,6 +34,7 @@ async function seedDefaultAdmin() {
         email: ADMIN_EMAIL,
         passwordHash,
         role: "admin",
+        mustChangePassword: true,
       });
       logger.info("Default admin user created: admin@nexorafield.com.br");
     } else {

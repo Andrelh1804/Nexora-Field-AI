@@ -1112,9 +1112,21 @@ components:
         role:
           type: string
           enum: [admin, company, technician]
+        mustChangePassword:
+          type: boolean
         createdAt:
           type: string
           format: date-time
+
+    ChangePasswordInput:
+      type: object
+      required: [currentPassword, newPassword]
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+          minLength: 8
 
     # TECHNICIANS
     Technician:

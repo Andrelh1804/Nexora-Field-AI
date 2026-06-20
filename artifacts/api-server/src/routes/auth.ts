@@ -100,7 +100,7 @@ router.post("/auth/login", async (req, res) => {
     const token = generateToken(user.id, user.role);
     res.json({
       token,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role, createdAt: user.createdAt },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role, mustChangePassword: user.mustChangePassword, createdAt: user.createdAt },
     });
   } catch (err) {
     req.log.error(err);
@@ -121,7 +121,48 @@ router.get("/auth/me", requireAuth, async (req: AuthRequest, res: Response) => {
       return;
     }
 
-    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, createdAt: user.createdAt });
+    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, mustChangePassword: user.mustChangePassword, createdAt: user.createdAt });
+  } catch (err) {
+    req.log.error(err);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+});
+
+router.patch("/auth/change-password", requireAuth, async (req: AuthRequest, res: Response) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      res.status(400).json({ error: "Senha atual e nova senha são obrigatórias." });
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      res.status(400).json({ error: "A nova senha deve ter pelo menos 8 caracteres." });
+      return;
+    }
+
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, req.userId!)).limit(1);
+    if (!user) {
+      res.status(401).json({ error: "Usuário não encontrado." });
+      return;
+    }
+
+    const valid = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!valid) {
+      res.status(400).json({ error: "Senha atual incorreta." });
+      return;
+    }
+
+    if (currentPassword === newPassword) {
+      res.status(400).json({ error: "A nova senha deve ser diferente da senha atual." });
+      return;
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 12);
+    await db.update(usersTable).set({ passwordHash, mustChangePassword: false }).where(eq(usersTable.id, req.userId!));
+
+    res.json({ success: true, message: "Senha alterada com sucesso." });
   } catch (err) {
     req.log.error(err);
     res.status(500).json({ error: "Erro interno do servidor." });

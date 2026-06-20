@@ -48,6 +48,7 @@ export const LoginResponse = zod.object({
   "name": zod.string(),
   "email": zod.string(),
   "role": zod.enum(['admin', 'company', 'technician']),
+  "mustChangePassword": zod.boolean().optional(),
   "createdAt": zod.coerce.date()
 })
 })
@@ -61,6 +62,7 @@ export const GetMeResponse = zod.object({
   "name": zod.string(),
   "email": zod.string(),
   "role": zod.enum(['admin', 'company', 'technician']),
+  "mustChangePassword": zod.boolean().optional(),
   "createdAt": zod.coerce.date()
 })
 

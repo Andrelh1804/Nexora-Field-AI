@@ -16,6 +16,7 @@ export * from './applicationInput';
 export * from './applicationStatus';
 export * from './authResponse';
 export * from './categoryCount';
+export * from './changePasswordInput';
 export * from './checkinInput';
 export * from './checkinRecord';
 export * from './checkoutInput';

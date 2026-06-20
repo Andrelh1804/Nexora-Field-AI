@@ -32,6 +32,7 @@ import Copilot from "@/pages/copilot";
 import Visao from "@/pages/visao";
 import Onboarding from "@/pages/onboarding";
 import Conhecimento from "@/pages/conhecimento";
+import AlterarSenha from "@/pages/alterar-senha";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30000, retry: 1 } },
@@ -39,7 +40,7 @@ const queryClient = new QueryClient({
 
 function ProtectedRoute({ component: Component, roles }: { component: React.ComponentType; roles?: string[] }) {
   const { user, isLoading } = useAuth();
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
 
   if (isLoading) return (
     <div className="flex items-center justify-center min-h-[60vh]">
@@ -49,6 +50,12 @@ function ProtectedRoute({ component: Component, roles }: { component: React.Comp
 
   if (!user) {
     setLocation("/login");
+    return null;
+  }
+
+  // Force password change — redirect to change-password page
+  if (user.mustChangePassword && location !== "/alterar-senha") {
+    setLocation("/alterar-senha");
     return null;
   }
 
@@ -68,6 +75,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/onboarding" component={Onboarding} />
+      <Route path="/alterar-senha" component={AlterarSenha} />
       <Route component={() => (
         <Layout>
           <Switch>

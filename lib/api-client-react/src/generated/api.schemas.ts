@@ -46,12 +46,19 @@ export interface User {
   name: string;
   email: string;
   role: UserRole;
+  mustChangePassword?: boolean;
   createdAt: string;
 }
 
 export interface AuthResponse {
   token: string;
   user: User;
+}
+
+export interface ChangePasswordInput {
+  currentPassword: string;
+  /** @minLength 8 */
+  newPassword: string;
 }
 
 export interface Technician {
