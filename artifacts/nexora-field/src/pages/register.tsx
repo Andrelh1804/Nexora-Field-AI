@@ -18,6 +18,7 @@ export default function Register() {
   const urlRole = new URLSearchParams(window.location.search).get("role");
   const initialRole: PublicRole = urlRole === "technician" ? "technician" : "company";
   const [role, setRole] = useState<PublicRole>(initialRole);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const registerMutation = useRegister();
@@ -31,6 +32,7 @@ export default function Register() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) errors.email = "Informe um e-mail válido.";
     if (!password || password.length < 8) errors.password = "A senha deve ter pelo menos 8 caracteres.";
+    if (!acceptedTerms) errors.terms = "Você precisa aceitar os Termos de Uso e a Política de Privacidade para continuar.";
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -114,7 +116,7 @@ export default function Register() {
           )}
         </div>
 
-        {/* Perfil — apenas Empresa e Técnico */}
+        {/* Perfil */}
         <div className="space-y-1.5">
           <Label>Perfil</Label>
           <Select value={role} onValueChange={v => setRole(v as PublicRole)}>
@@ -126,6 +128,73 @@ export default function Register() {
               <SelectItem value="technician">Técnico</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+
+        {/* Aceite dos Termos — LGPD */}
+        <div className="space-y-1.5 pt-1">
+          <label
+            className={`flex items-start gap-3 cursor-pointer group p-3 rounded-lg border transition-colors ${
+              fieldErrors.terms
+                ? "border-destructive bg-destructive/5"
+                : acceptedTerms
+                ? "border-primary/40 bg-primary/5"
+                : "border-border hover:border-primary/30 hover:bg-muted/30"
+            }`}
+          >
+            <div className="relative flex items-center justify-center mt-0.5 shrink-0">
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={e => {
+                  setAcceptedTerms(e.target.checked);
+                  setFieldErrors(p => ({ ...p, terms: "" }));
+                }}
+                className="sr-only"
+              />
+              <div
+                className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors ${
+                  acceptedTerms
+                    ? "bg-primary border-primary"
+                    : fieldErrors.terms
+                    ? "border-destructive"
+                    : "border-muted-foreground group-hover:border-primary/60"
+                }`}
+              >
+                {acceptedTerms && (
+                  <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 12 12">
+                    <path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </div>
+            </div>
+            <span className="text-xs text-muted-foreground leading-relaxed">
+              Li e concordo com os{" "}
+              <Link
+                href="/termos"
+                target="_blank"
+                className="text-primary hover:underline font-medium"
+                onClick={e => e.stopPropagation()}
+              >
+                Termos de Uso
+              </Link>{" "}
+              e a{" "}
+              <Link
+                href="/privacidade"
+                target="_blank"
+                className="text-primary hover:underline font-medium"
+                onClick={e => e.stopPropagation()}
+              >
+                Política de Privacidade
+              </Link>{" "}
+              da Nexora Field AI, incluindo o tratamento dos meus dados conforme a{" "}
+              <span className="font-medium text-foreground/70">LGPD (Lei nº 13.709/2018)</span>.
+            </span>
+          </label>
+          {fieldErrors.terms && (
+            <p className="flex items-center gap-1.5 text-xs text-destructive mt-1">
+              <AlertCircle size={12} /> {fieldErrors.terms}
+            </p>
+          )}
         </div>
 
         <Button type="submit" className="w-full mt-2" disabled={registerMutation.isPending}>
