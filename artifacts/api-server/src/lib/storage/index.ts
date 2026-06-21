@@ -8,9 +8,18 @@ let _available = false;
 async function getClient(): Promise<Client | null> {
   if (_checked) return _available ? _client : null;
   _checked = true;
+
+  const tokenEnv = process.env.REPLIT_OBJECT_STORAGE_TOKEN
+    ?? process.env.REPLIT_OBJECT_TOKEN
+    ?? process.env.REPLIT_BUCKET_ID;
+  if (!tokenEnv) {
+    _available = false;
+    return null;
+  }
+
   try {
     const c = new Client();
-    await c.init();
+    await Promise.resolve(c.init()).catch(() => { throw new Error("init failed"); });
     _client = c;
     _available = true;
     return c;

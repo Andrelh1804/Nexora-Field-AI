@@ -6,6 +6,10 @@ import { logger } from "./lib/logger";
 import { seedSpecialties } from "./scripts/seed-specialties";
 import { seedAcademy } from "./scripts/seed-academy";
 
+process.on("unhandledRejection", (reason) => {
+  logger.warn({ reason }, "Unhandled promise rejection (non-fatal)");
+});
+
 const rawPort = process.env["PORT"];
 
 if (!rawPort) {

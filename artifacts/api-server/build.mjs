@@ -55,6 +55,7 @@ async function buildAll() {
       "fontkit",
       "brotli",
       "@swc/helpers",
+      "@replit/object-storage",
       "twilio",
       "mercadopago",
       "knex",

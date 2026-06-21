@@ -21,6 +21,9 @@ if (SENTRY_DSN) {
 
 const app: Express = express();
 
+// Trust the Replit/Vite proxy (needed for correct IP in rate-limit and logs)
+app.set("trust proxy", 1);
+
 // Security headers
 app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" },

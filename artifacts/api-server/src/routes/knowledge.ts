@@ -40,6 +40,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const id = Number(req.params["id"]);
+  if (!id || isNaN(id)) { res.status(400).json({ error: "ID inválido" }); return; }
   const [doc] = await db.select().from(knowledgeDocumentsTable).where(eq(knowledgeDocumentsTable.id, id));
   if (!doc) { res.status(404).json({ error: "Not found" }); return; }
 
@@ -48,6 +49,20 @@ router.get("/:id", async (req, res) => {
     .where(eq(knowledgeDocumentsTable.id, id));
 
   res.json({ ...doc, views: doc.views + 1 });
+});
+
+router.post("/ask", requireAuth, async (req: AuthRequest, res: Response) => {
+  const { question } = req.body;
+  if (!question) { res.status(400).json({ error: "Pergunta obrigatória" }); return; }
+  const docs = await db.select().from(knowledgeDocumentsTable)
+    .where(eq(knowledgeDocumentsTable.published, true))
+    .orderBy(desc(knowledgeDocumentsTable.views))
+    .limit(5);
+  const context = docs.map(d => `## ${d.title}\n${d.content}`).join("\n\n---\n\n");
+  res.json({
+    answer: `Com base na base de conhecimento Nexora: ${docs.length > 0 ? "Encontrei " + docs.length + " artigos relevantes. Consulte os documentos abaixo para mais detalhes." : "Nenhum artigo encontrado. Consulte a equipe de suporte."}`,
+    docs: docs.slice(0, 3),
+  });
 });
 
 router.post("/", requireAuth, requireRole("admin"), async (req: AuthRequest, res: Response) => {
