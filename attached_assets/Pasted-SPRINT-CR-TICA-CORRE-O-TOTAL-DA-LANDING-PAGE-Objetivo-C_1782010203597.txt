@@ -1,0 +1,395 @@
+SPRINT CRÍTICA — CORREÇÃO TOTAL DA LANDING PAGE
+
+Objetivo:
+
+Corrigir integralmente a Landing Page da Nexora Field AI, eliminando erros 404, links quebrados, páginas inexistentes, menus sem destino e qualquer inconsistência de navegação.
+
+A Landing deve funcionar como site institucional completo da plataforma.
+
+Estrutura obrigatória:
+
+https://nexorafield.com.br
+→ Landing Page
+
+https://nexorafield.com.br/app
+→ Plataforma SaaS
+
+---
+
+FASE 1 — AUDITORIA COMPLETA
+
+Mapear todas as páginas existentes.
+
+Listar:
+
+* URL
+* Página
+* Status HTTP
+* Componente React
+* Menu associado
+
+Verificar:
+
+✓ Home
+
+✓ Sobre
+
+✓ Como Funciona
+
+✓ Soluções
+
+✓ Técnicos
+
+✓ Empresas
+
+✓ Especialidades
+
+✓ Academy
+
+✓ Planos
+
+✓ FAQ
+
+✓ Blog
+
+✓ Contato
+
+✓ Privacidade
+
+✓ Termos
+
+✓ Login
+
+✓ Cadastro
+
+✓ Recuperar Senha
+
+✓ Dashboard
+
+✓ Todas as rotas do CMS
+
+Gerar inventário completo.
+
+---
+
+FASE 2 — CORREÇÃO DE ROTAS
+
+Validar:
+
+/
+
+/sobre
+
+/como-funciona
+
+/solucoes
+
+/especialidades
+
+/academy
+
+/planos
+
+/faq
+
+/blog
+
+/contato
+
+/privacidade
+
+/termos
+
+/app
+
+/app/login
+
+/app/register
+
+/app/dashboard
+
+Eliminar:
+
+* erro 404
+* páginas órfãs
+* redirecionamentos incorretos
+
+Todas devem responder HTTP 200.
+
+---
+
+FASE 3 — MENUS E SUBMENUS
+
+Auditar todos os menus.
+
+Menu Principal:
+
+Home
+
+Como Funciona
+
+Soluções
+├ Telecom
+├ Fibra Óptica
+├ Infraestrutura TI
+├ Redes
+├ CFTV
+├ Automação Industrial
+├ Eletrônica
+├ Energia Solar
+
+Academy
+
+Planos
+
+Contato
+
+Entrar
+
+Cadastrar
+
+Validar:
+
+✓ Links corretos
+
+✓ Hover
+
+✓ Mobile
+
+✓ Responsividade
+
+---
+
+FASE 4 — LANDING DINÂMICA
+
+Remover conteúdo hardcoded.
+
+Consumir CMS real:
+
+* Hero
+* Benefícios
+* FAQ
+* Depoimentos
+* Planos
+* Rodapé
+
+Endpoints:
+
+/api/landing/*
+/api/plans
+
+Toda alteração feita pelo admin deve refletir imediatamente na Landing.
+
+---
+
+FASE 5 — SEÇÕES OBRIGATÓRIAS
+
+Home
+
+Hero
+
+Benefícios
+
+Como Funciona
+
+Especialidades
+
+Academy
+
+Planos
+
+Depoimentos
+
+FAQ
+
+CTA Final
+
+Rodapé
+
+---
+
+FASE 6 — ESPECIALIDADES
+
+Criar página:
+
+/especialidades
+
+Exibir:
+
+Telecom
+
+Fibra Óptica
+
+Infraestrutura TI
+
+Redes
+
+CFTV
+
+Automação Industrial
+
+Eletrônica
+
+Energia Solar
+
+Suporte Técnico
+
+Cloud
+
+Datacenter
+
+Cada especialidade com:
+
+* descrição
+* ícone
+* demanda de mercado
+
+---
+
+FASE 7 — ACADEMY
+
+Criar página:
+
+/academy
+
+Exibir:
+
+Cursos
+
+Certificações
+
+Manual de Boas Práticas Nexora
+
+Ranking Academy
+
+Técnico Homologado Nexora
+
+---
+
+FASE 8 — PLANOS
+
+Página:
+
+/planos
+
+Consumir planos do banco.
+
+Exibir:
+
+Starter
+
+Professional
+
+Business
+
+Enterprise
+
+Destaque automático para highlighted=true
+
+Botão:
+
+Assinar Agora
+
+---
+
+FASE 9 — SEO
+
+Validar:
+
+Meta Tags
+
+Open Graph
+
+Twitter Card
+
+Schema.org
+
+Canonical
+
+Sitemap
+
+Robots.txt
+
+Gerar relatório SEO.
+
+---
+
+FASE 10 — MOBILE
+
+Validar:
+
+320px
+
+375px
+
+768px
+
+1024px
+
+1440px
+
+Corrigir:
+
+* overflow
+* textos cortados
+* menus quebrados
+* botões fora da tela
+
+---
+
+FASE 11 — TESTE FINAL
+
+Executar crawler interno.
+
+Validar:
+
+✓ Todas as páginas
+
+✓ Todos os menus
+
+✓ Todos os submenus
+
+✓ Todos os CTAs
+
+✓ Todos os formulários
+
+✓ Todos os redirecionamentos
+
+✓ Todos os links internos
+
+✓ Todos os links externos
+
+---
+
+RESULTADO ESPERADO
+
+Landing Page 100% funcional
+
+Sem erro 404
+
+Sem links quebrados
+
+Sem páginas órfãs
+
+CMS conectado
+
+SEO válido
+
+Responsiva
+
+Estrutura final:
+
+https://nexorafield.com.br
+→ Landing institucional
+
+https://nexorafield.com.br/app
+→ Plataforma SaaS
+
+Gerar relatório final contendo:
+
+* páginas corrigidas
+* rotas criadas
+* menus corrigidos
+* componentes alterados
+* testes executados
+* evidências de funcionamento

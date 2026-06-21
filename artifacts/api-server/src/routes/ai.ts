@@ -8,7 +8,7 @@ const router = Router();
 // Lazy Gemini client to avoid startup crash if env not set
 async function getGeminiClient() {
   const { GoogleGenAI } = await import("@google/genai");
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env["AI_INTEGRATIONS_GEMINI_API_KEY"] || process.env["GEMINI_API_KEY"];
   if (!apiKey) throw new Error("GEMINI_API_KEY not configured");
   return new GoogleGenAI({ apiKey });
 }

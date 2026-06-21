@@ -1,0 +1,221 @@
+SPRINT ACADEMY V1 — CURSOS E TRILHAS DE CAPACITAÇÃO
+
+Objetivo:
+
+Expandir a Nexora Academy com cursos técnicos, certificações profissionais e treinamento comportamental, aumentando a qualificação dos técnicos e criando diferenciais competitivos para contratação.
+
+---
+
+IMPLEMENTAR NOVAS CATEGORIAS DE CURSOS
+
+1. TELECOM E FIBRA ÓPTICA
+
+* Introdução à Fibra Óptica
+* Fundamentos de FTTH
+* Fusão de Fibra Óptica
+* OTDR na Prática
+* Certificação de Enlaces
+* GPON e XGS-PON
+* Troubleshooting em Redes Ópticas
+
+---
+
+2. REDES E INFRAESTRUTURA DE TI
+
+* Fundamentos de Redes TCP/IP
+* Cabeamento Estruturado
+* Switching e VLANs
+* Redes Wireless Corporativas
+* MikroTik Básico
+* Ubiquiti Básico
+* Introdução a Datacenters
+
+---
+
+3. CFTV E SEGURANÇA ELETRÔNICA
+
+* Introdução ao CFTV
+* Instalação de Câmeras
+* CFTV IP
+* DVR e NVR
+* Controle de Acesso
+* Interfonia e Vídeo Porteiro
+
+---
+
+4. ELETRÔNICA
+
+* Eletricidade Básica
+* Uso Correto do Multímetro
+* Leitura de Diagramas Elétricos
+* Eletrônica Analógica
+* Eletrônica Digital
+* Diagnóstico de Equipamentos
+
+---
+
+5. AUTOMAÇÃO INDUSTRIAL
+
+* Introdução à Automação
+* Sensores e Atuadores
+* CLP Básico
+* Redes Industriais
+* Supervisórios e SCADA
+* Indústria 4.0
+
+---
+
+6. ENERGIA SOLAR
+
+* Fundamentos da Energia Solar
+* Segurança em Sistemas Fotovoltaicos
+* Instalação de Sistemas Fotovoltaicos
+* Inversores e String Box
+* Dimensionamento de Sistemas
+
+---
+
+7. CERTIFICAÇÕES PROFISSIONAIS
+
+Preparatórios para:
+
+* NR10
+* NR35
+* Cisco CCNA
+* MikroTik MTCNA
+* Huawei HCIA
+* Furukawa FCP
+* AWS Cloud Practitioner
+* Microsoft Azure Fundamentals
+
+---
+
+8. INTELIGÊNCIA ARTIFICIAL PARA TÉCNICOS
+
+* Introdução à IA para Técnicos de Campo
+* Diagnóstico Assistido por IA
+* Utilizando o Nexora Copilot
+* Análise de Equipamentos por Imagem
+* Criação de Relatórios Técnicos com IA
+
+---
+
+9. GESTÃO E EMPREENDEDORISMO
+
+* Como Trabalhar como Técnico Autônomo
+* Precificação de Serviços
+* Atendimento ao Cliente
+* Gestão Financeira para Técnicos
+* Como Abrir sua Empresa de Serviços
+
+---
+
+10. CURSO OBRIGATÓRIO — MANUAL DE BOAS PRÁTICAS NEXORA FIELD AI
+
+Criar curso obrigatório para todos os técnicos cadastrados.
+
+Conteúdo:
+
+Módulo 1
+
+* Apresentação profissional
+* Uso correto de uniforme e EPIs
+
+Módulo 2
+
+* Comunicação com clientes
+* Postura profissional em campo
+
+Módulo 3
+
+* Boas práticas em instalações
+* Organização do ambiente de trabalho
+
+Módulo 4
+
+* Segurança operacional
+* Normas NR10 e NR35
+
+Módulo 5
+
+* Evidências fotográficas
+* Como registrar check-in e checkout corretamente
+
+Módulo 6
+
+* Relatórios técnicos profissionais
+* Boas práticas de documentação
+
+Módulo 7
+
+* Conduta ética
+* Política de qualidade da Nexora Field AI
+
+Avaliação final:
+
+* 20 questões
+* Nota mínima: 70%
+
+Certificado:
+
+"Profissional Homologado Nexora Field AI"
+
+---
+
+GAMIFICAÇÃO
+
+Implementar pontuação Academy:
+
+Curso concluído:
++50 pontos
+
+Curso avançado:
++100 pontos
+
+Certificação aprovada:
++200 pontos
+
+Manual de Boas Práticas:
++300 pontos
+
+Exibir no perfil:
+
+* Cursos concluídos
+* Certificados
+* Selos conquistados
+* Pontuação Academy
+
+---
+
+RANKING
+
+Adicionar ao ranking dos técnicos:
+
+academy_score
+
+Peso sugerido:
+
+20% do ranking total
+
+---
+
+FILTROS PARA EMPRESAS
+
+Permitir filtrar técnicos por:
+
+* Curso concluído
+* Certificação aprovada
+* Homologado Nexora
+* Pontuação Academy
+
+---
+
+RELATÓRIO FINAL
+
+Informar:
+
+* Cursos criados
+* Categorias criadas
+* Seed executado
+* Ranking atualizado
+* Integração Academy concluída
