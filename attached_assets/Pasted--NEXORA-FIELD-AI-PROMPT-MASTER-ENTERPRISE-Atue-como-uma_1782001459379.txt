@@ -1,0 +1,587 @@
+# NEXORA FIELD AI — PROMPT MASTER ENTERPRISE
+
+Atue como uma equipe composta pelos melhores especialistas do mundo em:
+
+* SaaS Enterprise
+* Marketplace
+* React
+* TypeScript
+* Node.js
+* PostgreSQL
+* Prisma ORM
+* UX/UI
+* Inteligência Artificial
+* Field Service Management
+* Segurança
+* DevOps
+* Growth
+* Produto
+
+Sua missão é transformar a Nexora Field AI em uma plataforma SaaS Enterprise completa, preparada para milhares de empresas, técnicos e administradores.
+
+---
+
+# IDENTIDADE DA PLATAFORMA
+
+Nome:
+
+Nexora Field AI
+
+Slogan:
+
+Conecta. Resolve. Impulsiona.
+
+Domínio:
+
+nexorafield.com.br
+
+---
+
+# OBJETIVO
+
+Criar uma plataforma inteligente que conecte empresas e técnicos especializados para execução de serviços de campo.
+
+Mercados atendidos:
+
+* Telecom
+* Fibra Óptica
+* Infraestrutura de TI
+* Suporte Técnico
+* Redes
+* Data Center
+* Cloud
+* DevOps
+* Eletrônica
+* Automação Industrial
+* Energia Solar
+* CFTV
+* Segurança Eletrônica
+* Facilities Técnicos
+* Assistência Técnica
+* Sistemas Corporativos
+
+---
+
+# ESTRUTURA DE USUÁRIOS
+
+## ADMIN MASTER
+
+Permissões totais:
+
+* Criar administradores
+* Remover administradores
+* Alterar permissões
+* Alterar landing page
+* Alterar planos
+* Alterar preços
+* Alterar conteúdo institucional
+* Gerenciar empresas
+* Gerenciar técnicos
+* Gerenciar chamados
+* Dashboard global
+
+---
+
+## ADMIN
+
+Permissões:
+
+* Gerenciar usuários
+* Gerenciar chamados
+* Gerenciar empresas
+* Gerenciar técnicos
+* Relatórios
+
+Não pode remover Admin Master.
+
+---
+
+## EMPRESA
+
+Pode:
+
+* Criar chamados
+* Contratar técnicos
+* Gerenciar equipe
+* Acompanhar SLA
+* Relatórios
+
+---
+
+## TÉCNICO
+
+Pode:
+
+* Receber chamados
+* Aceitar chamados
+* Gerenciar agenda
+* Atualizar status
+* Emitir relatórios
+
+---
+
+# GESTÃO DE ADMINISTRADORES
+
+Implementar módulo:
+
+Configurações > Administradores
+
+Permitir:
+
+* Criar novo administrador
+* Editar administrador
+* Desativar administrador
+* Definir permissões
+* Histórico de ações
+
+Log obrigatório.
+
+---
+
+# MÓDULO DE ESPECIALIDADES
+
+Criar estrutura hierárquica:
+
+Categoria
+↓
+Subcategoria
+↓
+Especialidade
+
+Permitir múltiplas especialidades por técnico.
+
+---
+
+# CATEGORIA: TELECOM
+
+Subcategorias:
+
+## Fibra Óptica
+
+* FTTH
+* GPON
+* EPON
+* OTDR
+* Power Meter
+* Fusão
+* Cabeamento
+* Backbone
+
+## Provedores
+
+* ISP
+* Wireless
+* Rádio Enlace
+* Torre
+
+## Telefonia
+
+* VoIP
+* PABX
+* SIP
+
+---
+
+# CATEGORIA: TI E SUPORTE
+
+## Help Desk
+
+* N1
+* N2
+* N3
+
+## Infraestrutura
+
+* Windows Server
+* Linux
+* Active Directory
+* Virtualização
+
+## Microsoft
+
+* Microsoft 365
+* Exchange
+* Azure
+
+## Google
+
+* Workspace
+* Administração
+
+## Hardware
+
+* Desktop
+* Notebook
+* Impressoras
+
+---
+
+# CATEGORIA: REDES
+
+## Switching
+
+* Cisco
+* Huawei
+* HP
+
+## Routing
+
+* Mikrotik
+* Cisco
+* Juniper
+
+## Wireless
+
+* Ubiquiti
+* Cambium
+
+---
+
+# CATEGORIA: ELETRÔNICA
+
+## Bancada
+
+* Soldagem
+* SMD
+* BGA
+* Reparo
+
+## Diagnóstico
+
+* Fontes
+* Circuitos
+* Equipamentos
+
+---
+
+# CATEGORIA: AUTOMAÇÃO INDUSTRIAL
+
+## CLP
+
+* Siemens
+* Rockwell
+* Schneider
+
+## Supervisão
+
+* SCADA
+* IHM
+
+## Instrumentação
+
+* Sensores
+* Transmissores
+
+---
+
+# CATEGORIA: CFTV E SEGURANÇA
+
+## CFTV
+
+* IP
+* Analógico
+* DVR
+* NVR
+
+## Controle de Acesso
+
+* Biometria
+* Cartão
+* Facial
+
+## Alarmes
+
+* Monitoramento
+* Cerca Elétrica
+
+---
+
+# CATEGORIA: ENERGIA SOLAR
+
+* Instalação
+* Inversores
+* Manutenção
+* Monitoramento
+
+---
+
+# CATEGORIA: DATA CENTER
+
+* Racks
+* Storage
+* Servidores
+* Virtualização
+
+---
+
+# CATEGORIA: CLOUD E DEVOPS
+
+## Cloud
+
+* AWS
+* Azure
+* Google Cloud
+
+## DevOps
+
+* Docker
+* Kubernetes
+* CI/CD
+
+## Observabilidade
+
+* Grafana
+* Prometheus
+* Zabbix
+
+---
+
+# CATEGORIA: SEGURANÇA DA INFORMAÇÃO
+
+* Firewall
+* SOC
+* SIEM
+* Pentest
+* LGPD
+
+---
+
+# CATEGORIA: AUTOMAÇÃO COMERCIAL
+
+* ERP
+* PDV
+* SAT
+* TEF
+
+---
+
+# CATEGORIA: SISTEMAS
+
+* ERP
+* CRM
+* APIs
+* Banco de Dados
+
+---
+
+# IA MATCH
+
+A IA deve considerar:
+
+* Especialidade
+* Subespecialidade
+* Distância
+* SLA
+* Avaliação
+* Certificações
+* Histórico
+* Disponibilidade
+
+Gerar Score Inteligente.
+
+---
+
+# PLANOS COMERCIAIS
+
+Criar módulo:
+
+Configurações > Planos
+
+Permitir ao ADMIN MASTER:
+
+* Criar plano
+* Editar plano
+* Alterar preço
+* Ativar
+* Desativar
+* Destacar plano
+
+---
+
+# PLANO STARTER
+
+Editável.
+
+---
+
+# PLANO PROFESSIONAL
+
+Editável.
+
+---
+
+# PLANO ENTERPRISE
+
+Editável.
+
+---
+
+# PLANO PERSONALIZADO
+
+Permitir criação ilimitada.
+
+---
+
+# LANDING PAGE DINÂMICA
+
+Criar CMS interno.
+
+Menu:
+
+Configurações > Landing Page
+
+---
+
+# ADMIN DEVE CONSEGUIR ALTERAR
+
+## Hero
+
+* Título
+* Subtítulo
+* Botões
+* Imagem
+
+---
+
+## Benefícios
+
+* Criar
+* Editar
+* Excluir
+
+---
+
+## Segmentos
+
+* Criar
+* Editar
+* Excluir
+
+---
+
+## Planos
+
+Integrado ao módulo de planos.
+
+Atualização automática.
+
+---
+
+## FAQ
+
+* Criar
+* Editar
+* Excluir
+
+---
+
+## Depoimentos
+
+* Criar
+* Editar
+* Excluir
+
+---
+
+## Rodapé
+
+* Links
+* Redes sociais
+* Contatos
+
+---
+
+# DASHBOARD ADMINISTRATIVO
+
+Indicadores:
+
+* Empresas
+* Técnicos
+* Chamados
+* Receita
+* SLA
+* Assinaturas
+* Conversão Landing Page
+
+---
+
+# FINANCEIRO
+
+Integrar:
+
+* Mercado Pago
+* PIX
+* Cartão
+* Boleto
+
+Assinaturas recorrentes.
+
+---
+
+# RELATÓRIOS IA
+
+Gerar:
+
+* Relatório Técnico
+* Relatório Executivo
+* SLA
+* Performance
+
+PDF e Excel.
+
+---
+
+# SEGURANÇA
+
+Implementar:
+
+* JWT
+* RBAC
+* Logs
+* Auditoria
+* Rate Limit
+* Helmet
+* LGPD
+
+---
+
+# WHITE LABEL
+
+Permitir:
+
+* Logo própria
+* Domínio próprio
+* Cores próprias
+
+Para clientes Enterprise.
+
+---
+
+# ESCALABILIDADE
+
+Preparar para:
+
+* 100.000 usuários
+* Multiempresa
+* Multiadministrador
+* Multiunidade
+
+---
+
+# RESULTADO ESPERADO
+
+Entregar uma plataforma SaaS Enterprise completa onde:
+
+✓ Técnicos podem cadastrar múltiplas especialidades
+
+✓ Empresas encontram técnicos via IA
+
+✓ Administradores podem criar outros administradores
+
+✓ Administradores podem alterar toda a landing page sem deploy
+
+✓ Administradores podem criar, editar e publicar planos comerciais
+
+✓ Sistema preparado para monetização recorrente
+
+✓ Plataforma pronta para produção no domínio nexorafield.com.br
