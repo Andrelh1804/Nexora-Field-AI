@@ -75,6 +75,15 @@ export default function Home() {
     staleTime: 60_000,
   });
 
+  const { data: plansData } = useQuery<Array<{ id: number; name: string; slug: string; description: string | null; price: number; features: string[]; highlighted: boolean; sortOrder: number; active: boolean }>>({
+    queryKey: ["plans-landing"],
+    queryFn: () => fetch(`${API_BASE}/plans`).then(r => r.json()),
+    staleTime: 300_000,
+  });
+  const activePlans = Array.isArray(plansData)
+    ? plansData.filter(p => p.active !== false).sort((a, b) => a.sortOrder - b.sortOrder)
+    : null;
+
   const heroTitle = settings?.["hero.title"] || "A Plataforma Inteligente que Conecta Empresas aos Melhores Técnicos de Campo";
   const heroSubtitle = settings?.["hero.subtitle"] || "Automatize a contratação, gestão e execução de serviços técnicos com Inteligência Artificial. Encontre profissionais qualificados em telecom, fibra óptica, infraestrutura de TI, automação industrial, CFTV e manutenção em minutos.";
   const ctaPrimary = settings?.["hero.cta_primary"] || "Solicitar Demonstração";
@@ -401,7 +410,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PROBLEM SECTION */}
+        {/* PROBLEM / BENEFITS SECTION — CMS dinâmico */}
         <section className="py-24 relative">
           <div className="container mx-auto px-4 md:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
@@ -410,20 +419,13 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                { title: "Dificuldade para encontrar técnicos", icon: <Users size={24} /> },
-                { title: "Falta de controle operacional", icon: <LayoutDashboard size={24} /> },
-                { title: "SLA sem monitoramento", icon: <Clock size={24} /> },
-                { title: "Relatórios inconsistentes", icon: <FileText size={24} /> },
-                { title: "Alto custo operacional", icon: <TrendingUp size={24} className="rotate-180" /> },
-                { title: "Pouca visibilidade sobre resultados", icon: <Activity size={24} /> }
-              ].map((problem, i) => (
-                <div key={i} className="bg-white/5 border border-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors group">
-                  <div className="h-12 w-12 rounded-lg bg-destructive/10 text-destructive flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    {problem.icon}
+              {activeBenefits.map((benefit, i) => (
+                <div key={benefit.id ?? i} className="bg-white/5 border border-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors group">
+                  <div className="h-12 w-12 rounded-lg bg-destructive/10 text-destructive flex items-center justify-center mb-4 group-hover:scale-110 transition-transform text-2xl">
+                    {benefit.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{problem.title}</h3>
-                  <p className="text-sm text-muted-foreground">A complexidade não precisa ser a regra. É hora de substituir o caos por visibilidade total.</p>
+                  <h3 className="text-lg font-semibold text-white mb-2">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground">{benefit.description}</p>
                 </div>
               ))}
             </div>
@@ -729,6 +731,7 @@ export default function Home() {
         </section>
 
         {/* PRICING */}
+        {/* PLANOS — dinâmico via API */}
         <section id="planos" className="py-24">
           <div className="container mx-auto px-4 md:px-8">
             <div className="text-center mb-16">
@@ -736,79 +739,84 @@ export default function Home() {
               <p className="text-lg text-muted-foreground">Escolha o plano ideal para o tamanho da sua operação.</p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              {/* Starter */}
-              <div className="glass-panel p-6 rounded-2xl flex flex-col">
-                <h3 className="text-xl font-semibold text-white mb-2">Starter</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">R$ 199</span>
-                  <span className="text-muted-foreground">/mês</span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6 h-10">Para pequenas operações iniciando digitalização.</p>
-                <ul className="space-y-3 mb-8 flex-1 text-sm text-white/80">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Até 20 chamados</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Dashboard básico</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Suporte padrão</li>
-                </ul>
-                <a href="/register" className="w-full block"><Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Assinar Starter</Button></a>
+            {activePlans ? (
+              <div className={`grid gap-6 max-w-6xl mx-auto ${activePlans.length <= 2 ? "md:grid-cols-2 max-w-2xl" : activePlans.length === 3 ? "md:grid-cols-3 max-w-4xl" : "md:grid-cols-2 lg:grid-cols-4"}`}>
+                {activePlans.map((plan) => {
+                  const isEnterprise = plan.price === 0;
+                  return plan.highlighted ? (
+                    <div key={plan.id} className="bg-gradient-to-b from-[#1B2942] to-background border-2 border-primary p-6 rounded-2xl flex flex-col relative transform lg:-translate-y-4 shadow-[0_0_30px_rgba(10,132,255,0.15)]">
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full">
+                        Mais Popular
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{plan.name}</h3>
+                      <div className="mb-4">
+                        {isEnterprise ? (
+                          <span className="text-2xl font-bold text-white">Sob consulta</span>
+                        ) : (
+                          <>
+                            <span className="text-3xl font-bold text-white">
+                              {plan.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                            </span>
+                            <span className="text-muted-foreground">/mês</span>
+                          </>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">{plan.description}</p>
+                      <ul className="space-y-3 mb-8 flex-1 text-sm text-white/90">
+                        {(plan.features ?? []).map((f, i) => (
+                          <li key={i} className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary shrink-0" /> {f}</li>
+                        ))}
+                      </ul>
+                      <a href="/register" className="w-full block">
+                        <Button className="w-full bg-primary text-white hover:bg-primary/90">
+                          {isEnterprise ? "Falar com Vendas" : `Assinar ${plan.name}`}
+                        </Button>
+                      </a>
+                    </div>
+                  ) : (
+                    <div key={plan.id} className="glass-panel p-6 rounded-2xl flex flex-col">
+                      <h3 className="text-xl font-semibold text-white mb-2">{plan.name}</h3>
+                      <div className="mb-4">
+                        {isEnterprise ? (
+                          <span className="text-2xl font-bold text-white">Sob consulta</span>
+                        ) : (
+                          <>
+                            <span className="text-3xl font-bold text-white">
+                              {plan.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
+                            </span>
+                            <span className="text-muted-foreground">/mês</span>
+                          </>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-6 min-h-[40px]">{plan.description}</p>
+                      <ul className="space-y-3 mb-8 flex-1 text-sm text-white/80">
+                        {(plan.features ?? []).map((f, i) => (
+                          <li key={i} className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50 shrink-0" /> {f}</li>
+                        ))}
+                      </ul>
+                      <a href="/register" className="w-full block">
+                        <Button variant="outline" className="w-full border-white/20 hover:bg-white/5">
+                          {isEnterprise ? "Falar com Vendas" : `Assinar ${plan.name}`}
+                        </Button>
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
-
-              {/* Professional */}
-              <div className="bg-gradient-to-b from-[#1B2942] to-background border-2 border-primary p-6 rounded-2xl flex flex-col relative transform lg:-translate-y-4 shadow-[0_0_30px_rgba(10,132,255,0.15)]">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-primary text-white text-[10px] font-bold uppercase tracking-wider py-1 px-3 rounded-full">
-                  Mais Popular
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Professional</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">R$ 599</span>
-                  <span className="text-muted-foreground">/mês</span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6 h-10">O equilíbrio perfeito para operações em crescimento.</p>
-                <ul className="space-y-3 mb-8 flex-1 text-sm text-white/90">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> Até 100 chamados</li>
-                  <li className="flex items-center gap-2 font-medium text-white"><Bot size={16} className="text-primary" /> IA Match de Técnicos</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> WhatsApp Integrado</li>
-                  <li className="flex items-center gap-2 font-medium text-white"><FileText size={16} className="text-primary" /> Relatórios gerados por IA</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary" /> Dashboard completo</li>
-                </ul>
-                <a href="/register" className="w-full block"><Button className="w-full bg-primary text-white hover:bg-primary/90">Assinar Professional</Button></a>
+            ) : (
+              /* Fallback skeleton enquanto carrega */
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="glass-panel p-6 rounded-2xl flex flex-col animate-pulse">
+                    <div className="h-5 w-32 bg-white/10 rounded mb-4" />
+                    <div className="h-8 w-20 bg-white/10 rounded mb-6" />
+                    <div className="space-y-2 flex-1">
+                      {[1,2,3].map(j => <div key={j} className="h-4 bg-white/5 rounded" />)}
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              {/* Business */}
-              <div className="glass-panel p-6 rounded-2xl flex flex-col">
-                <h3 className="text-xl font-semibold text-white mb-2">Business</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">R$ 1.499</span>
-                  <span className="text-muted-foreground">/mês</span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6 h-10">Para operações maduras que precisam de automação total.</p>
-                <ul className="space-y-3 mb-8 flex-1 text-sm text-white/80">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Chamados ilimitados</li>
-                  <li className="flex items-center gap-2 text-white"><Camera size={16} className="text-white/50" /> IA Vision Analytics</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Dashboard avançado</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Acesso à API</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> White Label básico</li>
-                </ul>
-                <a href="/register" className="w-full block"><Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Assinar Business</Button></a>
-              </div>
-
-              {/* Enterprise */}
-              <div className="glass-panel p-6 rounded-2xl flex flex-col">
-                <h3 className="text-xl font-semibold text-white mb-2">Enterprise</h3>
-                <div className="mb-4">
-                  <span className="text-3xl font-bold text-white">Sob consulta</span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-6 h-10">Arquitetura dedicada para grandes corporações.</p>
-                <ul className="space-y-3 mb-8 flex-1 text-sm text-white/80">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Multiempresa</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> White Label completo</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> SSO / SAML</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> SLA corporativo customizado</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-white/50" /> Suporte dedicado (CSM)</li>
-                </ul>
-                <a href="/register" className="w-full block"><Button variant="outline" className="w-full border-white/20 hover:bg-white/5">Falar com Vendas</Button></a>
-              </div>
-            </div>
+            )}
           </div>
         </section>
 

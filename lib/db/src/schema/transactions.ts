@@ -31,6 +31,7 @@ export const transactionsTable = pgTable("transactions", {
   description: text("description").notNull(),
   reference: text("reference"),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
+  mercadoPagoPaymentId: text("mercado_pago_payment_id"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [
   index("idx_transactions_wallet_id").on(t.walletId),

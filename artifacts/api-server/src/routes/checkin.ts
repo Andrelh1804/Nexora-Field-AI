@@ -1,8 +1,9 @@
 import { Router, type Response } from "express";
-import { db, checkinCheckoutsTable, techniciansTable, serviceOrdersTable, notificationsTable } from "@workspace/db";
+import { db, checkinCheckoutsTable, techniciansTable, serviceOrdersTable, notificationsTable, companiesTable, usersTable } from "@workspace/db";
 import { eq, and } from "drizzle-orm";
 import { requireAuth, type AuthRequest } from "../middlewares/auth";
 import { pushNotification } from "./notifications";
+import { WhatsApp } from "../lib/whatsapp";
 
 const router = Router();
 
@@ -113,7 +114,7 @@ router.post("/service-orders/:id/checkout", requireAuth, async (req: AuthRequest
     // Finalize order
     await db.update(serviceOrdersTable).set({ status: "finalizado" }).where(eq(serviceOrdersTable.id, orderId));
 
-    // Notify
+    // Notify via plataforma
     const [notif] = await db.insert(notificationsTable).values({
       userId: req.userId!,
       type: "chamado_finalizado",
@@ -121,6 +122,16 @@ router.post("/service-orders/:id/checkout", requireAuth, async (req: AuthRequest
       message: `Checkout realizado. Duração: ${durationMinutes || "—"} minutos`,
     }).returning();
     pushNotification(req.userId!, { ...notif, data: notif.data ?? undefined });
+
+    // WhatsApp: notificar empresa sobre conclusão
+    try {
+      if (order.companyId) {
+        const [companyUser] = await db.select({ phone: usersTable.phone }).from(usersTable).where(eq(usersTable.id, order.companyId)).limit(1);
+        if (companyUser?.phone && order.title) {
+          await WhatsApp.orderCompleted(companyUser.phone, order.title, tech.name ?? "Técnico");
+        }
+      }
+    } catch (waErr) { console.warn("[WhatsApp] checkout notification failed:", waErr); }
 
     res.json(record);
   } catch (err) {

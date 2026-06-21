@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "wouter";
+import { FileDown } from "lucide-react";
 import {
   useGetServiceOrder, useGetAiMatch,
   useGetCheckin, useDoCheckin, useDoCheckout,
@@ -316,6 +317,25 @@ export default function ChamadoDetail() {
   const isTechnician = user?.role === "technician";
   const isActive = ["aceito", "em_andamento"].includes(chamado.status);
 
+  const downloadReport = async () => {
+    const token = localStorage.getItem("nexora_token");
+    try {
+      const res = await fetch(`/api/reports/technical/${numId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) throw new Error("Erro ao gerar relatório");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `relatorio-tecnico-OS${numId}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      alert("Não foi possível gerar o relatório. Tente novamente.");
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       <div className="flex items-start justify-between">
@@ -323,9 +343,14 @@ export default function ChamadoDetail() {
           <h1 className="text-3xl font-bold">{chamado.title}</h1>
           <p className="text-muted-foreground text-sm mt-1">{chamado.city}, {chamado.state}</p>
         </div>
-        <Badge className={STATUS_COLORS[chamado.status] || ""}>
-          {STATUS_LABELS[chamado.status] || chamado.status}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" onClick={downloadReport} className="text-xs gap-1.5">
+            <FileDown className="h-3.5 w-3.5" /> Exportar PDF
+          </Button>
+          <Badge className={STATUS_COLORS[chamado.status] || ""}>
+            {STATUS_LABELS[chamado.status] || chamado.status}
+          </Badge>
+        </div>
       </div>
 
       {/* Details */}

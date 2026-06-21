@@ -32,6 +32,8 @@ import specialtiesRouter from "./specialties";
 import adminUsersRouter from "./admin-users";
 import adminPlansRouter from "./admin-plans";
 import landingCmsRouter from "./landing-cms";
+import reportsRouter from "./reports";
+import paymentsRouter from "./payments";
 
 const router: IRouter = Router();
 
@@ -68,5 +70,7 @@ router.use(specialtiesRouter);
 router.use(adminUsersRouter);
 router.use(adminPlansRouter);
 router.use(landingCmsRouter);
+router.use(reportsRouter);
+router.use(paymentsRouter);
 
 export default router;

@@ -19,6 +19,8 @@ export const subscriptionsTable = pgTable("subscriptions", {
   status: subscriptionStatusEnum("status").notNull().default("ativa"),
   stripeSubscriptionId: text("stripe_subscription_id"),
   stripeCustomerId: text("stripe_customer_id"),
+  mercadoPagoPaymentId: text("mercado_pago_payment_id"),
+  mercadoPagoSubscriptionId: text("mercado_pago_subscription_id"),
   currentPeriodStart: timestamp("current_period_start", { withTimezone: true }),
   currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }),
   canceledAt: timestamp("canceled_at", { withTimezone: true }),

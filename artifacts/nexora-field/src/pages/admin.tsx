@@ -47,7 +47,26 @@ export default function Admin() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">Painel Administrativo</h1>
-        <Badge variant="outline" className="text-primary border-primary/30">Admin</Badge>
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            className="text-xs gap-1.5"
+            onClick={async () => {
+              const token = localStorage.getItem("nexora_token");
+              const res = await fetch("/api/reports/executive", { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+              if (!res.ok) { alert("Erro ao gerar relatório executivo."); return; }
+              const blob = await res.blob();
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a"); a.href = url; a.download = `relatorio-executivo-${new Date().toISOString().slice(0,10)}.pdf`; a.click();
+              URL.revokeObjectURL(url);
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Relatório Executivo
+          </Button>
+          <Badge variant="outline" className="text-primary border-primary/30">Admin</Badge>
+        </div>
       </div>
 
       {/* Key metrics */}

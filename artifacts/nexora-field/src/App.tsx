@@ -40,6 +40,8 @@ import AdminEspecialidades from "@/pages/admin-especialidades";
 import AdminAdministradores from "@/pages/admin-administradores";
 import AdminPlanos from "@/pages/admin-planos";
 import AdminLanding from "@/pages/admin-landing";
+import RecuperarSenha from "@/pages/recuperar-senha";
+import RedefinirSenha from "@/pages/redefinir-senha";
 import { CookieBanner } from "@/components/cookie-banner";
 
 const queryClient = new QueryClient({
@@ -90,6 +92,8 @@ function Router() {
             <Route path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/recuperar-senha" component={RecuperarSenha} />
+            <Route path="/redefinir-senha" component={RedefinirSenha} />
             <Route path="/ranking" component={Ranking} />
             <Route path="/planos" component={Planos} />
             <Route path="/mapa" component={Mapa} />

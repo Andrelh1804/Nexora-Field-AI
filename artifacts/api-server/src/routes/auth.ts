@@ -1,9 +1,10 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
-import { db, usersTable } from "@workspace/db";
-import { eq, sql } from "drizzle-orm";
+import { db, usersTable, passwordResetTokensTable } from "@workspace/db";
+import { eq, sql, and, gt } from "drizzle-orm";
 import { generateToken, requireAuth, type AuthRequest } from "../middlewares/auth";
 import { type Response } from "express";
+import crypto from "crypto";
 
 const router = Router();
 
@@ -245,6 +246,94 @@ router.delete("/auth/account", requireAuth, async (req: AuthRequest, res: Respon
 
 router.post("/auth/logout", (_req, res) => {
   res.json({ success: true });
+});
+
+router.post("/auth/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body as { email?: string };
+    if (!email) { res.status(400).json({ error: "E-mail é obrigatório." }); return; }
+
+    const [user] = await db.select({ id: usersTable.id, email: usersTable.email, name: usersTable.name })
+      .from(usersTable).where(eq(usersTable.email, email.toLowerCase())).limit(1);
+
+    if (!user) {
+      res.json({ success: true, message: "Se o e-mail estiver cadastrado, você receberá as instruções em breve." });
+      return;
+    }
+
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const tokenHash = crypto.createHash("sha256").update(rawToken).digest("hex");
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+
+    await db.delete(passwordResetTokensTable).where(eq(passwordResetTokensTable.userId, user.id));
+    await db.insert(passwordResetTokensTable).values({ userId: user.id, tokenHash, expiresAt });
+
+    const resetUrl = `${process.env.APP_URL ?? ""}/redefinir-senha?token=${rawToken}`;
+
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey) {
+      try {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: { "Authorization": `Bearer ${resendKey}`, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            from: process.env.RESEND_FROM_EMAIL ?? "noreply@nexorafield.com.br",
+            to: user.email,
+            subject: "Recuperação de Senha — Nexora Field AI",
+            html: `
+              <div style="font-family:sans-serif;max-width:480px;margin:0 auto;background:#0e1624;color:#fff;padding:32px;border-radius:12px">
+                <h2 style="color:#0A84FF;margin-bottom:8px">Nexora Field AI</h2>
+                <h3 style="margin-bottom:16px">Recuperação de Senha</h3>
+                <p style="color:#aaa">Olá, ${user.name}. Recebemos uma solicitação para redefinir a senha da sua conta.</p>
+                <a href="${resetUrl}" style="display:inline-block;background:#0A84FF;color:#fff;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:bold;margin:24px 0">
+                  Redefinir Senha
+                </a>
+                <p style="color:#888;font-size:12px">Este link expira em 1 hora. Se você não solicitou a recuperação, ignore este e-mail.</p>
+                <p style="color:#666;font-size:11px">Link direto: ${resetUrl}</p>
+              </div>`,
+          }),
+        });
+      } catch (emailErr) {
+        console.error("[forgot-password] Email send failed:", emailErr);
+      }
+    } else {
+      console.log(`[forgot-password] RESEND_API_KEY not set. Reset link for ${user.email}: ${resetUrl}`);
+    }
+
+    res.json({ success: true, message: "Se o e-mail estiver cadastrado, você receberá as instruções em breve." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao processar solicitação." });
+  }
+});
+
+router.post("/auth/reset-password", async (req, res) => {
+  try {
+    const { token, password } = req.body as { token?: string; password?: string };
+    if (!token || !password) { res.status(400).json({ error: "Token e nova senha são obrigatórios." }); return; }
+    if (password.length < 8) { res.status(400).json({ error: "A senha deve ter no mínimo 8 caracteres." }); return; }
+
+    const tokenHash = crypto.createHash("sha256").update(token).digest("hex");
+    const now = new Date();
+
+    const [resetRecord] = await db
+      .select({ id: passwordResetTokensTable.id, userId: passwordResetTokensTable.userId, usedAt: passwordResetTokensTable.usedAt })
+      .from(passwordResetTokensTable)
+      .where(and(eq(passwordResetTokensTable.tokenHash, tokenHash), gt(passwordResetTokensTable.expiresAt, now)))
+      .limit(1);
+
+    if (!resetRecord) { res.status(400).json({ error: "Token inválido ou expirado." }); return; }
+    if (resetRecord.usedAt) { res.status(400).json({ error: "Este link já foi utilizado." }); return; }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    await db.update(usersTable).set({ passwordHash, mustChangePassword: false }).where(eq(usersTable.id, resetRecord.userId));
+    await db.update(passwordResetTokensTable).set({ usedAt: now }).where(eq(passwordResetTokensTable.id, resetRecord.id));
+
+    res.json({ success: true, message: "Senha redefinida com sucesso. Faça login com sua nova senha." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao redefinir senha." });
+  }
 });
 
 export default router;

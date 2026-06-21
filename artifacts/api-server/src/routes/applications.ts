@@ -1,8 +1,9 @@
 import { Router, type Response } from "express";
-import { db, applicationsTable, techniciansTable, serviceOrdersTable, companiesTable } from "@workspace/db";
+import { db, applicationsTable, techniciansTable, serviceOrdersTable, companiesTable, usersTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
 import { requireAuth, type AuthRequest } from "../middlewares/auth";
 import { sql } from "drizzle-orm";
+import { WhatsApp } from "../lib/whatsapp";
 
 const router = Router();
 
@@ -66,6 +67,20 @@ router.patch("/applications/:id/accept", requireAuth, async (req: AuthRequest, r
     await db.update(serviceOrdersTable)
       .set({ status: "aceito", assignedTechnicianId: app.technicianId })
       .where(eq(serviceOrdersTable.id, app.serviceOrderId));
+
+    // WhatsApp: notificar técnico sobre aprovação
+    try {
+      const [order] = await db.select({ title: serviceOrdersTable.title, companyId: serviceOrdersTable.companyId })
+        .from(serviceOrdersTable).where(eq(serviceOrdersTable.id, app.serviceOrderId)).limit(1);
+      const [tech] = await db.select({ userId: techniciansTable.userId })
+        .from(techniciansTable).where(eq(techniciansTable.id, app.technicianId)).limit(1);
+      const [techUser] = tech ? await db.select({ phone: usersTable.phone }).from(usersTable).where(eq(usersTable.id, tech.userId)).limit(1) : [null];
+      const [company] = order?.companyId ? await db.select({ razaoSocial: companiesTable.razaoSocial }).from(companiesTable).where(eq(companiesTable.userId, order.companyId)).limit(1) : [null];
+      if (techUser?.phone && order?.title) {
+        await WhatsApp.orderApprovedForTech(techUser.phone, order.title, company?.razaoSocial ?? "Empresa");
+      }
+    } catch (waErr) { console.warn("[WhatsApp] accept notification failed:", waErr); }
+
     const enriched = await enrichApplication(app);
     res.json(enriched);
   } catch (err) {
