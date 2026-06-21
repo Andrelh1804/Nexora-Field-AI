@@ -35,6 +35,7 @@ import landingCmsRouter from "./landing-cms";
 import reportsRouter from "./reports";
 import paymentsRouter from "./payments";
 import paymentConfigRouter from "./payment-config";
+import certificationsRouter from "./certifications";
 
 const router: IRouter = Router();
 
@@ -74,5 +75,6 @@ router.use(landingCmsRouter);
 router.use(reportsRouter);
 router.use(paymentsRouter);
 router.use(paymentConfigRouter);
+router.use(certificationsRouter);
 
 export default router;

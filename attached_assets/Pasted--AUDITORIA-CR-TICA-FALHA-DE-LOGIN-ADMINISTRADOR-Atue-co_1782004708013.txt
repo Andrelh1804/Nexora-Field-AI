@@ -1,0 +1,296 @@
+# AUDITORIA CRÍTICA — FALHA DE LOGIN ADMINISTRADOR
+
+Atue como um engenheiro sênior especializado em:
+
+* Node.js
+* React
+* PostgreSQL
+* Prisma ORM
+* JWT
+* Autenticação
+* Segurança
+* SaaS Multiusuário
+
+Sua missão é identificar e corrigir completamente qualquer problema que esteja impedindo o login do usuário administrador da Nexora Field AI.
+
+NÃO PRESUMA NADA.
+
+Realize uma auditoria completa do fluxo de autenticação.
+
+---
+
+# FASE 1 — VERIFICAR USUÁRIO ADMIN
+
+Consultar banco de dados.
+
+Validar existência de:
+
+Email:
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+ou qualquer outro usuário com:
+
+role = admin_master
+role = admin
+
+Verificar:
+
+* id
+* email
+* senha hash
+* role
+* status
+* active
+* mustChangePassword
+* createdAt
+
+Gerar relatório.
+
+---
+
+# FASE 2 — VALIDAR SENHA
+
+Verificar:
+
+* Hash bcrypt válido
+* Quantidade de rounds
+* Comparação bcrypt.compare()
+
+Executar teste:
+
+Senha atual cadastrada
+
+↓
+
+bcrypt.compare()
+
+↓
+
+Resultado
+
+Caso a senha esteja corrompida:
+
+Criar nova senha:
+
+Admin@123456
+
+Atualizar hash corretamente.
+
+---
+
+# FASE 3 — TESTAR LOGIN VIA API
+
+Executar teste real:
+
+POST /auth/login
+
+Payload:
+
+{
+"email":"[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)",
+"password":"Admin@123456"
+}
+
+Registrar:
+
+* Request
+* Response
+* Status HTTP
+* Erros
+
+---
+
+# FASE 4 — VALIDAR BACKEND
+
+Auditar:
+
+AuthController
+
+AuthService
+
+JWT
+
+Middleware
+
+Login Route
+
+Identificar:
+
+* Falha de validação
+* Falha de role
+* Falha de status
+* Falha de senha
+
+Corrigir.
+
+---
+
+# FASE 5 — VALIDAR TOKEN JWT
+
+Após login:
+
+Verificar:
+
+* Token gerado
+* Expiração
+* Payload
+* Role incluída
+
+Payload esperado:
+
+{
+id,
+email,
+role
+}
+
+---
+
+# FASE 6 — VALIDAR FRONTEND
+
+Auditar:
+
+Página Login
+
+Hooks
+
+AuthContext
+
+Store
+
+LocalStorage
+
+Session
+
+Verificar:
+
+* Token salvo corretamente
+* Redirecionamento correto
+* Erros silenciosos
+
+Adicionar logs temporários.
+
+---
+
+# FASE 7 — VALIDAR RBAC
+
+Verificar:
+
+role = admin
+
+role = admin_master
+
+Acesso permitido para:
+
+/dashboard/admin
+
+/admin
+
+/settings
+
+/users
+
+/plans
+
+/cms
+
+Validar se existe bloqueio indevido.
+
+---
+
+# FASE 8 — RATE LIMIT
+
+Verificar se o administrador foi bloqueado.
+
+Auditar:
+
+express-rate-limit
+
+Identificar:
+
+* Bloqueio por IP
+* Excesso de tentativas
+* Cache residual
+
+Se necessário:
+
+Limpar bloqueio.
+
+---
+
+# FASE 9 — BANCO DE DADOS
+
+Executar:
+
+SELECT id,email,role,active,status
+FROM users
+WHERE role IN ('admin','admin_master');
+
+Exibir resultado.
+
+---
+
+# FASE 10 — CRIAR ADMIN MASTER EMERGENCIAL
+
+Caso não exista administrador funcional:
+
+Criar automaticamente:
+
+Nome:
+Administrador Master
+
+Email:
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+Senha:
+Admin@123456
+
+Role:
+admin_master
+
+Status:
+active
+
+mustChangePassword:
+true
+
+Garantir hash bcrypt válido.
+
+---
+
+# FASE 11 — TESTE FINAL
+
+Executar:
+
+1. Login
+2. Geração JWT
+3. Persistência da sessão
+4. Redirecionamento
+5. Acesso ao dashboard admin
+
+Confirmar:
+
+✓ Login funcionando
+
+✓ JWT válido
+
+✓ Sessão persistida
+
+✓ Dashboard acessível
+
+---
+
+# RELATÓRIO FINAL
+
+Informar:
+
+1. Problema encontrado
+2. Arquivo afetado
+3. Correção aplicada
+4. Usuário administrador criado ou corrigido
+5. Credenciais de teste
+6. Status final
+
+Objetivo:
+
+Entregar acesso administrativo totalmente funcional na Nexora Field AI e eliminar qualquer falha de autenticação ou autorização relacionada ao administrador.

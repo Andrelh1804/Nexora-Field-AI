@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, integer, real } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer, real, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 import { usersTable } from "./users";
@@ -19,6 +19,13 @@ export const techniciansTable = pgTable("technicians", {
   rating: real("rating"),
   totalServices: integer("total_services").notNull().default(0),
   totalEarnings: real("total_earnings").default(0),
+  latitude: real("latitude"),
+  longitude: real("longitude"),
+  serviceRadius: integer("service_radius").default(100),
+  availableDays: text("available_days").array().default([]),
+  availableFrom: text("available_from"),
+  availableTo: text("available_to"),
+  isAvailable: boolean("is_available").notNull().default(true),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

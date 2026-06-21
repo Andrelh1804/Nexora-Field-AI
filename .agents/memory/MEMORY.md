@@ -1,4 +1,6 @@
-- [DB schema column names](db-schema-columns.md) — users.password_hash, companies.razao_social/nome_fantasia, technicians has no daily_rate/available/experience_years
+- [DB schema column names](db-schema-columns.md) — users.password_hash, companies.razao_social/nome_fantasia/email(NOT NULL); service_orders.sla(text e.g. "24h"), NO sla_hours/priority; applications.message (not proposal), status: pending/accepted/rejected
+- [Certifications system](certifications-system.md) — cert_type enum + cert_status enum; file stored as base64 in file_data; admin reviews via PUT /admin/certifications/:id/review; technician page at /certificacoes; admin page at /admin/certificacoes
+- [Haversine geolocation](haversine-geolocation.md) — technicians table now has latitude/longitude/service_radius/available_days/available_from/available_to/is_available; GET /technicians?lat=&lon=&radius= uses Haversine; falls back to city/state when no coords
 - [Service status enum](service-status-enum.md) — valid values: aberto, aceito, em_andamento, finalizado, cancelado (NOT "concluido")
 - [Ratings table constraints](ratings-constraints.md) — service_order_id NOT NULL, score is integer (not real), requires valid FK to completed orders
 - [Seed bulk script pattern](seed-bulk-pattern.md) — use timestamp in email to avoid conflicts; expose errors not swallow them; plans seeded separately via psql
