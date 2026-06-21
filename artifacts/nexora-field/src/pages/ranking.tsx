@@ -74,11 +74,11 @@ export default function Ranking() {
             {/* Score breakdown */}
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="bg-muted/30 rounded-lg p-3 text-center">
-                <p className="text-sm font-semibold">{Math.round(myRanking.score - (myRanking.academyScore || 0))} pts</p>
+                <p className="text-sm font-semibold">{Math.round(myRanking.score - ((myRanking as any).academyScore || 0))} pts</p>
                 <p className="text-xs text-muted-foreground">Campo (chamados + rating)</p>
               </div>
-              <div className={`rounded-lg p-3 text-center ${(myRanking.academyScore || 0) > 0 ? "bg-yellow-500/10 border border-yellow-500/20" : "bg-muted/30"}`}>
-                <p className="text-sm font-semibold text-yellow-400">{myRanking.academyScore || 0} pts</p>
+              <div className={`rounded-lg p-3 text-center ${((myRanking as any).academyScore || 0) > 0 ? "bg-yellow-500/10 border border-yellow-500/20" : "bg-muted/30"}`}>
+                <p className="text-sm font-semibold text-yellow-400">{(myRanking as any).academyScore || 0} pts</p>
                 <p className="text-xs text-muted-foreground">Academy 🎓</p>
               </div>
             </div>

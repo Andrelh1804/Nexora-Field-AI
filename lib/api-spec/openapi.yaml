@@ -1078,7 +1078,7 @@ components:
           minLength: 6
         role:
           type: string
-          enum: [admin, company, technician]
+          enum: [admin, admin_master, company, technician]
 
     LoginInput:
       type: object
@@ -1111,7 +1111,7 @@ components:
           type: string
         role:
           type: string
-          enum: [admin, company, technician]
+          enum: [admin, admin_master, company, technician]
         mustChangePassword:
           type: boolean
         createdAt:

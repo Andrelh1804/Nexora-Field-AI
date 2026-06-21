@@ -34,3 +34,4 @@ export * from "./landing-cms";
 export * from "./password-reset-tokens";
 export * from "./payment-configs";
 export * from "./certifications";
+export * from "./platform-settings";

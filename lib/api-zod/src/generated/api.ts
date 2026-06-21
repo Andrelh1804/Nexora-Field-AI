@@ -29,7 +29,7 @@ export const RegisterBody = zod.object({
   "name": zod.string().min(registerBodyNameMin),
   "email": zod.string().email(),
   "password": zod.string().min(registerBodyPasswordMin),
-  "role": zod.enum(['admin', 'company', 'technician'])
+  "role": zod.enum(['admin', 'admin_master', 'company', 'technician'])
 })
 
 
@@ -47,7 +47,7 @@ export const LoginResponse = zod.object({
   "id": zod.number(),
   "name": zod.string(),
   "email": zod.string(),
-  "role": zod.enum(['admin', 'company', 'technician']),
+  "role": zod.enum(['admin', 'admin_master', 'company', 'technician']),
   "mustChangePassword": zod.boolean().optional(),
   "createdAt": zod.coerce.date()
 })
@@ -61,7 +61,7 @@ export const GetMeResponse = zod.object({
   "id": zod.number(),
   "name": zod.string(),
   "email": zod.string(),
-  "role": zod.enum(['admin', 'company', 'technician']),
+  "role": zod.enum(['admin', 'admin_master', 'company', 'technician']),
   "mustChangePassword": zod.boolean().optional(),
   "createdAt": zod.coerce.date()
 })

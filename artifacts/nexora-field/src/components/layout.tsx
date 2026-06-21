@@ -8,12 +8,31 @@ import { useQuery } from "@tanstack/react-query";
 import { SecureImage, isObjectStorageKey } from "@/components/secure-image";
 
 const API = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
-function authH() {
+function authH(): Record<string, string> {
   const t = localStorage.getItem("nexora_token");
   return t ? { Authorization: `Bearer ${t}` } : {};
 }
 
 interface TechAvatar { photoUrl: string | null; name: string }
+
+type PublicSettings = { company?: Record<string, string>; social?: Record<string, string>; branding?: Record<string, string> };
+
+function PlatformFooter() {
+  const { data } = useQuery<PublicSettings>({
+    queryKey: ["platform-settings", "public"],
+    queryFn: async () => {
+      const r = await fetch(`${API}/platform-settings/public`);
+      if (!r.ok) return {};
+      return r.json();
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+  const name = data?.company?.name ?? "Nexora Field AI";
+  const cnpj = data?.company?.cnpj ?? "58.453.955/0001-84";
+  return (
+    <span>© {new Date().getFullYear()} {name} · CNPJ {cnpj} · Todos os direitos reservados</span>
+  );
+}
 
 function NotificationBell({ userId }: { userId: number }) {
   const { data } = useGetUnreadCount({ query: { queryKey: ["notifications", "unread", userId], refetchInterval: 30000 } });
@@ -93,7 +112,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/mapa", label: "Mapa" },
     { href: "/tecnicos", label: "Técnicos" },
     { href: "/ranking", label: "Ranking" },
-  ] : [
+  ] : /* unauthenticated */ [
     { href: "/ranking", label: "Ranking" },
     { href: "/planos", label: "Planos" },
     { href: "/academy", label: "Academy" },
@@ -123,6 +142,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       { href: "/admin/academy", label: "🎓 Academy" },
       { href: "/crm", label: "🎯 CRM" },
       { href: "/contratos", label: "📋 Contratos" },
+      ...(user.role === "admin_master" ? [{ href: "/admin/configuracoes", label: "⚙️ Configurações" }] : []),
     ] : []),
     { href: "/academy", label: "🎓 Academy" },
     { href: "/comunidade", label: "💬 Comunidade" },
@@ -135,9 +155,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-50 px-4 py-3 flex items-center justify-between">
         {user ? (
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2 shrink-0">
             <img src="/nexora-logo.png" alt="Nexora Field" className="h-11 w-11" />
-          </Link>
+          </a>
         ) : (
           <a href="/" className="flex items-center gap-2">
             <img src="/nexora-logo.png" alt="Nexora Field" className="h-11 w-11" />
@@ -145,6 +165,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         <nav className="hidden lg:flex items-center gap-1">
+          {user && (
+            <a href="/" className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors text-muted-foreground hover:text-foreground hover:bg-muted/50">
+              🏠 Início
+            </a>
+          )}
           {mainLinks.map(l => <NavLink key={l.href} href={l.href} label={l.label} active={isActive(l.href)} />)}
           {roleLinks.length > 0 && (
             <div className="relative group ml-1">
@@ -185,6 +210,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {mobileOpen && (
         <div className="lg:hidden border-b border-border bg-card px-4 py-3 flex flex-col gap-1 z-40">
+          {user && (
+            <a href="/" onClick={() => setMobileOpen(false)} className="px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50">
+              🏠 Início
+            </a>
+          )}
           {[...mainLinks, ...roleLinks].map(l => (
             <Link key={l.href} href={l.href} onClick={() => setMobileOpen(false)} className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive(l.href) ? "bg-primary/10 text-primary" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
               {l.label}
@@ -199,7 +229,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       <footer className="border-t border-border py-4 px-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
-        <span>© {new Date().getFullYear()} Nexora Field AI · CNPJ 58.453.955/0001-84 · Todos os direitos reservados</span>
+        <PlatformFooter />
         <div className="flex items-center gap-4 flex-wrap justify-center">
           <Link href="/privacidade" className="hover:text-foreground transition-colors">Privacidade</Link>
           <Link href="/termos" className="hover:text-foreground transition-colors">Termos de Uso</Link>

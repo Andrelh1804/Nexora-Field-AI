@@ -45,6 +45,7 @@ import AdminPagamentos from "@/pages/admin-pagamentos";
 import Certificacoes from "@/pages/certificacoes";
 import AdminCertificacoes from "@/pages/admin-certificacoes";
 import AdminAcademy from "@/pages/admin-academy";
+import AdminConfiguracoes from "@/pages/admin-configuracoes";
 import RecuperarSenha from "@/pages/recuperar-senha";
 import RedefinirSenha from "@/pages/redefinir-senha";
 import { CookieBanner } from "@/components/cookie-banner";
@@ -153,6 +154,7 @@ function PlatformRoutes() {
             <Route path="/certificacoes" component={() => <ProtectedRoute component={Certificacoes} roles={["technician"]} />} />
             <Route path="/admin/certificacoes" component={() => <ProtectedRoute component={AdminCertificacoes} roles={["admin"]} />} />
             <Route path="/admin/academy" component={() => <ProtectedRoute component={AdminAcademy} roles={["admin"]} />} />
+            <Route path="/admin/configuracoes" component={() => <ProtectedRoute component={AdminConfiguracoes} roles={["admin"]} />} />
             <Route component={NotFound} />
           </Switch>
         </Layout>

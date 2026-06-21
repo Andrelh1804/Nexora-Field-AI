@@ -37,6 +37,7 @@ import paymentsRouter from "./payments";
 import paymentConfigRouter from "./payment-config";
 import certificationsRouter from "./certifications";
 import uploadsRouter from "./uploads";
+import platformSettingsRouter from "./platform-settings";
 
 const router: IRouter = Router();
 
@@ -78,5 +79,6 @@ router.use(paymentsRouter);
 router.use(paymentConfigRouter);
 router.use(certificationsRouter);
 router.use(uploadsRouter);
+router.use(platformSettingsRouter);
 
 export default router;

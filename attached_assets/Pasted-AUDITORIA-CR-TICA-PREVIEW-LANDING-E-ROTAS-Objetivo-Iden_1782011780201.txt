@@ -1,0 +1,287 @@
+AUDITORIA CRÍTICA — PREVIEW, LANDING E ROTAS
+
+Objetivo:
+
+Identificar por que o Preview não está funcionando corretamente e corrigir todos os problemas de navegação, rotas e renderização.
+
+==================================================
+
+FASE 1 — DIAGNÓSTICO DO PREVIEW
+
+Verificar:
+
+✓ Preview do Replit
+✓ Preview local
+✓ Build de produção
+✓ Build Vite
+✓ Console do navegador
+✓ Network Tab
+✓ Logs do servidor
+
+Gerar relatório contendo:
+
+- erros javascript
+- erros react
+- erros typescript
+- erros de build
+- erros de roteamento
+
+==================================================
+
+FASE 2 — VERIFICAR LANDING PAGE
+
+Validar:
+
+/
+
+A página deve carregar:
+
+Hero
+Benefícios
+Especialidades
+Academy
+Planos
+FAQ
+Contato
+Rodapé
+
+Nenhum componente pode retornar:
+
+404
+500
+Tela branca
+Loading infinito
+
+==================================================
+
+FASE 3 — VERIFICAR APP
+
+Validar:
+
+/app
+
+/app/login
+
+/app/register
+
+/app/dashboard
+
+/app/chamados
+
+/app/tecnicos
+
+/app/empresas
+
+/app/academy
+
+/app/configuracoes
+
+Todas devem retornar HTTP 200.
+
+==================================================
+
+FASE 4 — REACT ROUTER
+
+Auditar:
+
+BrowserRouter
+
+Routes
+
+Route
+
+Navigate
+
+ProtectedRoute
+
+Layout
+
+Verificar conflitos:
+
+/ e /app
+
+Corrigir.
+
+==================================================
+
+FASE 5 — VITE
+
+Verificar:
+
+vite.config.ts
+
+base
+
+build.outDir
+
+server.port
+
+proxy
+
+rewrite
+
+fallback
+
+Garantir:
+
+SPA funcionando.
+
+==================================================
+
+FASE 6 — REWRITES
+
+Se estiver em:
+
+Vercel
+
+Criar:
+
+vercel.json
+
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+
+Validar rotas internas.
+
+==================================================
+
+FASE 7 — MENUS
+
+Testar:
+
+Header
+
+Footer
+
+Sidebar
+
+Admin
+
+Academy
+
+CMS
+
+Planos
+
+Landing
+
+Validar:
+
+Todos os links clicáveis.
+
+Sem 404.
+
+==================================================
+
+FASE 8 — CMS
+
+Verificar:
+
+FAQ
+
+Benefícios
+
+Planos
+
+Depoimentos
+
+Hero
+
+Rodapé
+
+Garantir:
+
+Landing consumindo CMS.
+
+Não pode existir conteúdo hardcoded.
+
+==================================================
+
+FASE 9 — PREVIEW QUEBRADO
+
+Localizar componentes que retornam:
+
+undefined
+
+null
+
+erro de importação
+
+erro de exportação
+
+lazy loading quebrado
+
+Corrigir automaticamente.
+
+==================================================
+
+FASE 10 — TESTE FINAL
+
+Executar crawler interno.
+
+Testar:
+
+✓ Landing
+
+✓ Plataforma
+
+✓ Academy
+
+✓ CMS
+
+✓ Admin
+
+✓ Configurações
+
+✓ Planos
+
+✓ Login
+
+✓ Registro
+
+✓ Recuperação de senha
+
+✓ Certificações
+
+✓ Relatórios
+
+✓ Rankings
+
+✓ CRM
+
+✓ Dashboard
+
+==================================================
+
+RESULTADO ESPERADO
+
+✓ Preview funcionando
+
+✓ Landing funcionando
+
+✓ Plataforma funcionando
+
+✓ Menus funcionando
+
+✓ Submenus funcionando
+
+✓ Sem erro 404
+
+✓ Sem tela branca
+
+✓ Sem erros de console
+
+✓ Sem componentes quebrados
+
+Gerar relatório final contendo:
+
+- problema encontrado
+- arquivo corrigido
+- rota corrigida
+- evidência de funcionamento
