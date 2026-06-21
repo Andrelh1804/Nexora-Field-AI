@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ArrowRight, CheckCircle2, ChevronRight, Menu, X, 
@@ -22,10 +23,69 @@ const staggerContainer = {
   }
 };
 
+const API_BASE = "/api";
+
+const DEFAULT_TESTIMONIALS = [
+  { id: 1, name: "Rodrigo Mendes", role: "Diretor de Operações", company: "TelecomX", content: "A Nexora reduziu nosso tempo de contratação de técnicos em mais de 70%. O que antes levava dias de ligações e negociações, agora a IA resolve em minutos com garantia de qualidade.", avatar: "" },
+  { id: 2, name: "Juliana Costa", role: "Gerente de Infraestrutura", company: "NeoData", content: "A plataforma transformou nossa gestão de serviços de campo. Os relatórios gerados por IA eliminaram a dor de cabeça no fechamento dos serviços. O SLA melhorou absurdamente.", avatar: "" },
+];
+
+const DEFAULT_BENEFITS = [
+  { id: 1, icon: "🔍", title: "Dificuldade para encontrar técnicos", description: "A complexidade não precisa ser a regra. É hora de substituir o caos por visibilidade total." },
+  { id: 2, icon: "📊", title: "Falta de controle operacional", description: "Acompanhe cada chamado em tempo real com painéis de controle inteligentes." },
+  { id: 3, icon: "⏱️", title: "SLA sem monitoramento", description: "Alertas automáticos garantem que nenhum prazo seja ignorado na operação." },
+  { id: 4, icon: "📄", title: "Relatórios inconsistentes", description: "IA gera relatórios técnicos completos em segundos a partir de anotações simples." },
+  { id: 5, icon: "💸", title: "Alto custo operacional", description: "Reduza despesas eliminando intermediários e processos manuais desnecessários." },
+  { id: 6, icon: "👁️", title: "Pouca visibilidade sobre resultados", description: "Dashboard executivo com métricas em tempo real para decisões baseadas em dados." },
+];
+
+const DEFAULT_FAQ = [
+  { id: 1, question: "Como funciona o Match de técnicos por IA?", answer: "Nossa IA analisa as especialidades, histórico, localização e avaliações de cada técnico para encontrar o profissional com maior afinidade para cada chamado em segundos." },
+  { id: 2, question: "A plataforma funciona para qualquer segmento?", answer: "Sim. Atendemos telecom, fibra óptica, infraestrutura de TI, automação industrial, CFTV, energia solar, refrigeração e muito mais." },
+  { id: 3, question: "Como os técnicos recebem pelos serviços?", answer: "Os valores são creditados na carteira digital após a conclusão do serviço. O saque pode ser feito via PIX a qualquer momento." },
+  { id: 4, question: "Existe contrato de fidelidade?", answer: "Não. Nossos planos são mensais e você pode cancelar a qualquer momento sem multas ou penalidades." },
+];
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hasSession, setHasSession] = useState(false);
+
+  const { data: settings } = useQuery<Record<string, string>>({
+    queryKey: ["landing-settings"],
+    queryFn: () => fetch(`${API_BASE}/landing/settings`).then(r => r.json()),
+    staleTime: 60_000,
+  });
+
+  const { data: testimonials } = useQuery<typeof DEFAULT_TESTIMONIALS>({
+    queryKey: ["landing-testimonials"],
+    queryFn: () => fetch(`${API_BASE}/landing/testimonials`).then(r => r.json()),
+    staleTime: 60_000,
+  });
+
+  const { data: faqItems } = useQuery<typeof DEFAULT_FAQ>({
+    queryKey: ["landing-faq"],
+    queryFn: () => fetch(`${API_BASE}/landing/faq`).then(r => r.json()),
+    staleTime: 60_000,
+  });
+
+  const { data: benefits } = useQuery<typeof DEFAULT_BENEFITS>({
+    queryKey: ["landing-benefits"],
+    queryFn: () => fetch(`${API_BASE}/landing/benefits`).then(r => r.json()),
+    staleTime: 60_000,
+  });
+
+  const heroTitle = settings?.["hero.title"] || "A Plataforma Inteligente que Conecta Empresas aos Melhores Técnicos de Campo";
+  const heroSubtitle = settings?.["hero.subtitle"] || "Automatize a contratação, gestão e execução de serviços técnicos com Inteligência Artificial. Encontre profissionais qualificados em telecom, fibra óptica, infraestrutura de TI, automação industrial, CFTV e manutenção em minutos.";
+  const ctaPrimary = settings?.["hero.cta_primary"] || "Solicitar Demonstração";
+  const footerEmail = settings?.["footer.email"] || "contato@nexorafield.com.br";
+  const footerPhone = settings?.["footer.phone"] || "";
+  const footerInstagram = settings?.["footer.instagram"] || "";
+  const footerLinkedin = settings?.["footer.linkedin"] || "";
+
+  const activeTestimonials = (testimonials && Array.isArray(testimonials) && testimonials.length > 0) ? testimonials : DEFAULT_TESTIMONIALS;
+  const activeBenefits = (benefits && Array.isArray(benefits) && benefits.length > 0) ? benefits : DEFAULT_BENEFITS;
+  const activeFaq = (faqItems && Array.isArray(faqItems) && faqItems.length > 0) ? faqItems : DEFAULT_FAQ;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -154,18 +214,18 @@ export default function Home() {
                 <motion.div variants={fadeIn} className="mb-8">
                   <img src="/nexora-logo.png" alt="Nexora" className="h-28 w-28 md:h-36 md:w-36 mb-6" />
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-                    A Plataforma Inteligente que Conecta Empresas aos <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Melhores Técnicos de Campo</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">{heroTitle}</span>
                   </h1>
                 </motion.div>
                 
                 <motion.p variants={fadeIn} className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  Automatize a contratação, gestão e execução de serviços técnicos com Inteligência Artificial. Encontre profissionais qualificados em telecom, fibra óptica, infraestrutura de TI, automação industrial, CFTV e manutenção em minutos.
+                  {heroSubtitle}
                 </motion.p>
                 
                 <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 mb-12">
                   <a href="/register">
                     <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 text-base h-14 px-8 shadow-[0_0_30px_rgba(142,219,101,0.2)]">
-                      Solicitar Demonstração
+                      {ctaPrimary}
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </a>
@@ -755,30 +815,45 @@ export default function Home() {
         {/* TESTIMONIALS */}
         <section className="py-24 bg-[#121c2e] border-y border-white/5">
           <div className="container mx-auto px-4 md:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">O que nossos clientes dizem</h2>
+              <p className="text-muted-foreground">Empresas que já transformaram suas operações com a Nexora</p>
+            </div>
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <div className="glass-panel p-8 rounded-2xl relative">
-                <div className="text-4xl text-primary opacity-20 absolute top-4 left-6 font-serif">"</div>
-                <p className="text-lg text-white mb-6 relative z-10 font-medium">A Nexora reduziu nosso tempo de contratação de técnicos em mais de 70%. O que antes levava dias de ligações e negociações, agora a IA resolve em minutos com garantia de qualidade.</p>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center text-xl font-bold text-white">R</div>
-                  <div>
-                    <p className="font-semibold text-white">Rodrigo Mendes</p>
-                    <p className="text-sm text-muted-foreground">Diretor de Operações, TelecomX</p>
+              {activeTestimonials.map((t) => (
+                <div key={t.id} className="glass-panel p-8 rounded-2xl relative">
+                  <div className="text-4xl text-primary opacity-20 absolute top-4 left-6 font-serif">"</div>
+                  <p className="text-lg text-white mb-6 relative z-10 font-medium">{t.content}</p>
+                  <div className="flex items-center gap-4">
+                    {t.avatar ? (
+                      <img src={t.avatar} alt={t.name} className="h-12 w-12 rounded-full object-cover" />
+                    ) : (
+                      <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center text-xl font-bold text-white">
+                        {t.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-semibold text-white">{t.name}</p>
+                      <p className="text-sm text-muted-foreground">{t.role}{t.company ? `, ${t.company}` : ""}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="glass-panel p-8 rounded-2xl relative">
-                <div className="text-4xl text-primary opacity-20 absolute top-4 left-6 font-serif">"</div>
-                <p className="text-lg text-white mb-6 relative z-10 font-medium">A plataforma transformou nossa gestão de serviços de campo. Os relatórios gerados por IA eliminaram a dor de cabeça no fechamento dos serviços. O SLA melhorou absurdamente.</p>
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center text-xl font-bold text-white">J</div>
-                  <div>
-                    <p className="font-semibold text-white">Juliana Costa</p>
-                    <p className="text-sm text-muted-foreground">Gerente de Infraestrutura, NeoData</p>
-                  </div>
-                </div>
-              </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="py-24 relative border-b border-white/5">
+          <div className="container mx-auto px-4 md:px-8 max-w-3xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Perguntas Frequentes</h2>
+              <p className="text-muted-foreground">Tudo o que você precisa saber antes de começar</p>
+            </div>
+            <div className="space-y-4">
+              {activeFaq.map((item) => (
+                <FaqItem key={item.id} question={item.question} answer={item.answer} />
+              ))}
             </div>
           </div>
         </section>
@@ -816,15 +891,26 @@ export default function Home() {
                 Marketplace Inteligente de Serviços Técnicos. O sistema operacional definitivo para operações em campo no Brasil.
               </p>
               <div className="space-y-1 text-sm">
-                <a href="mailto:contato@nexorafield.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                  <span className="text-primary/60">✉</span> contato@nexorafield.com.br
-                </a>
-                <a href="mailto:comercial@nexorafield.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                  <span className="text-primary/60">✉</span> comercial@nexorafield.com.br
-                </a>
-                <a href="mailto:suporte@nexorafield.com.br" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                  <span className="text-primary/60">✉</span> suporte@nexorafield.com.br
-                </a>
+                {footerEmail && (
+                  <a href={`mailto:${footerEmail}`} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <span className="text-primary/60">✉</span> {footerEmail}
+                  </a>
+                )}
+                {footerPhone && (
+                  <a href={`tel:${footerPhone}`} className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <span className="text-primary/60">📞</span> {footerPhone}
+                  </a>
+                )}
+                {footerInstagram && (
+                  <a href={footerInstagram} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <span className="text-primary/60">📸</span> Instagram
+                  </a>
+                )}
+                {footerLinkedin && (
+                  <a href={footerLinkedin} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                    <span className="text-primary/60">💼</span> LinkedIn
+                  </a>
+                )}
               </div>
             </div>
             
@@ -875,6 +961,26 @@ export default function Home() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="glass-panel rounded-2xl overflow-hidden">
+      <button
+        className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-white/5 transition-colors"
+        onClick={() => setOpen(!open)}
+      >
+        <span className="font-semibold text-white">{question}</span>
+        <ChevronRight className={`h-5 w-5 text-primary shrink-0 transition-transform duration-300 ${open ? "rotate-90" : ""}`} />
+      </button>
+      {open && (
+        <div className="px-6 pb-5 text-muted-foreground text-sm leading-relaxed border-t border-white/5 pt-4">
+          {answer}
+        </div>
+      )}
     </div>
   );
 }
