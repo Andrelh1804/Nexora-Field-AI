@@ -178,11 +178,16 @@ router.get("/auth/export-data", requireAuth, async (req: AuthRequest, res: Respo
     }
 
     // Collect all user data via raw SQL for portability
-    const [techData] = await db.execute(sql`SELECT * FROM technicians WHERE user_id = ${userId} LIMIT 1`);
-    const [companyData] = await db.execute(sql`SELECT * FROM companies WHERE user_id = ${userId} LIMIT 1`);
-    const ordersData = await db.execute(sql`SELECT id, title, description, category, city, state, status, created_at FROM service_orders WHERE company_id IN (SELECT id FROM companies WHERE user_id = ${userId})`);
-    const ratingsData = await db.execute(sql`SELECT score, comment, created_at FROM ratings WHERE technician_id IN (SELECT id FROM technicians WHERE user_id = ${userId})`);
-    const transactionsData = await db.execute(sql`SELECT type, amount, description, status, created_at FROM transactions WHERE user_id = ${userId}`);
+    const techResult = await db.execute(sql`SELECT * FROM technicians WHERE user_id = ${userId} LIMIT 1`);
+    const companyResult = await db.execute(sql`SELECT * FROM companies WHERE user_id = ${userId} LIMIT 1`);
+    const ordersResult = await db.execute(sql`SELECT id, title, description, category, city, state, status, created_at FROM service_orders WHERE company_id IN (SELECT id FROM companies WHERE user_id = ${userId})`);
+    const ratingsResult = await db.execute(sql`SELECT score, comment, created_at FROM ratings WHERE technician_id IN (SELECT id FROM technicians WHERE user_id = ${userId})`);
+    const transactionsResult = await db.execute(sql`SELECT type, amount, description, status, created_at FROM transactions WHERE user_id = ${userId}`);
+    const techData = techResult.rows?.[0] ?? techResult[0] ?? null;
+    const companyData = companyResult.rows?.[0] ?? companyResult[0] ?? null;
+    const ordersData = ordersResult.rows ?? ordersResult ?? [];
+    const ratingsData = ratingsResult.rows ?? ratingsResult ?? [];
+    const transactionsData = transactionsResult.rows ?? transactionsResult ?? [];
 
     const exportPayload = {
       exportedAt: new Date().toISOString(),

@@ -143,10 +143,9 @@ router.get("/reports/technical/:orderId", requireAuth, async (req: AuthRequest, 
 
 router.get("/reports/executive", requireAuth, requireRole("admin", "admin_master", "company"), async (req: AuthRequest, res: Response) => {
   try {
-    const user = req.user!;
-    const isAdmin = user.role === "admin" || user.role === "admin_master";
+    const isAdmin = req.userRole === "admin" || req.userRole === "admin_master";
 
-    const whereClause = isAdmin ? undefined : eq(serviceOrdersTable.companyId, user.id);
+    const whereClause = isAdmin ? undefined : eq(serviceOrdersTable.companyId, req.userId!);
 
     const [metrics] = await db
       .select({
@@ -167,7 +166,7 @@ router.get("/reports/executive", requireAuth, requireRole("admin", "admin_master
 
     const slaData = await db
       .select({
-        slaHours: serviceOrdersTable.slaHours,
+        sla: serviceOrdersTable.sla,
         duration: checkinCheckoutsTable.durationMinutes,
         status: serviceOrdersTable.status,
       })
@@ -181,11 +180,13 @@ router.get("/reports/executive", requireAuth, requireRole("admin", "admin_master
     const gmv = Number(metrics?.gmv ?? 0);
     const avgVal = Number(metrics?.avgValue ?? 0);
     const taxaConversao = total > 0 ? ((finalizados / total) * 100).toFixed(1) : "0";
-    const slaCompliance = slaData.length > 0
-      ? slaData.filter(s => {
-          if (!s.slaHours || !s.duration) return false;
-          return (s.duration / 60) <= s.slaHours;
-        }).length / slaData.filter(s => s.slaHours && s.duration).length * 100
+    // SLA compliance: parse "24h", "48h" etc. from sla field
+    const slaWithDuration = slaData.filter(s => s.sla && s.duration != null);
+    const slaCompliance = slaWithDuration.length > 0
+      ? slaWithDuration.filter(s => {
+          const hours = parseInt(s.sla ?? "0", 10);
+          return hours > 0 && (Number(s.duration ?? 0) / 60) <= hours;
+        }).length / slaWithDuration.length * 100
       : 0;
 
     const doc = new PDFDocument({ size: "A4", margin: 40 });
@@ -196,7 +197,7 @@ router.get("/reports/executive", requireAuth, requireRole("admin", "admin_master
     drawHeader(doc, "RELATÓRIO EXECUTIVO");
 
     doc.moveDown(0.5);
-    doc.fontSize(9).fillColor("#555555").text(`Gerado para: ${isAdmin ? "Plataforma (visão global)" : "Empresa #" + user.id}`);
+    doc.fontSize(9).fillColor("#555555").text(`Gerado para: ${isAdmin ? "Plataforma (visão global)" : "Empresa #" + req.userId}`);
     doc.moveDown(0.3);
 
     drawSectionTitle(doc, "INDICADORES GERAIS");

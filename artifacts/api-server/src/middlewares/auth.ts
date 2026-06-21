@@ -29,7 +29,9 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
 
 export function requireRole(...roles: string[]) {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
-    if (!req.userRole || !roles.includes(req.userRole)) {
+    // admin_master is granted whenever "admin" is required
+    const effective = roles.includes("admin") ? [...roles, "admin_master"] : roles;
+    if (!req.userRole || !effective.includes(req.userRole)) {
       res.status(403).json({ error: "Forbidden" });
       return;
     }

@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import express, { type Express } from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -5,6 +6,18 @@ import rateLimit from "express-rate-limit";
 import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
+
+// FASE 3 — Sentry (initialize before anything else)
+const SENTRY_DSN = process.env.SENTRY_DSN;
+if (SENTRY_DSN) {
+  Sentry.init({
+    dsn: SENTRY_DSN,
+    environment: process.env.NODE_ENV ?? "development",
+    tracesSampleRate: 0.2,
+    integrations: [Sentry.httpIntegration()],
+  });
+  logger.info("Sentry initialized");
+}
 
 const app: Express = express();
 
@@ -52,13 +65,18 @@ app.use(
 );
 
 app.use(cors());
-app.use(express.json({ limit: "2mb" }));
-app.use(express.urlencoded({ extended: true, limit: "2mb" }));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 // Apply strict limiter to auth routes before main router
 app.use("/api/auth/login", authLimiter);
 app.use("/api/auth/register", authLimiter);
 
 app.use("/api", router);
+
+// Sentry error handler (must be last)
+if (SENTRY_DSN) {
+  app.use(Sentry.expressErrorHandler());
+}
 
 export default app;
