@@ -29,6 +29,9 @@ import apiKeysRouter from "./api-keys";
 import contractsRouter from "./contracts";
 import executiveRouter from "./executive";
 import specialtiesRouter from "./specialties";
+import adminUsersRouter from "./admin-users";
+import adminPlansRouter from "./admin-plans";
+import landingCmsRouter from "./landing-cms";
 
 const router: IRouter = Router();
 
@@ -62,5 +65,8 @@ router.use(apiKeysRouter);
 router.use(contractsRouter);
 router.use(executiveRouter);
 router.use(specialtiesRouter);
+router.use(adminUsersRouter);
+router.use(adminPlansRouter);
+router.use(landingCmsRouter);
 
 export default router;

@@ -4,3 +4,5 @@
 - [Seed bulk script pattern](seed-bulk-pattern.md) — use timestamp in email to avoid conflicts; expose errors not swallow them; plans seeded separately via psql
 - [Test credentials](test-creds-reset.md) — original seed used unknown password; reset all test users via direct SQL UPDATE using bcryptjs hash
 - [Specialties system](specialties-system.md) — 4-table hierarchy (specialty_categories → subcategories → skills → technician_specialties); seeded on server startup; batch-replace pattern for upserts
+- [Enterprise roles](enterprise-roles.md) — admin_master role added; seed creates admin_master (not admin); new modules: /admin/administradores, /admin/planos, /admin/landing; landing CMS tables: landing_settings/testimonials/faq/benefits
+- [Admin master guard](enterprise-roles.md) — ProtectedRoute allows admin_master on any route requiring "admin"; backend requireRole("admin","admin_master") pattern; admin_master-only: create users, delete plans, delete users

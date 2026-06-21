@@ -37,6 +37,9 @@ import Privacidade from "@/pages/privacidade";
 import Termos from "@/pages/termos";
 import Especialidades from "@/pages/especialidades";
 import AdminEspecialidades from "@/pages/admin-especialidades";
+import AdminAdministradores from "@/pages/admin-administradores";
+import AdminPlanos from "@/pages/admin-planos";
+import AdminLanding from "@/pages/admin-landing";
 import { CookieBanner } from "@/components/cookie-banner";
 
 const queryClient = new QueryClient({
@@ -64,7 +67,7 @@ function ProtectedRoute({ component: Component, roles }: { component: React.Comp
     return null;
   }
 
-  if (roles && !roles.includes(user.role)) {
+  if (roles && !roles.includes(user.role) && !(user.role === "admin_master" && roles.includes("admin"))) {
     return (
       <div className="text-center py-20">
         <p className="text-2xl">🔒</p>
@@ -113,6 +116,9 @@ function Router() {
             <Route path="/executive" component={() => <ProtectedRoute component={Executive} roles={["admin"]} />} />
             <Route path="/especialidades" component={() => <ProtectedRoute component={Especialidades} roles={["technician"]} />} />
             <Route path="/admin/especialidades" component={() => <ProtectedRoute component={AdminEspecialidades} roles={["admin"]} />} />
+            <Route path="/admin/administradores" component={() => <ProtectedRoute component={AdminAdministradores} roles={["admin"]} />} />
+            <Route path="/admin/planos" component={() => <ProtectedRoute component={AdminPlanos} roles={["admin"]} />} />
+            <Route path="/admin/landing" component={() => <ProtectedRoute component={AdminLanding} roles={["admin"]} />} />
             <Route component={NotFound} />
           </Switch>
         </Layout>

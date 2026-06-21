@@ -64,8 +64,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
     ...(user.role === "company" ? [
       { href: "/contratos", label: "📋 Contratos" },
     ] : []),
-    ...(user.role === "admin" ? [
+    ...(user.role === "admin" || user.role === "admin_master" ? [
       { href: "/admin", label: "⚡ Admin" },
+      { href: "/admin/administradores", label: "👥 Administradores" },
+      { href: "/admin/planos", label: "💳 Planos" },
+      { href: "/admin/landing", label: "🌐 Landing CMS" },
       { href: "/admin/especialidades", label: "🗂️ Especialidades" },
       { href: "/executive", label: "🧠 Executive" },
       { href: "/crm", label: "🎯 CRM" },

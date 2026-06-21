@@ -30,3 +30,4 @@ export * from "./contracts";
 export * from "./api-keys";
 export * from "./specialty-categories";
 export * from "./technician-specialties";
+export * from "./landing-cms";

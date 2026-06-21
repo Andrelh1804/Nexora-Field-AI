@@ -36,7 +36,8 @@ A SaaS marketplace connecting companies needing field technical support with spe
 - Contract-first: OpenAPI spec → Orval codegen → React Query hooks + Zod. Never hand-write API clients.
 - JWT auth stored in `localStorage` as `nexora_token`. `setAuthTokenGetter` is called once at module load in `src/lib/auth.tsx` so all generated hooks pick it up automatically.
 - AI match scoring done in-memory (weighted keyword matching on specialties). Gemini integration is a future enhancement.
-- Role-based access: `admin`, `company`, `technician` — enforced both in middleware (`requireRole`) and in the frontend per-route.
+- Role-based access: `admin_master`, `admin`, `company`, `technician` — enforced both in middleware (`requireRole`) and in the frontend per-route. `admin_master` has all admin privileges plus exclusive rights: create/delete admins, delete plans, promote to admin_master.
+- New admin enterprise modules: `/admin/administradores`, `/admin/planos`, `/admin/landing` — use direct fetch (not Orval-generated hooks) since they are admin-only and were added post-codegen.
 - Dashboard queries use raw SQL via `db.execute(sql\`...\`)` for GROUP BY aggregations.
 
 ## Product
@@ -47,16 +48,16 @@ A SaaS marketplace connecting companies needing field technical support with spe
 - Role-based dashboards with live stats
 - Technician directory with ratings and profiles
 
-## Test credentials (password: `password`)
+## Test credentials
 
-| Role | Email |
-|------|-------|
-| Admin | admin@nexora.com |
-| Empresa | empresa@techpro.com |
-| Empresa | empresa@infracorp.com |
-| Técnico | carlos@tecnico.com |
-| Técnico | ana@tecnico.com |
-| Técnico | joao@tecnico.com |
+| Role | Email | Senha |
+|------|-------|-------|
+| Admin Master | admin@nexorafield.com.br | Admin@123456 |
+| Empresa | empresa@techpro.com | password |
+| Empresa | empresa@infracorp.com | password |
+| Técnico | carlos@tecnico.com | password |
+| Técnico | ana@tecnico.com | password |
+| Técnico | joao@tecnico.com | password |
 
 ## User preferences
 
