@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -10,12 +9,12 @@ export default function Home() {
         Conectamos empresas que precisam de suporte técnico em campo com técnicos autônomos especializados através de IA.
       </p>
       <div className="flex gap-4">
-        <Link href="/register">
+        <a href="/app/register">
           <Button size="lg" className="text-lg px-8">Começar Agora</Button>
-        </Link>
-        <Link href="/login">
+        </a>
+        <a href="/app/login">
           <Button variant="outline" size="lg" className="text-lg px-8">Acessar Conta</Button>
-        </Link>
+        </a>
       </div>
     </div>
   );

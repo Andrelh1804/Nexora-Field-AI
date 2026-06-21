@@ -97,7 +97,7 @@ function AppRedirect() {
   return null;
 }
 
-function Router() {
+function PlatformRoutes() {
   return (
     <Switch>
       <Route path="/onboarding" component={Onboarding} />
@@ -105,8 +105,7 @@ function Router() {
       <Route component={() => (
         <Layout>
           <Switch>
-            <Route path="/" component={Home} />
-            <Route path="/app" component={AppRedirect} />
+            <Route path="/" component={AppRedirect} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/recuperar-senha" component={RecuperarSenha} />
@@ -147,6 +146,45 @@ function Router() {
           </Switch>
         </Layout>
       )} />
+    </Switch>
+  );
+}
+
+const APP_BASE = "/app";
+
+function AppSection() {
+  return (
+    <WouterRouter base={APP_BASE}>
+      <PlatformRoutes />
+    </WouterRouter>
+  );
+}
+
+function LandingRoutes() {
+  return (
+    <Layout>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/ranking" component={Ranking} />
+        <Route path="/planos" component={Planos} />
+        <Route path="/mapa" component={Mapa} />
+        <Route path="/academy" component={Academy} />
+        <Route path="/comunidade" component={Community} />
+        <Route path="/conhecimento" component={Conhecimento} />
+        <Route path="/privacidade" component={Privacidade} />
+        <Route path="/termos" component={Termos} />
+        <Route component={NotFound} />
+      </Switch>
+    </Layout>
+  );
+}
+
+function Router() {
+  return (
+    <Switch>
+      <Route path="/app" component={AppSection} />
+      <Route path="/app/:rest*" component={AppSection} />
+      <Route component={LandingRoutes} />
     </Switch>
   );
 }

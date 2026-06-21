@@ -77,12 +77,12 @@ function UserAvatar({ user }: { user: { id: number; name: string; role: string }
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    setLocation("/login");
+    window.location.href = "/app/login";
   };
 
   const isActive = (path: string) => location === path || location.startsWith(path + "/");
@@ -134,11 +134,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-50 px-4 py-3 flex items-center justify-between">
         {user ? (
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2">
             <img src="/nexora-logo.png" alt="Nexora Field" className="h-11 w-11" />
           </Link>
         ) : (
-          <a href="/landing/" className="flex items-center gap-2">
+          <a href="/" className="flex items-center gap-2">
             <img src="/nexora-logo.png" alt="Nexora Field" className="h-11 w-11" />
           </a>
         )}
@@ -172,8 +172,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </>
           ) : (
             <>
-              <Link href="/login"><Button variant="ghost" size="sm">Entrar</Button></Link>
-              <Link href="/register"><Button size="sm">Criar Conta</Button></Link>
+              <a href="/app/login"><Button variant="ghost" size="sm">Entrar</Button></a>
+              <a href="/app/register"><Button size="sm">Criar Conta</Button></a>
             </>
           )}
           <button className="lg:hidden p-2 rounded-lg hover:bg-muted/50" onClick={() => setMobileOpen(!mobileOpen)}>
