@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import { Layout } from "@/components/layout";
+import { LandingLayout } from "@/components/landing-layout";
 import NotFound from "@/pages/not-found";
 
 import Home from "@/pages/home";
@@ -46,6 +47,14 @@ import AdminCertificacoes from "@/pages/admin-certificacoes";
 import RecuperarSenha from "@/pages/recuperar-senha";
 import RedefinirSenha from "@/pages/redefinir-senha";
 import { CookieBanner } from "@/components/cookie-banner";
+
+import LandingSobre from "@/pages/landing-sobre";
+import LandingComoFunciona from "@/pages/landing-como-funciona";
+import LandingSolucoes from "@/pages/landing-solucoes";
+import LandingEspecialidades from "@/pages/landing-especialidades";
+import LandingFaq from "@/pages/landing-faq";
+import LandingBlog from "@/pages/landing-blog";
+import LandingContato from "@/pages/landing-contato";
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30000, retry: 1 } },
@@ -160,22 +169,75 @@ function AppSection() {
   );
 }
 
+function LandingRedirectLogin() {
+  window.location.replace("/app/login");
+  return null;
+}
+
+function LandingRedirectCadastro() {
+  window.location.replace("/app/register");
+  return null;
+}
+
 function LandingRoutes() {
   return (
-    <Layout>
+    <LandingLayout>
       <Switch>
         <Route path="/" component={Home} />
-        <Route path="/ranking" component={Ranking} />
-        <Route path="/planos" component={Planos} />
-        <Route path="/mapa" component={Mapa} />
-        <Route path="/academy" component={Academy} />
-        <Route path="/comunidade" component={Community} />
-        <Route path="/conhecimento" component={Conhecimento} />
-        <Route path="/privacidade" component={Privacidade} />
-        <Route path="/termos" component={Termos} />
-        <Route component={NotFound} />
+        <Route path="/sobre" component={LandingSobre} />
+        <Route path="/como-funciona" component={LandingComoFunciona} />
+        <Route path="/solucoes" component={LandingSolucoes} />
+        <Route path="/especialidades" component={LandingEspecialidades} />
+        <Route path="/faq" component={LandingFaq} />
+        <Route path="/blog" component={LandingBlog} />
+        <Route path="/contato" component={LandingContato} />
+        <Route path="/planos" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Planos />
+          </div>
+        )} />
+        <Route path="/ranking" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Ranking />
+          </div>
+        )} />
+        <Route path="/academy" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Academy />
+          </div>
+        )} />
+        <Route path="/comunidade" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Community />
+          </div>
+        )} />
+        <Route path="/conhecimento" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Conhecimento />
+          </div>
+        )} />
+        <Route path="/privacidade" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Privacidade />
+          </div>
+        )} />
+        <Route path="/termos" component={() => (
+          <div className="py-10 px-4 max-w-7xl mx-auto">
+            <Termos />
+          </div>
+        )} />
+        <Route path="/login" component={LandingRedirectLogin} />
+        <Route path="/cadastro" component={LandingRedirectCadastro} />
+        <Route component={() => (
+          <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+            <p className="text-6xl mb-4">404</p>
+            <h1 className="text-2xl font-bold text-white mb-2">Página não encontrada</h1>
+            <p className="text-slate-400 mb-6">A página que você procura não existe.</p>
+            <a href="/" className="text-primary hover:underline">← Voltar ao início</a>
+          </div>
+        )} />
       </Switch>
-    </Layout>
+    </LandingLayout>
   );
 }
 
