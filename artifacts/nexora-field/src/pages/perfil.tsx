@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,23 +8,138 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { User, Shield, Download, Trash2, Lock, Mail, Calendar, Building } from "lucide-react";
+import { User, Shield, Download, Trash2, Lock, Mail, Calendar, Building, Camera } from "lucide-react";
 import { Link } from "wouter";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useFileUpload } from "@/hooks/use-file-upload";
+import { SecureImage, isObjectStorageKey } from "@/components/secure-image";
+
+const API = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
+function authH() {
+  const t = localStorage.getItem("nexora_token");
+  return t ? { Authorization: `Bearer ${t}` } : {};
+}
 
 function roleLabel(role: string) {
-  if (role === "admin") return { label: "Administrador", variant: "destructive" as const };
+  if (role === "admin" || role === "admin_master") return { label: "Administrador", variant: "destructive" as const };
   if (role === "company") return { label: "Empresa", variant: "secondary" as const };
   return { label: "Técnico", variant: "default" as const };
+}
+
+interface TechProfile {
+  id: number;
+  name: string;
+  photoUrl: string | null;
+}
+
+function AvatarSection({ userId }: { userId: number }) {
+  const { toast } = useToast();
+  const qc = useQueryClient();
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const { data: tech } = useQuery<TechProfile>({
+    queryKey: ["tech-profile-me"],
+    queryFn: async () => {
+      const res = await fetch(`${API}/technicians/me`, { headers: authH() as Record<string, string> });
+      if (!res.ok) throw new Error();
+      return res.json();
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const { uploadFile, isUploading } = useFileUpload({
+    maxSizeMb: 5,
+    accept: ["image/jpeg", "image/png", "image/webp"],
+    onError: (e) => toast({ title: "Erro no upload", description: e.message, variant: "destructive" }),
+  });
+
+  const photoUrl = tech?.photoUrl ?? null;
+  const initials = (tech?.name ?? "?")[0].toUpperCase();
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = "";
+
+    if (!file.type.startsWith("image/")) {
+      toast({ title: "Formato inválido", description: "Use JPG, PNG ou WebP.", variant: "destructive" });
+      return;
+    }
+
+    const result = await uploadFile(file);
+    if (!result) return;
+
+    const res = await fetch(`${API}/technicians/me`, {
+      method: "PUT",
+      headers: { ...authH(), "Content-Type": "application/json" } as Record<string, string>,
+      body: JSON.stringify({ photoUrl: result.objectKey }),
+    });
+
+    if (!res.ok) {
+      toast({ title: "Erro ao salvar", description: "Não foi possível atualizar o avatar.", variant: "destructive" });
+      return;
+    }
+
+    qc.invalidateQueries({ queryKey: ["tech-profile-me"] });
+    qc.invalidateQueries({ queryKey: ["tech-avatar"] });
+    toast({ title: "Foto atualizada!", description: "Seu avatar foi salvo com sucesso." });
+  };
+
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <Camera className="h-4 w-4 text-primary" />
+          Foto do Perfil
+        </CardTitle>
+        <CardDescription className="text-xs">Sua foto aparece no seu perfil público e no cabeçalho.</CardDescription>
+      </CardHeader>
+      <CardContent className="flex items-center gap-6">
+        <div className="relative shrink-0">
+          <div className="w-20 h-20 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center text-primary text-2xl font-bold">
+            {photoUrl && isObjectStorageKey(photoUrl) ? (
+              <SecureImage
+                objectKey={photoUrl}
+                alt="Avatar"
+                className="w-full h-full object-cover"
+                fallback={<span>{initials}</span>}
+              />
+            ) : (
+              <span>{initials}</span>
+            )}
+          </div>
+          {isUploading && (
+            <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center">
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+        </div>
+        <div className="space-y-2">
+          <p className="text-sm text-muted-foreground">JPG, PNG ou WebP · Máximo 5 MB</p>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={() => fileRef.current?.click()}
+            disabled={isUploading}
+          >
+            <Camera className="h-4 w-4" />
+            {isUploading ? "Enviando..." : photoUrl ? "Alterar foto" : "Adicionar foto"}
+          </Button>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={handleAvatarChange}
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
 
 export default function Perfil() {
@@ -37,7 +152,6 @@ export default function Perfil() {
   if (!user) return null;
 
   const { label, variant } = roleLabel(user.role);
-
   const apiBase = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   async function handleExportData() {
@@ -73,10 +187,7 @@ export default function Perfil() {
       const token = localStorage.getItem("nexora_token");
       const res = await fetch(`${apiBase}/api/auth/account`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ password: deletePassword }),
       });
       const data = await res.json();
@@ -97,7 +208,8 @@ export default function Perfil() {
         <p className="text-muted-foreground text-sm mt-1">Gerencie suas informações e privacidade</p>
       </div>
 
-      {/* Dados do usuário */}
+      {user.role === "technician" && <AvatarSection userId={user.id} />}
+
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
@@ -108,32 +220,28 @@ export default function Perfil() {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <User className="h-4 w-4" />
-              Nome
+              <User className="h-4 w-4" /> Nome
             </div>
             <span className="text-sm font-medium">{user.name}</span>
           </div>
           <Separator />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Mail className="h-4 w-4" />
-              E-mail
+              <Mail className="h-4 w-4" /> E-mail
             </div>
             <span className="text-sm font-medium">{user.email}</span>
           </div>
           <Separator />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Building className="h-4 w-4" />
-              Perfil
+              <Building className="h-4 w-4" /> Perfil
             </div>
             <Badge variant={variant}>{label}</Badge>
           </div>
           <Separator />
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Calendar className="h-4 w-4" />
-              Membro desde
+              <Calendar className="h-4 w-4" /> Membro desde
             </div>
             <span className="text-sm font-medium">
               {new Date(user.createdAt ?? Date.now()).toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}
@@ -143,15 +251,13 @@ export default function Perfil() {
           <div className="pt-1">
             <Link href="/alterar-senha">
               <Button variant="outline" size="sm" className="gap-2 w-full sm:w-auto">
-                <Lock className="h-4 w-4" />
-                Alterar Senha
+                <Lock className="h-4 w-4" /> Alterar Senha
               </Button>
             </Link>
           </div>
         </CardContent>
       </Card>
 
-      {/* LGPD — Privacidade e dados */}
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
@@ -160,14 +266,10 @@ export default function Perfil() {
           </CardTitle>
           <CardDescription className="text-xs">
             Em conformidade com a Lei Geral de Proteção de Dados — Lei nº 13.709/2018.{" "}
-            <Link href="/privacidade" className="text-primary hover:underline">
-              Ver Política de Privacidade
-            </Link>
+            <Link href="/privacidade" className="text-primary hover:underline">Ver Política de Privacidade</Link>
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-
-          {/* Exportar dados */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-lg bg-muted/40 border border-border">
             <div>
               <p className="text-sm font-medium">Exportar meus dados</p>
@@ -175,19 +277,12 @@ export default function Perfil() {
                 Baixe todos os seus dados em formato JSON (Art. 18, II da LGPD — Portabilidade).
               </p>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2 shrink-0"
-              onClick={handleExportData}
-              disabled={exportingData}
-            >
+            <Button variant="outline" size="sm" className="gap-2 shrink-0" onClick={handleExportData} disabled={exportingData}>
               <Download className="h-4 w-4" />
               {exportingData ? "Exportando..." : "Exportar dados"}
             </Button>
           </div>
 
-          {/* Exclusão de conta */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 rounded-lg bg-destructive/5 border border-destructive/20">
             <div>
               <p className="text-sm font-medium text-destructive">Excluir minha conta</p>
@@ -198,16 +293,14 @@ export default function Perfil() {
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button variant="destructive" size="sm" className="gap-2 shrink-0">
-                  <Trash2 className="h-4 w-4" />
-                  Excluir conta
+                  <Trash2 className="h-4 w-4" /> Excluir conta
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>Excluir conta permanentemente?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Esta ação é <strong>irreversível</strong>. Todos os seus dados, histórico de chamados,
-                    avaliações e saldo serão removidos permanentemente da plataforma.
+                    Esta ação é <strong>irreversível</strong>. Todos os seus dados serão removidos permanentemente.
                     <br /><br />
                     Digite sua senha para confirmar:
                   </AlertDialogDescription>
@@ -220,7 +313,7 @@ export default function Perfil() {
                     placeholder="Sua senha"
                     className="mt-1.5"
                     value={deletePassword}
-                    onChange={(e) => setDeletePassword(e.target.value)}
+                    onChange={e => setDeletePassword(e.target.value)}
                   />
                 </div>
                 <AlertDialogFooter>

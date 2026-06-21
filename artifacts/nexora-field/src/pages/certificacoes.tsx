@@ -1,12 +1,13 @@
 import { useState, useRef } from "react";
 import { useAuth } from "@/lib/auth";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ShieldCheck, Upload, Clock, CheckCircle2, XCircle, Trash2 } from "lucide-react";
+import { useFileUpload } from "@/hooks/use-file-upload";
 
 const API = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
 function authH() {
@@ -27,9 +28,9 @@ const CERT_TYPES = [
 ];
 
 const STATUS_META: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-  pending: { label: "Aguardando análise", color: "text-yellow-400 border-yellow-500/30 bg-yellow-500/10", icon: <Clock size={12} /> },
-  approved: { label: "Aprovada", color: "text-green-400 border-green-500/30 bg-green-500/10", icon: <CheckCircle2 size={12} /> },
-  rejected: { label: "Reprovada", color: "text-red-400 border-red-500/30 bg-red-500/10", icon: <XCircle size={12} /> },
+  pending:  { label: "Aguardando análise", color: "text-yellow-400 border-yellow-500/30 bg-yellow-500/10", icon: <Clock size={12} /> },
+  approved: { label: "Aprovada",           color: "text-green-400 border-green-500/30 bg-green-500/10",   icon: <CheckCircle2 size={12} /> },
+  rejected: { label: "Reprovada",          color: "text-red-400 border-red-500/30 bg-red-500/10",         icon: <XCircle size={12} /> },
 };
 
 interface Cert {
@@ -40,6 +41,7 @@ interface Cert {
   issueDate: string | null;
   expiryDate: string | null;
   fileName: string | null;
+  fileUrl: string | null;
   status: "pending" | "approved" | "rejected";
   adminNotes: string | null;
   approvedAt: string | null;
@@ -55,15 +57,21 @@ const emptyForm = () => ({
   fileData: "",
   fileName: "",
   fileMime: "",
+  fileUrl: "",
 });
 
 export default function Certificacoes() {
-  const { user } = useAuth();
+  useAuth();
   const { toast } = useToast();
   const qc = useQueryClient();
   const fileRef = useRef<HTMLInputElement>(null);
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState(emptyForm());
+
+  const { uploadFile, isUploading } = useFileUpload({
+    maxSizeMb: 10,
+    onError: (e) => toast({ title: "Erro no upload", description: e.message, variant: "destructive" }),
+  });
 
   const { data: certs = [], isLoading } = useQuery<Cert[]>({
     queryKey: ["certifications-me"],
@@ -76,13 +84,25 @@ export default function Certificacoes() {
 
   const submitMutation = useMutation({
     mutationFn: async () => {
+      const body: Record<string, string> = {
+        certType: form.certType,
+        certName: form.certName || CERT_TYPES.find(t => t.value === form.certType)?.label || form.certType,
+        issuedBy: form.issuedBy,
+        issueDate: form.issueDate,
+        expiryDate: form.expiryDate,
+      };
+      if (form.fileUrl) {
+        body["fileUrl"] = form.fileUrl;
+        body["fileName"] = form.fileName;
+      } else if (form.fileData) {
+        body["fileData"] = form.fileData;
+        body["fileName"] = form.fileName;
+        body["fileMime"] = form.fileMime;
+      }
       const res = await fetch(`${API}/certifications`, {
         method: "POST",
         headers: { ...authH(), "Content-Type": "application/json" } as Record<string, string>,
-        body: JSON.stringify({
-          ...form,
-          certName: form.certName || CERT_TYPES.find(t => t.value === form.certType)?.label || form.certType,
-        }),
+        body: JSON.stringify(body),
       });
       if (!res.ok) throw new Error("Erro ao enviar");
       return res.json();
@@ -106,9 +126,18 @@ export default function Certificacoes() {
     },
   });
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    e.target.value = "";
+
+    const result = await uploadFile(file);
+    if (result) {
+      setForm(f => ({ ...f, fileUrl: result.objectKey, fileName: result.fileName, fileMime: result.mimeType, fileData: "" }));
+      toast({ title: "Arquivo enviado!", description: result.fileName });
+      return;
+    }
+
     if (file.size > 5 * 1024 * 1024) {
       toast({ title: "Arquivo muito grande", description: "Máximo 5 MB.", variant: "destructive" });
       return;
@@ -116,7 +145,8 @@ export default function Certificacoes() {
     const reader = new FileReader();
     reader.onload = () => {
       const b64 = (reader.result as string).split(",")[1];
-      setForm(f => ({ ...f, fileData: b64, fileName: file.name, fileMime: file.type }));
+      setForm(f => ({ ...f, fileData: b64, fileName: file.name, fileMime: file.type, fileUrl: "" }));
+      toast({ title: "Arquivo selecionado", description: `${file.name} (armazenamento local)` });
     };
     reader.readAsDataURL(file);
   };
@@ -183,6 +213,7 @@ export default function Certificacoes() {
                         {cert.issueDate && <span>Data: {cert.issueDate}</span>}
                         {cert.expiryDate && <span>Validade: {cert.expiryDate}</span>}
                         {cert.fileName && <span>📎 {cert.fileName}</span>}
+                        {cert.fileUrl && <span className="text-green-400/70">✓ Arquivo no storage</span>}
                       </div>
                       {cert.adminNotes && (
                         <p className="text-xs mt-1.5 text-muted-foreground italic">
@@ -208,7 +239,6 @@ export default function Certificacoes() {
         </div>
       )}
 
-      {/* Upload Modal */}
       {modal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-card border border-border rounded-2xl shadow-2xl w-full max-w-lg">
@@ -264,18 +294,20 @@ export default function Certificacoes() {
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="text-sm font-medium">Arquivo do Certificado (PDF ou Imagem, máx 5 MB)</label>
+                <label className="text-sm font-medium">Arquivo do Certificado (PDF ou Imagem, máx 10 MB)</label>
                 <div
-                  onClick={() => fileRef.current?.click()}
-                  className="border-2 border-dashed border-border rounded-xl p-5 text-center cursor-pointer hover:border-primary/50 transition-colors"
+                  onClick={() => !isUploading && fileRef.current?.click()}
+                  className={`border-2 border-dashed border-border rounded-xl p-5 text-center transition-colors ${isUploading ? "opacity-60 cursor-wait" : "cursor-pointer hover:border-primary/50"}`}
                 >
-                  {form.fileName ? (
-                    <p className="text-sm text-primary">📎 {form.fileName}</p>
+                  {isUploading ? (
+                    <p className="text-sm text-muted-foreground animate-pulse">Enviando arquivo...</p>
+                  ) : form.fileName ? (
+                    <p className="text-sm text-primary">📎 {form.fileName}{form.fileUrl ? " ✓" : ""}</p>
                   ) : (
                     <>
                       <Upload size={24} className="mx-auto mb-2 text-muted-foreground" />
                       <p className="text-sm text-muted-foreground">Clique para selecionar arquivo</p>
-                      <p className="text-xs text-muted-foreground/60 mt-1">PDF, JPG, PNG até 5 MB</p>
+                      <p className="text-xs text-muted-foreground/60 mt-1">PDF, JPG, PNG até 10 MB</p>
                     </>
                   )}
                 </div>
@@ -292,7 +324,7 @@ export default function Certificacoes() {
                 <Button
                   className="flex-1"
                   onClick={() => submitMutation.mutate()}
-                  disabled={submitMutation.isPending}
+                  disabled={submitMutation.isPending || isUploading}
                 >
                   {submitMutation.isPending ? "Enviando..." : "📤 Enviar para Análise"}
                 </Button>

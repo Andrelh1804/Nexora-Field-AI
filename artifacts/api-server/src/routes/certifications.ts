@@ -74,10 +74,15 @@ router.post(
   requireRole("technician"),
   async (req: AuthRequest, res: Response) => {
     try {
-      const { certType, certName, issuedBy, issueDate, expiryDate, fileData, fileName, fileMime } = req.body as {
+      const {
+        certType, certName, issuedBy, issueDate, expiryDate,
+        fileData, fileName, fileMime,
+        fileUrl,
+      } = req.body as {
         certType: string; certName: string; issuedBy?: string;
         issueDate?: string; expiryDate?: string;
         fileData?: string; fileName?: string; fileMime?: string;
+        fileUrl?: string;
       };
 
       if (!certType || !certName) {
@@ -101,9 +106,10 @@ router.post(
           issuedBy: issuedBy || null,
           issueDate: issueDate || null,
           expiryDate: expiryDate || null,
-          fileData: fileData || null,
+          fileData: fileUrl ? null : (fileData || null),
           fileName: fileName || null,
           fileMime: fileMime || null,
+          fileUrl: fileUrl || null,
           status: "pending",
         })
         .returning();

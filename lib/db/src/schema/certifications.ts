@@ -24,6 +24,7 @@ export const certificationsTable = pgTable("certifications", {
   fileData: text("file_data"),
   fileName: text("file_name"),
   fileMime: text("file_mime"),
+  fileUrl: text("file_url"),
   status: certStatusEnum("status").notNull().default("pending"),
   adminNotes: text("admin_notes"),
   approvedById: integer("approved_by_id").references(() => usersTable.id),

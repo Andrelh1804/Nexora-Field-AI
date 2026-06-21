@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { ShieldCheck, CheckCircle2, XCircle, Clock, Eye } from "lucide-react";
+import { ShieldCheck, CheckCircle2, XCircle, Eye } from "lucide-react";
+import { SecureFilePreview, isObjectStorageKey } from "@/components/secure-image";
 
 const API = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
 function authH() {
@@ -23,6 +24,7 @@ interface CertRow {
     fileName: string | null;
     fileMime: string | null;
     fileData: string | null;
+    fileUrl: string | null;
     status: "pending" | "approved" | "rejected";
     adminNotes: string | null;
     approvedAt: string | null;
@@ -36,6 +38,44 @@ const STATUS_META: Record<string, { label: string; color: string }> = {
   approved: { label: "Aprovada",  color: "text-green-400 border-green-500/30 bg-green-500/10"   },
   rejected: { label: "Reprovada", color: "text-red-400 border-red-500/30 bg-red-500/10"         },
 };
+
+function FilePreviewModal({ row, onClose }: { row: CertRow; onClose: () => void }) {
+  const c = row.cert;
+  const hasObjectKey = c.fileUrl && isObjectStorageKey(c.fileUrl);
+  const hasBase64 = !!c.fileData;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={onClose}>
+      <div className="max-w-3xl w-full max-h-[90vh] bg-card rounded-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-3 border-b border-border">
+          <p className="font-medium text-sm">{c.fileName ?? "Arquivo"}</p>
+          <button onClick={onClose} className="text-muted-foreground hover:text-foreground">✕</button>
+        </div>
+        <div className="p-4 overflow-auto max-h-[80vh]">
+          {hasObjectKey ? (
+            <SecureFilePreview objectKey={c.fileUrl!} mimeType={c.fileMime ?? undefined} fileName={c.fileName ?? undefined} />
+          ) : hasBase64 ? (
+            c.fileMime?.startsWith("image/") ? (
+              <img
+                src={`data:${c.fileMime};base64,${c.fileData}`}
+                alt="Certificado"
+                className="max-w-full mx-auto rounded-lg"
+              />
+            ) : (
+              <iframe
+                src={`data:${c.fileMime};base64,${c.fileData}`}
+                className="w-full h-[70vh] rounded-lg"
+                title="Certificado PDF"
+              />
+            )
+          ) : (
+            <p className="text-center text-muted-foreground py-12">Nenhum arquivo disponível.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminCertificacoes() {
   const { toast } = useToast();
@@ -92,7 +132,6 @@ export default function AdminCertificacoes() {
         )}
       </div>
 
-      {/* Filter tabs */}
       <div className="flex gap-2 flex-wrap">
         {(["all", "pending", "approved", "rejected"] as const).map(f => (
           <button
@@ -122,6 +161,7 @@ export default function AdminCertificacoes() {
         <div className="space-y-3">
           {displayed.map(row => {
             const meta = STATUS_META[row.cert.status];
+            const hasFile = !!(row.cert.fileUrl || row.cert.fileData);
             return (
               <Card key={row.cert.id} className="border-border">
                 <CardContent className="py-4 px-5">
@@ -130,6 +170,9 @@ export default function AdminCertificacoes() {
                       <div className="flex items-center gap-2 flex-wrap">
                         <p className="font-semibold text-sm">{row.cert.certName}</p>
                         <Badge variant="outline" className={`text-[10px] ${meta.color}`}>{meta.label}</Badge>
+                        {row.cert.fileUrl && isObjectStorageKey(row.cert.fileUrl) && (
+                          <Badge variant="outline" className="text-[10px] text-blue-400 border-blue-500/30 bg-blue-500/10">☁ Storage</Badge>
+                        )}
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         Técnico: <strong>{row.tech.name}</strong> · {row.tech.city}/{row.tech.state} · {row.tech.email}
@@ -145,7 +188,7 @@ export default function AdminCertificacoes() {
                       )}
                     </div>
                     <div className="flex gap-2 shrink-0">
-                      {row.cert.fileData && (
+                      {hasFile && (
                         <Button size="sm" variant="outline" className="gap-1 text-xs" onClick={() => setPreviewRow(row)}>
                           <Eye size={13} /> Ver
                         </Button>
@@ -164,7 +207,6 @@ export default function AdminCertificacoes() {
         </div>
       )}
 
-      {/* Review Modal */}
       {reviewing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-card border border-border rounded-2xl shadow-2xl w-full max-w-md">
@@ -208,31 +250,8 @@ export default function AdminCertificacoes() {
         </div>
       )}
 
-      {/* File Preview Modal */}
-      {previewRow && previewRow.cert.fileData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={() => setPreviewRow(null)}>
-          <div className="max-w-3xl w-full max-h-[90vh] bg-card rounded-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
-            <div className="flex items-center justify-between px-5 py-3 border-b border-border">
-              <p className="font-medium text-sm">{previewRow.cert.fileName ?? "Arquivo"}</p>
-              <button onClick={() => setPreviewRow(null)} className="text-muted-foreground hover:text-foreground">✕</button>
-            </div>
-            <div className="p-4 overflow-auto max-h-[80vh]">
-              {previewRow.cert.fileMime?.startsWith("image/") ? (
-                <img
-                  src={`data:${previewRow.cert.fileMime};base64,${previewRow.cert.fileData}`}
-                  alt="Certificado"
-                  className="max-w-full mx-auto rounded-lg"
-                />
-              ) : (
-                <iframe
-                  src={`data:${previewRow.cert.fileMime};base64,${previewRow.cert.fileData}`}
-                  className="w-full h-[70vh] rounded-lg"
-                  title="Certificado PDF"
-                />
-              )}
-            </div>
-          </div>
-        </div>
+      {previewRow && (
+        <FilePreviewModal row={previewRow} onClose={() => setPreviewRow(null)} />
       )}
     </div>
   );

@@ -4,6 +4,16 @@ import { useAuth } from "@/lib/auth";
 import { useGetUnreadCount } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useQuery } from "@tanstack/react-query";
+import { SecureImage, isObjectStorageKey } from "@/components/secure-image";
+
+const API = import.meta.env.BASE_URL.replace(/\/$/, "") + "/api";
+function authH() {
+  const t = localStorage.getItem("nexora_token");
+  return t ? { Authorization: `Bearer ${t}` } : {};
+}
+
+interface TechAvatar { photoUrl: string | null; name: string }
 
 function NotificationBell({ userId }: { userId: number }) {
   const { data } = useGetUnreadCount({ query: { queryKey: ["notifications", "unread", userId], refetchInterval: 30000 } });
@@ -25,6 +35,42 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
   return (
     <Link href={href} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${active ? "text-primary bg-primary/10" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
       {label}
+    </Link>
+  );
+}
+
+function UserAvatar({ user }: { user: { id: number; name: string; role: string } }) {
+  const isTech = user.role === "technician";
+
+  const { data } = useQuery<TechAvatar>({
+    queryKey: ["tech-avatar"],
+    queryFn: async () => {
+      const res = await fetch(`${API}/technicians/me`, { headers: authH() as Record<string, string> });
+      if (!res.ok) throw new Error();
+      return res.json();
+    },
+    enabled: isTech,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+  });
+
+  const photoUrl = isTech ? (data?.photoUrl ?? null) : null;
+  const initial = user.name[0].toUpperCase();
+
+  return (
+    <Link href="/perfil">
+      <div className="w-8 h-8 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center text-primary text-sm font-bold cursor-pointer hover:opacity-80 transition-opacity">
+        {photoUrl && isObjectStorageKey(photoUrl) ? (
+          <SecureImage
+            objectKey={photoUrl}
+            alt={user.name}
+            className="w-full h-full object-cover"
+            fallback={<span>{initial}</span>}
+          />
+        ) : (
+          <span>{initial}</span>
+        )}
+      </div>
     </Link>
   );
 }
@@ -97,7 +143,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </a>
         )}
 
-        {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
           {mainLinks.map(l => <NavLink key={l.href} href={l.href} label={l.label} active={isActive(l.href)} />)}
           {roleLinks.length > 0 && (
@@ -120,33 +165,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {user ? (
             <>
               <NotificationBell userId={user.id} />
-              <Link href="/perfil">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm font-bold cursor-pointer hover:bg-primary/30 transition-colors">
-                  {user.name[0]}
-                </div>
-              </Link>
+              <UserAvatar user={user} />
               <Button variant="ghost" size="sm" onClick={handleLogout} className="hidden sm:flex text-muted-foreground hover:text-foreground">
                 Sair
               </Button>
             </>
           ) : (
             <>
-              <Link href="/login">
-                <Button variant="ghost" size="sm">Entrar</Button>
-              </Link>
-              <Link href="/register">
-                <Button size="sm">Criar Conta</Button>
-              </Link>
+              <Link href="/login"><Button variant="ghost" size="sm">Entrar</Button></Link>
+              <Link href="/register"><Button size="sm">Criar Conta</Button></Link>
             </>
           )}
-          {/* Mobile hamburger */}
           <button className="lg:hidden p-2 rounded-lg hover:bg-muted/50" onClick={() => setMobileOpen(!mobileOpen)}>
             <span className="text-lg">{mobileOpen ? "✕" : "☰"}</span>
           </button>
         </div>
       </header>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden border-b border-border bg-card px-4 py-3 flex flex-col gap-1 z-40">
           {[...mainLinks, ...roleLinks].map(l => (

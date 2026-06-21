@@ -66,7 +66,6 @@ function ProtectedRoute({ component: Component, roles }: { component: React.Comp
     return null;
   }
 
-  // Force password change — redirect to change-password page
   if (user.mustChangePassword && location !== "/alterar-senha") {
     setLocation("/alterar-senha");
     return null;
@@ -84,6 +83,20 @@ function ProtectedRoute({ component: Component, roles }: { component: React.Comp
   return <Component />;
 }
 
+function AppRedirect() {
+  const { user, isLoading } = useAuth();
+  const [, setLocation] = useLocation();
+
+  if (isLoading) return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="text-muted-foreground animate-pulse">Carregando...</div>
+    </div>
+  );
+
+  setLocation(user ? "/dashboard" : "/login");
+  return null;
+}
+
 function Router() {
   return (
     <Switch>
@@ -93,6 +106,7 @@ function Router() {
         <Layout>
           <Switch>
             <Route path="/" component={Home} />
+            <Route path="/app" component={AppRedirect} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/recuperar-senha" component={RecuperarSenha} />

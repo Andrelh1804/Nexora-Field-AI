@@ -1,0 +1,232 @@
+AUDITORIA CRÍTICA — LOGIN E AUTENTICAÇÃO
+
+Objetivo:
+
+Identificar e corrigir qualquer problema que esteja impedindo login de usuários, com foco principal no administrador.
+
+Não assumir que o sistema está funcionando.
+
+Executar testes reais ponta a ponta.
+
+---
+
+FASE 1 — INVENTÁRIO DE USUÁRIOS
+
+Consultar banco de dados.
+
+Listar:
+
+* admin_master
+* admin
+* company
+* technician
+
+Informar:
+
+* id
+* email
+* role
+* is_active
+* mustChangePassword
+* createdAt
+
+---
+
+FASE 2 — TESTE REAL DE LOGIN
+
+Executar login via API para:
+
+Admin Master
+Admin
+Empresa
+Técnico
+
+Testar:
+
+POST /api/auth/login
+
+Validar:
+
+* HTTP Status
+* Token JWT
+* Role retornada
+* Mensagem de erro
+
+Registrar resultados.
+
+---
+
+FASE 3 — JWT
+
+Verificar:
+
+* Geração do token
+* Expiração
+* Payload
+* userId
+* role
+
+Confirmar que o token é válido.
+
+---
+
+FASE 4 — FRONTEND
+
+Auditar:
+
+* Página Login
+* AuthContext
+* ProtectedRoute
+* localStorage
+* Redirects
+
+Verificar:
+
+* Token salvo corretamente
+* Sessão persistida
+* Logout
+* Refresh da página
+
+---
+
+FASE 5 — ADMIN MASTER
+
+Testar especificamente:
+
+Email:
+[admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+
+Senha:
+Admin@123456
+
+Validar:
+
+✓ Login
+
+✓ Troca de senha
+
+✓ Novo login
+
+✓ Dashboard
+
+✓ CMS
+
+✓ Planos
+
+✓ Certificações
+
+✓ Usuários
+
+✓ Relatórios
+
+Identificar qualquer erro 401, 403 ou 500.
+
+---
+
+FASE 6 — RBAC
+
+Verificar:
+
+admin_master
+
+admin
+
+company
+
+technician
+
+Validar acesso e bloqueio correto em todas as rotas protegidas.
+
+Gerar tabela completa de permissões.
+
+---
+
+FASE 7 — MUST CHANGE PASSWORD
+
+Verificar se existe loop:
+
+Login
+→ Alterar senha
+→ Dashboard
+
+ou
+
+Login
+→ Alterar senha
+→ Alterar senha novamente
+
+Confirmar atualização correta do campo:
+
+mustChangePassword = false
+
+após troca de senha.
+
+---
+
+FASE 8 — RATE LIMIT
+
+Verificar:
+
+* Login bloqueado
+* Middleware ativo
+* Limites configurados
+
+Informar:
+
+* Arquivo
+* Configuração
+* Rotas protegidas
+
+---
+
+FASE 9 — LOGS E ERROS
+
+Analisar:
+
+* Console frontend
+* Logs backend
+* Network requests
+
+Identificar:
+
+* 401
+* 403
+* 404
+* 500
+
+Relacionados ao login.
+
+---
+
+FASE 10 — CORREÇÃO AUTOMÁTICA
+
+Caso qualquer login falhe:
+
+Corrigir imediatamente.
+
+Caso admin não exista:
+
+Criar:
+
+Nome: Administrador Master
+Email: [admin@nexorafield.com.br](mailto:admin@nexorafield.com.br)
+Senha: Admin@123456
+Role: admin_master
+is_active: true
+
+---
+
+RELATÓRIO FINAL
+
+Informar:
+
+1. Logins funcionando
+2. Logins com falha
+3. Problemas encontrados
+4. Correções aplicadas
+5. Credenciais válidas para teste
+6. Status final da autenticação
+
+Objetivo final:
+
+Garantir que TODOS os logins (admin_master, admin, company e technician) funcionem corretamente tanto pela API quanto pelo frontend.

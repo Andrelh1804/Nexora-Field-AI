@@ -1,81 +1,81 @@
+import { Client } from "@replit/object-storage";
 import { randomUUID } from "crypto";
 
-const REPLIT_SIDECAR = "http://127.0.0.1:1106";
-const PRIVATE_DIR = process.env.PRIVATE_OBJECT_DIR ?? "";
+let _client: Client | null = null;
+let _checked = false;
+let _available = false;
+
+async function getClient(): Promise<Client | null> {
+  if (_checked) return _available ? _client : null;
+  _checked = true;
+  try {
+    const c = new Client();
+    await c.init();
+    _client = c;
+    _available = true;
+    return c;
+  } catch {
+    _available = false;
+    return null;
+  }
+}
 
 export function isStorageConfigured(): boolean {
-  return !!PRIVATE_DIR;
+  return _available;
 }
 
-export async function getUploadUrl(mimeType: string): Promise<{ uploadUrl: string; objectPath: string }> {
-  if (!PRIVATE_DIR) throw new Error("Object Storage não configurado.");
-
-  const objectId = randomUUID();
-  const fullPath = `${PRIVATE_DIR}/uploads/${objectId}`;
-  const parts = fullPath.replace(/^\//, "").split("/");
-  const bucketName = parts[0];
-  const objectName = parts.slice(1).join("/");
-
-  const resp = await fetch(`${REPLIT_SIDECAR}/object-storage/signed-object-url`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      bucket_name: bucketName,
-      object_name: objectName,
-      method: "PUT",
-      expires_at: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
-    }),
-  });
-
-  if (!resp.ok) throw new Error(`Sidecar error: ${resp.status}`);
-  const { signed_url } = await resp.json() as { signed_url: string };
-
-  const objectPath = `/objects/uploads/${objectId}`;
-  return { uploadUrl: signed_url, objectPath };
+export async function checkStorageAvailable(): Promise<boolean> {
+  await getClient();
+  return _available;
 }
 
-export async function getDownloadUrl(objectPath: string): Promise<string> {
-  if (!PRIVATE_DIR) return objectPath;
+export async function uploadFile(
+  buffer: Buffer,
+  mimeType: string,
+  prefix = "uploads"
+): Promise<string> {
+  const client = await getClient();
+  if (!client) throw new Error("Object Storage não configurado. Ative o App Storage nas configurações do Replit.");
+  const key = `${prefix}/${randomUUID()}`;
+  const result = await client.uploadFromBytes(key, buffer, { contentType: mimeType });
+  if (!result.ok) throw new Error(result.error?.message ?? "Falha no upload");
+  return key;
+}
 
-  const fullPath = `${PRIVATE_DIR}${objectPath.replace("/objects", "")}`;
-  const parts = fullPath.replace(/^\//, "").split("/");
-  const bucketName = parts[0];
-  const objectName = parts.slice(1).join("/");
+export async function downloadFile(key: string): Promise<Buffer> {
+  const client = await getClient();
+  if (!client) throw new Error("Object Storage não configurado.");
+  const clean = key.replace(/^\/objects\//, "");
+  const result = await client.downloadAsBytes(clean);
+  if (!result.ok) throw new Error(result.error?.message ?? "Arquivo não encontrado");
+  return Buffer.from(result.value!);
+}
 
-  const resp = await fetch(`${REPLIT_SIDECAR}/object-storage/signed-object-url`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      bucket_name: bucketName,
-      object_name: objectName,
-      method: "GET",
-      expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
-    }),
-  });
+export async function deleteFile(key: string): Promise<void> {
+  const client = await getClient();
+  if (!client) return;
+  const clean = key.replace(/^\/objects\//, "");
+  await client.delete(clean);
+}
 
-  if (!resp.ok) return objectPath;
-  const { signed_url } = await resp.json() as { signed_url: string };
-  return signed_url;
+export async function fileExists(key: string): Promise<boolean> {
+  const client = await getClient();
+  if (!client) return false;
+  const clean = key.replace(/^\/objects\//, "");
+  const result = await client.exists(clean);
+  return result.ok ? (result.value ?? false) : false;
 }
 
 export async function checkStorageHealth(): Promise<{ ok: boolean; configured: boolean }> {
-  if (!PRIVATE_DIR) return { ok: false, configured: false };
-  try {
-    // Validate by attempting to generate a signed URL for a dummy object
-    const parts = `${PRIVATE_DIR}/health-check`.replace(/^\//, "").split("/");
-    const resp = await fetch(`${REPLIT_SIDECAR}/object-storage/signed-object-url`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        bucket_name: parts[0],
-        object_name: parts.slice(1).join("/"),
-        method: "GET",
-        expires_at: new Date(Date.now() + 60000).toISOString(),
-      }),
-      signal: AbortSignal.timeout(3000),
-    });
-    return { ok: resp.ok, configured: true };
-  } catch {
-    return { ok: false, configured: true };
-  }
+  await getClient();
+  return { ok: _available, configured: _available };
+}
+
+export function objectKeyToPath(key: string): string {
+  if (key.startsWith("/objects/")) return key;
+  return `/objects/${key}`;
+}
+
+export function pathToObjectKey(path: string): string {
+  return path.replace(/^\/objects\//, "");
 }
