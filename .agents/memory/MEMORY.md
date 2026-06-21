@@ -9,3 +9,4 @@
 - [Enterprise roles](enterprise-roles.md) — admin_master role added; seed creates admin_master (not admin); new modules: /admin/administradores, /admin/planos, /admin/landing; landing CMS tables: landing_settings/testimonials/faq/benefits
 - [Admin master guard](enterprise-roles.md) — ProtectedRoute allows admin_master on any route requiring "admin"; backend requireRole("admin","admin_master") pattern; admin_master-only: create users, delete plans, delete users
 - [esbuild external packages](esbuild-externals.md) — pdfkit/fontkit/brotli/@swc/helpers must be external in build.mjs; transactions require walletId NOT NULL; subscriptions uses currentPeriodEnd not expiresAt
+- [Vite proxy for API](vite-proxy.md) — vite.config.ts MUST have proxy: {"/api": {target:"http://localhost:8080"}} or all browser requests to /api/* hit Vite (port 5000) and return 404
