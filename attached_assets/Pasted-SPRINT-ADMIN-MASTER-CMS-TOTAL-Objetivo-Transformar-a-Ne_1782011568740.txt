@@ -1,0 +1,480 @@
+SPRINT ADMIN MASTER CMS TOTAL
+
+Objetivo:
+
+Transformar a Nexora Field AI em uma plataforma totalmente gerenciável pelo painel administrativo, eliminando dependência de alterações no código para informações institucionais, integrações, planos e conteúdo da landing page.
+
+==================================================
+
+FASE 1 — MENU CONFIGURAÇÕES GERAIS
+
+Criar novo menu:
+
+Admin
+└── Configurações Gerais
+
+Página:
+
+/admin/configuracoes
+
+Permissões:
+
+admin_master
+
+==================================================
+
+SEÇÃO 1 — DADOS INSTITUCIONAIS
+
+Campos editáveis:
+
+Nome da Empresa
+
+Razão Social
+
+CNPJ
+
+Email Principal
+
+Telefone Principal
+
+WhatsApp
+
+Endereço
+
+Cidade
+
+Estado
+
+CEP
+
+País
+
+Slogan
+
+Descrição Institucional
+
+Missão
+
+Visão
+
+Valores
+
+Salvar no banco.
+
+Todas as páginas devem consumir estes dados dinamicamente.
+
+==================================================
+
+SEÇÃO 2 — REDES SOCIAIS
+
+Campos:
+
+Instagram
+
+Facebook
+
+LinkedIn
+
+YouTube
+
+TikTok
+
+X (Twitter)
+
+Telegram
+
+GitHub
+
+Site Institucional
+
+Exibir automaticamente:
+
+Landing Page
+
+Rodapé
+
+Contato
+
+SEO Schema.org
+
+==================================================
+
+SEÇÃO 3 — LOGOS E IDENTIDADE VISUAL
+
+Upload via Object Storage:
+
+Logo Principal
+
+Logo Branca
+
+Logo Escura
+
+Favicon
+
+Banner Principal
+
+Imagem Compartilhamento Social (OG Image)
+
+Campos:
+
+Cor Primária
+
+Cor Secundária
+
+Cor Destaque
+
+Cor Botões
+
+Aplicar automaticamente.
+
+==================================================
+
+SEÇÃO 4 — CONFIGURAÇÕES DE IA
+
+Criar página:
+
+/admin/integracoes/ia
+
+Campos:
+
+Gemini API Key
+
+Modelo Gemini
+
+Temperatura
+
+Tokens Máximos
+
+Prompt Base Copilot
+
+Prompt Base Vision
+
+Prompt Base Executive AI
+
+Botão:
+
+Testar Conexão
+
+Status:
+
+Online
+Offline
+
+==================================================
+
+SEÇÃO 5 — MERCADO PAGO
+
+Página:
+
+/admin/integracoes/mercadopago
+
+Campos:
+
+Access Token
+
+Public Key
+
+Webhook URL
+
+Modo:
+
+Sandbox
+Produção
+
+Botão:
+
+Testar Integração
+
+==================================================
+
+SEÇÃO 6 — WHATSAPP
+
+Página:
+
+/admin/integracoes/whatsapp
+
+Campos:
+
+Twilio SID
+
+Twilio Token
+
+Número WhatsApp
+
+Templates
+
+Botão:
+
+Enviar Mensagem de Teste
+
+==================================================
+
+SEÇÃO 7 — EMAIL
+
+Página:
+
+/admin/integracoes/email
+
+Campos:
+
+Resend API Key
+
+Email Remetente
+
+Nome Remetente
+
+Botão:
+
+Enviar Email de Teste
+
+==================================================
+
+SEÇÃO 8 — PLANOS COMERCIAIS
+
+Página:
+
+/admin/planos
+
+Permitir:
+
+Criar Plano
+
+Editar Plano
+
+Excluir Plano
+
+Duplicar Plano
+
+Ordenar Planos
+
+Campos:
+
+Nome
+
+Preço
+
+Descrição
+
+Benefícios
+
+Quantidade de Chamados
+
+Quantidade de Usuários
+
+Limite de Técnicos
+
+Suporte
+
+Cor
+
+Ícone
+
+Destacado
+
+Ordem de Exibição
+
+Exibir automaticamente na Landing.
+
+==================================================
+
+SEÇÃO 9 — LANDING PAGE CMS
+
+Página:
+
+/admin/landing
+
+Administrar:
+
+Hero
+
+Título
+
+Subtítulo
+
+Botões CTA
+
+Benefícios
+
+Problemas Resolvidos
+
+Especialidades
+
+Academy
+
+Depoimentos
+
+FAQ
+
+CTA Final
+
+Rodapé
+
+Tudo consumido dinamicamente.
+
+Nenhum texto hardcoded.
+
+==================================================
+
+SEÇÃO 10 — MENU INÍCIO
+
+Adicionar botão:
+
+Início
+
+No menu principal da plataforma.
+
+Comportamento:
+
+Se estiver em:
+
+/app/*
+
+Redirecionar para:
+
+/
+
+Landing Page
+
+Adicionar também:
+
+Logo clicável
+
+Redireciona para:
+
+/
+
+==================================================
+
+FASE 11 — AUDITORIA DE MENUS
+
+Validar:
+
+Menu Principal
+
+Submenus
+
+Sidebar
+
+Header
+
+Footer
+
+Landing
+
+CMS
+
+Admin
+
+Academy
+
+Planos
+
+Certificações
+
+Relatórios
+
+CRM
+
+Dashboard
+
+Eliminar:
+
+404
+
+links quebrados
+
+rotas inexistentes
+
+menus órfãos
+
+==================================================
+
+FASE 12 — TESTE FINAL
+
+Executar crawler interno.
+
+Validar:
+
+✓ Todas as páginas
+
+✓ Todos os menus
+
+✓ Todos os submenus
+
+✓ Todos os botões
+
+✓ Todos os CTAs
+
+✓ Todas as rotas
+
+✓ Landing
+
+✓ Plataforma
+
+✓ CMS
+
+✓ Configurações
+
+✓ Integrações
+
+✓ Planos
+
+✓ SEO
+
+==================================================
+
+RESULTADO ESPERADO
+
+Admin Master consegue alterar sem programador:
+
+✓ Dados da empresa
+
+✓ Redes sociais
+
+✓ Logos
+
+✓ Cores
+
+✓ Landing Page
+
+✓ Planos
+
+✓ Gemini
+
+✓ Mercado Pago
+
+✓ WhatsApp
+
+✓ Email
+
+✓ SEO
+
+✓ Contatos
+
+✓ Rodapé
+
+✓ CTAs
+
+✓ Banner Principal
+
+✓ FAQ
+
+✓ Depoimentos
+
+✓ Academy
+
+✓ Branding
+
+E o botão:
+
+INÍCIO
+
+funciona corretamente levando o usuário para:
+
+https://nexorafield.com.br
+
+enquanto a plataforma permanece em:
+
+https://nexorafield.com.br/app
+
+Gerar relatório final com todas as implementações realizadas.

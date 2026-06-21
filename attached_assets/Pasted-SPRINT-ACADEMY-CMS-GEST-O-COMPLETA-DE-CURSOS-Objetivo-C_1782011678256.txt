@@ -1,0 +1,503 @@
+SPRINT ACADEMY CMS — GESTÃO COMPLETA DE CURSOS
+
+Objetivo:
+
+Criar um painel administrativo completo para gerenciamento da Nexora Academy, permitindo que o Admin Master crie, edite, publique, organize e remova cursos sem necessidade de alterar código.
+
+==================================================
+
+MENU ADMIN
+
+Admin
+└── Academy
+├── Dashboard
+├── Cursos
+├── Categorias
+├── Módulos
+├── Aulas
+├── Certificados
+├── Alunos
+├── Avaliações
+└── Configurações
+
+Permissão:
+
+admin_master
+
+admin
+
+==================================================
+
+DASHBOARD ACADEMY
+
+Página:
+
+/admin/academy
+
+Exibir:
+
+Total de Cursos
+
+Total de Categorias
+
+Total de Alunos
+
+Total de Certificados Emitidos
+
+Cursos Mais Acessados
+
+Cursos Mais Concluídos
+
+Média de Conclusão
+
+Últimos Certificados Emitidos
+
+Gráficos:
+
+* Cursos por Categoria
+* Conclusões por Mês
+* Certificados Emitidos
+
+==================================================
+
+GESTÃO DE CURSOS
+
+Página:
+
+/admin/academy/cursos
+
+Funcionalidades:
+
+✓ Criar Curso
+
+✓ Editar Curso
+
+✓ Duplicar Curso
+
+✓ Arquivar Curso
+
+✓ Excluir Curso
+
+✓ Publicar/Despublicar
+
+==================================================
+
+CAMPOS DO CURSO
+
+Título
+
+Slug
+
+Descrição Curta
+
+Descrição Completa
+
+Categoria
+
+Subcategoria
+
+Nível
+
+Iniciante
+
+Intermediário
+
+Avançado
+
+Especialista
+
+Carga Horária
+
+Imagem de Capa
+
+Vídeo de Apresentação
+
+Instrutor
+
+Tags
+
+Pontuação Academy
+
+Status
+
+Rascunho
+
+Publicado
+
+Arquivado
+
+Curso Obrigatório
+
+Sim/Não
+
+==================================================
+
+CATEGORIAS PADRÃO
+
+Telecom
+
+Fibra Óptica
+
+Infraestrutura TI
+
+Redes
+
+CFTV
+
+Eletrônica
+
+Automação Industrial
+
+Energia Solar
+
+Cloud
+
+Datacenter
+
+Inteligência Artificial
+
+Gestão e Negócios
+
+Segurança do Trabalho
+
+Boas Práticas Nexora
+
+Permitir criar novas categorias.
+
+==================================================
+
+GESTÃO DE MÓDULOS
+
+Página:
+
+/admin/academy/modulos
+
+Permitir:
+
+Criar
+
+Editar
+
+Reordenar
+
+Excluir
+
+Campos:
+
+Título
+
+Descrição
+
+Ordem
+
+Curso Vinculado
+
+==================================================
+
+GESTÃO DE AULAS
+
+Página:
+
+/admin/academy/aulas
+
+Permitir:
+
+Criar Aula
+
+Editar Aula
+
+Excluir Aula
+
+Reordenar
+
+Campos:
+
+Título
+
+Descrição
+
+Módulo
+
+Duração
+
+Tipo
+
+Vídeo
+
+PDF
+
+Texto
+
+Quiz
+
+Link Externo
+
+Arquivo
+
+URL Vídeo
+
+Conteúdo Rich Text
+
+Material Complementar
+
+==================================================
+
+UPLOAD DE CONTEÚDO
+
+Utilizar Object Storage.
+
+Permitir upload:
+
+Vídeos
+
+PDFs
+
+Imagens
+
+Apresentações
+
+Arquivos ZIP
+
+Materiais de Apoio
+
+Armazenar URLs no banco.
+
+==================================================
+
+CURSO OBRIGATÓRIO
+
+Criar por padrão:
+
+MANUAL DE BOAS PRÁTICAS NEXORA FIELD AI
+
+Marcar como:
+
+Obrigatório
+
+Todos os técnicos devem concluir.
+
+==================================================
+
+CONTEÚDO DO MANUAL
+
+Apresentação Profissional
+
+Uso de EPIs
+
+Atendimento ao Cliente
+
+Conduta Profissional
+
+Check-in e Checkout
+
+Evidências Fotográficas
+
+Relatórios Técnicos
+
+Segurança Operacional
+
+Política de Qualidade Nexora
+
+Ética Profissional
+
+Avaliação Final
+
+Certificado Nexora
+
+==================================================
+
+QUIZ E PROVAS
+
+Permitir:
+
+Criar Questões
+
+Alternativas
+
+Resposta Correta
+
+Pontuação
+
+Tempo Limite
+
+Nota Mínima
+
+Exemplo:
+
+70%
+
+==================================================
+
+CERTIFICADOS
+
+Página:
+
+/admin/academy/certificados
+
+Permitir:
+
+Criar Template
+
+Editar Template
+
+Emitir Automaticamente
+
+Campos:
+
+Nome
+
+Descrição
+
+Imagem de Fundo
+
+Assinatura
+
+Logo Nexora
+
+Código de Validação
+
+QR Code
+
+==================================================
+
+ALUNOS
+
+Página:
+
+/admin/academy/alunos
+
+Exibir:
+
+Nome
+
+Email
+
+Curso
+
+Progresso
+
+Nota
+
+Data Conclusão
+
+Certificado Emitido
+
+Permitir:
+
+Resetar Progresso
+
+Reemitir Certificado
+
+Bloquear Curso
+
+==================================================
+
+RANKING ACADEMY
+
+Integrar com ranking geral.
+
+Pontuação:
+
+Curso concluído
+
++50 pontos
+
+Curso avançado
+
++100 pontos
+
+Curso obrigatório
+
++300 pontos
+
+Certificação aprovada
+
++200 pontos
+
+==================================================
+
+FILTROS PARA EMPRESAS
+
+Permitir filtrar técnicos por:
+
+Curso Concluído
+
+Curso Obrigatório Concluído
+
+Certificado Emitido
+
+Pontuação Academy
+
+Técnico Homologado Nexora
+
+==================================================
+
+CONFIGURAÇÕES
+
+Página:
+
+/admin/academy/configuracoes
+
+Campos:
+
+Pontos por Curso
+
+Pontos por Certificação
+
+Nota Mínima
+
+Validade dos Certificados
+
+Texto dos Certificados
+
+Regras de Homologação
+
+==================================================
+
+TESTES
+
+Validar:
+
+✓ Criação de Curso
+
+✓ Criação de Categoria
+
+✓ Upload de Vídeo
+
+✓ Upload de PDF
+
+✓ Emissão de Certificado
+
+✓ Quiz
+
+✓ Ranking
+
+✓ Integração Perfil Técnico
+
+✓ Integração Empresas
+
+==================================================
+
+RESULTADO ESPERADO
+
+Academy totalmente administrável pelo painel Admin.
+
+Sem necessidade de programador para:
+
+✓ Criar cursos
+
+✓ Criar módulos
+
+✓ Criar aulas
+
+✓ Criar provas
+
+✓ Criar certificados
+
+✓ Gerenciar alunos
+
+✓ Atualizar conteúdo
+
+✓ Publicar novos treinamentos
+
+✓ Expandir a Academy conforme crescimento da Nexora Field AI.

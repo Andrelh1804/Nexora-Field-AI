@@ -50,6 +50,22 @@ router.post("/academy/courses", requireAuth, requireRole("admin"), async (req: A
   res.json(course);
 });
 
+// ── Admin: update course ────────────────────────────────────────────
+router.put("/academy/courses/:id", requireAuth, requireRole("admin"), async (req: AuthRequest, res: Response) => {
+  const id = Number(req.params["id"]);
+  const { id: _id, createdAt: _ca, enrollments: _enr, ...data } = req.body;
+  const [course] = await db.update(academyCoursesTable).set(data).where(eq(academyCoursesTable.id, id)).returning();
+  if (!course) { res.status(404).json({ error: "Not found" }); return; }
+  res.json(course);
+});
+
+// ── Admin: delete course ────────────────────────────────────────────
+router.delete("/academy/courses/:id", requireAuth, requireRole("admin"), async (req: AuthRequest, res: Response) => {
+  const id = Number(req.params["id"]);
+  await db.delete(academyCoursesTable).where(eq(academyCoursesTable.id, id));
+  res.json({ success: true });
+});
+
 // ── Enroll in course ────────────────────────────────────────────────
 router.post("/academy/courses/:id/enroll", requireAuth, async (req: AuthRequest, res: Response) => {
   const courseId = Number(req.params["id"]);

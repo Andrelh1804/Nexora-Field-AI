@@ -120,6 +120,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       { href: "/executive", label: "🧠 Executive" },
       { href: "/admin/pagamentos", label: "💰 Pagamentos" },
       { href: "/admin/certificacoes", label: "🛡️ Certificações" },
+      { href: "/admin/academy", label: "🎓 Academy" },
       { href: "/crm", label: "🎯 CRM" },
       { href: "/contratos", label: "📋 Contratos" },
     ] : []),
