@@ -53,12 +53,10 @@ export default function Ranking() {
       {user?.role === "technician" && myRanking && (
         <Card className="border-primary/30 bg-primary/5">
           <CardHeader>
-            <CardTitle className="text-primary flex items-center gap-2">
-              Minha Posição
-            </CardTitle>
+            <CardTitle className="text-primary flex items-center gap-2">Minha Posição</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center justify-between">
+          <CardContent className="space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center gap-3">
                 <span className="text-4xl font-bold text-primary">#{myRanking.position || "—"}</span>
                 <div>
@@ -67,11 +65,23 @@ export default function Ranking() {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-2xl font-bold">{Math.round(myRanking.score)} pts</p>
-                {myRanking.avgRating && <p className="text-sm text-muted-foreground">⭐ {Number(myRanking.avgRating).toFixed(1)}</p>}
+                <p className="text-2xl font-bold">{Math.round(myRanking.score)} pts total</p>
+                {myRanking.avgRating ? <p className="text-sm text-muted-foreground">⭐ {Number(myRanking.avgRating).toFixed(1)}</p> : null}
               </div>
             </div>
             <ProgressBar score={myRanking.score} level={myRanking.level} />
+
+            {/* Score breakdown */}
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <div className="bg-muted/30 rounded-lg p-3 text-center">
+                <p className="text-sm font-semibold">{Math.round(myRanking.score - (myRanking.academyScore || 0))} pts</p>
+                <p className="text-xs text-muted-foreground">Campo (chamados + rating)</p>
+              </div>
+              <div className={`rounded-lg p-3 text-center ${(myRanking.academyScore || 0) > 0 ? "bg-yellow-500/10 border border-yellow-500/20" : "bg-muted/30"}`}>
+                <p className="text-sm font-semibold text-yellow-400">{myRanking.academyScore || 0} pts</p>
+                <p className="text-xs text-muted-foreground">Academy 🎓</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
       )}
@@ -88,6 +98,17 @@ export default function Ranking() {
           </Card>
         ))}
       </div>
+
+      {/* Score formula card */}
+      <Card className="border-muted bg-muted/10">
+        <CardContent className="pt-4 pb-3">
+          <p className="text-xs text-muted-foreground text-center">
+            <strong className="text-foreground">Como é calculado o ranking:</strong>{" "}
+            Pontos de campo (chamados × 10 + avaliação × 50) + Pontos Academy (cursos concluídos).
+            Cursos Academy contribuem com até 20% do ranking total.
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Leaderboard */}
       <Card>
@@ -113,7 +134,7 @@ export default function Ranking() {
                       "border-border bg-card/50 hover:bg-card"}`}
                 >
                   {/* Position */}
-                  <div className="w-8 text-center">
+                  <div className="w-8 text-center shrink-0">
                     {index === 0 ? <span className="text-xl">🥇</span> :
                      index === 1 ? <span className="text-xl">🥈</span> :
                      index === 2 ? <span className="text-xl">🥉</span> :
@@ -121,7 +142,7 @@ export default function Ranking() {
                   </div>
 
                   {/* Avatar */}
-                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold shrink-0">
                     {entry.name?.[0] || "?"}
                   </div>
 
@@ -137,7 +158,12 @@ export default function Ranking() {
                   {/* Stats */}
                   <div className="text-right hidden sm:block">
                     <p className="font-bold">{Math.round(entry.score)} pts</p>
-                    <p className="text-xs text-muted-foreground">{entry.completedOrders} chamados</p>
+                    <div className="flex items-center gap-2 justify-end text-xs text-muted-foreground">
+                      <span>{entry.completedOrders} chamados</span>
+                      {entry.academy_score > 0 && (
+                        <span className="text-yellow-400">+{entry.academy_score} 🎓</span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

@@ -9,6 +9,7 @@ export const academyCoursesTable = pgTable("academy_courses", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   specialty: text("specialty").notNull(),
+  category: text("category").notNull().default("Geral"),
   level: courseLevelEnum("level").notNull().default("iniciante"),
   duration: integer("duration").notNull().default(0),
   videoUrl: text("video_url"),
@@ -17,6 +18,8 @@ export const academyCoursesTable = pgTable("academy_courses", {
   published: boolean("published").notNull().default(true),
   enrollments: integer("enrollments").notNull().default(0),
   rating: real("rating"),
+  pointsValue: integer("points_value").notNull().default(50),
+  isMandatory: boolean("is_mandatory").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

@@ -19,6 +19,7 @@ export const technicianRankingsTable = pgTable("technician_rankings", {
   completedOrders: integer("completed_orders").notNull().default(0),
   avgRating: real("avg_rating").default(0),
   slaCompliance: real("sla_compliance").default(0),
+  academyScore: integer("academy_score").notNull().default(0),
   position: integer("position"),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });
