@@ -40,6 +40,7 @@ import AdminEspecialidades from "@/pages/admin-especialidades";
 import AdminAdministradores from "@/pages/admin-administradores";
 import AdminPlanos from "@/pages/admin-planos";
 import AdminLanding from "@/pages/admin-landing";
+import AdminPagamentos from "@/pages/admin-pagamentos";
 import RecuperarSenha from "@/pages/recuperar-senha";
 import RedefinirSenha from "@/pages/redefinir-senha";
 import { CookieBanner } from "@/components/cookie-banner";
@@ -123,6 +124,7 @@ function Router() {
             <Route path="/admin/administradores" component={() => <ProtectedRoute component={AdminAdministradores} roles={["admin"]} />} />
             <Route path="/admin/planos" component={() => <ProtectedRoute component={AdminPlanos} roles={["admin"]} />} />
             <Route path="/admin/landing" component={() => <ProtectedRoute component={AdminLanding} roles={["admin"]} />} />
+            <Route path="/admin/pagamentos" component={() => <ProtectedRoute component={AdminPagamentos} roles={["admin"]} />} />
             <Route component={NotFound} />
           </Switch>
         </Layout>

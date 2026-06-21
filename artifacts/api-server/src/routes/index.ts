@@ -34,6 +34,7 @@ import adminPlansRouter from "./admin-plans";
 import landingCmsRouter from "./landing-cms";
 import reportsRouter from "./reports";
 import paymentsRouter from "./payments";
+import paymentConfigRouter from "./payment-config";
 
 const router: IRouter = Router();
 
@@ -72,5 +73,6 @@ router.use(adminPlansRouter);
 router.use(landingCmsRouter);
 router.use(reportsRouter);
 router.use(paymentsRouter);
+router.use(paymentConfigRouter);
 
 export default router;

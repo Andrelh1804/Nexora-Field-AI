@@ -71,6 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       { href: "/admin/landing", label: "🌐 Landing CMS" },
       { href: "/admin/especialidades", label: "🗂️ Especialidades" },
       { href: "/executive", label: "🧠 Executive" },
+      { href: "/admin/pagamentos", label: "💰 Pagamentos" },
       { href: "/crm", label: "🎯 CRM" },
       { href: "/contratos", label: "📋 Contratos" },
     ] : []),
